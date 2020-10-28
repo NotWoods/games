@@ -32,20 +32,17 @@ export interface CompletedLevel extends CurrentLevel {
   endTime: number;
 }
 
+export function timeout(ms: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, ms));
+}
+
 export class GameState {
   completedLevels: Readonly<CompletedLevel>[] = [];
   currentLevel?: CurrentLevel;
 
   constructor(public readonly stageRadius: number) {}
 
-  randomAudioPoint(): SphericalPoint {
-    return {
-      polar: 0,
-      azimuthal: 0,
-    };
-  }
-
-  startLevel(audioPosition = this.randomAudioPoint(), now = Date.now()) {
+  startLevel(audioPosition: SphericalPoint, now = Date.now()) {
     if (this.currentLevel) {
       throw new Error("Level already started");
     }
@@ -67,9 +64,5 @@ export class GameState {
     this.completedLevels.push(level);
     this.currentLevel = undefined;
     return level;
-  }
-
-  waitTime() {
-    return 10_000;
   }
 }

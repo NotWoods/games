@@ -1,57 +1,69 @@
 import type { DisplayResult, PlayAudio } from "../main/push-from-worker";
-import { GameState, Ray } from "./level-record";
+import { GameState, Ray, SphericalPoint, timeout } from "./level-record";
 import {
   sphericalInterpolate,
   cartesianToSpherical,
   sphericalToCartesian,
-  raycastOnSphere,
+  raycastOnSphereToPoint,
 } from "./radian-math";
 
 declare var self: DedicatedWorkerGlobalScope;
 
-const game = new GameState(15);
+export class GameLogic {
 
-function timeout(ms: number) {
-  return new Promise<void>((resolve) => setTimeout(resolve, ms));
+  readonly state: GameState;
+
+  constructor(stageRadius: number) {
+    this.state = new GameState(stageRadius);
+  }
+
+  randomAudioPoint(): SphericalPoint {
+    return {
+      polar: 0,
+      azimuthal: 0,
+    };
+  }
+
+  waitTime() {
+    return 10_000;
+  }
+
+  handlePlayerClick(hand: Ray): DisplayResult {
+    const { stageRadius } = this.state;
+    // raycast hand onto sphere
+    const pointCartesian = raycastOnSphereToPoint(hand, stageRadius);
+
+    // go from raycast point to radian lat lng
+    const pointSpherical = cartesianToSpherical(pointCartesian);
+
+    // complete level
+    const { audio } = this.state.completeLevel(pointSpherical);
+
+    // return an arc
+    const interpolate = sphericalInterpolate(pointSpherical, audio);
+    return {
+      type: "display_result",
+      pointerPosition: pointCartesian,
+      arc: [pointSpherical, interpolate(0.5), audio].map((point) =>
+        sphericalToCartesian(point, stageRadius)
+      ) as DisplayResult['arc'],
+    };
+  }
+
+  newAudioPoint(): PlayAudio {
+    // send a new audio sound
+    const level = this.state.startLevel(this.randomAudioPoint());
+    return {
+      type: "play_audio",
+      audioPosition: sphericalToCartesian(level.audio, this.state.stageRadius)
+    };
+  }
 }
 
-/**
- * Given player position and direction,
- * find the corresponding point on a sphere
- * and get the distance from that point to the audio source.
- *
- * Later send a new audio sound.
- */
-async function onPlayerClick(data: { hand: Ray }) {
-  // raycast hand onto sphere
-  const pointCartesian = raycastOnSphere(data.hand, game.stageRadius);
+const game = new GameLogic(15);
 
-  // go from raycast point to radian lat lng
-  const pointSpherical = cartesianToSpherical(pointCartesian);
-
-  // complete level
-  const { audio } = game.completeLevel(pointSpherical);
-
-  // return an arc
-  const interpolate = sphericalInterpolate(pointSpherical, audio);
-  const displayMessage: DisplayResult = {
-    type: "display_result",
-    pointerPosition: pointCartesian,
-    arc: [pointSpherical, interpolate(0.5), audio].map((point) =>
-      sphericalToCartesian(point, game.stageRadius)
-    ) as DisplayResult['arc'],
-  };
-  self.postMessage(displayMessage);
-
+self.onmessage = async (evt: MessageEvent) => {
+  self.postMessage(game.handlePlayerClick(evt.data.hand));
   await timeout(game.waitTime());
-
-  // send a new audio sound
-  const level = game.startLevel();
-  const audioMessage: PlayAudio = {
-    type: "play_audio",
-    audioPosition: sphericalToCartesian(level.audio, game.stageRadius),
-  };
-  self.postMessage(audioMessage);
+  self.postMessage(game.newAudioPoint());
 }
-
-self.onmessage = (evt) => onPlayerClick(evt.data);

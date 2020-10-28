@@ -1,17 +1,27 @@
 import { Ray, SphericalPoint, Vector } from "./level-record";
-
-/**
- * Taken from d3-geo.
- */
-export function haversin(x: number) {
-  return (x = Math.sin(x / 2)) * x;
-}
+import { add, dot, haversin, scale } from "./math";
 
 /**
  * Find the point where the ray intersects with a sphere centered at the origin.
+ * http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
  */
-export function raycastOnSphere(ray: Ray, sphereRadius: number): Vector {
+export function raycastOnSphere(ray: Ray, sphereRadius: number): number {
   // sphere's origin is 0, 0, 0
+  const oc = ray.origin;
+  const a = dot(ray.direction, ray.direction);
+  const b = 2 * dot(oc, ray.direction);
+  const c = dot(oc, oc) - sphereRadius * sphereRadius;
+  const discriminant = b * b - 4 * a * c;
+  if (discriminant < 0) {
+    return -1;
+  } else {
+    return (-b - Math.sqrt(discriminant)) / (2 * a);
+  }
+}
+
+export function raycastOnSphereToPoint(ray: Ray, sphereRadius: number): Vector {
+  const t = raycastOnSphere(ray, sphereRadius);
+  return add(ray.origin, scale(t, ray.direction));
 }
 
 /**
@@ -46,7 +56,7 @@ export function sphericalInterpolate(from: SphericalPoint, to: SphericalPoint) {
     k = Math.sin(d);
 
   if (d === 0) {
-    function interpolate(t: number) {
+    function interpolate() {
       return from;
     }
 
