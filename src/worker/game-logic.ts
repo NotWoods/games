@@ -1,16 +1,13 @@
 import type { DisplayResult, PlayAudio } from "../main/push-from-worker";
-import { GameState, Ray, SphericalPoint, timeout } from "./level-record";
+import { GameState, Ray, SphericalPoint } from "./level-record";
 import {
-  sphericalInterpolate,
   cartesianToSpherical,
-  sphericalToCartesian,
   raycastOnSphereToPoint,
+  sphericalInterpolate,
+  sphericalToCartesian,
 } from "./radian-math";
 
-declare var self: DedicatedWorkerGlobalScope;
-
 export class GameLogic {
-
   readonly state: GameState;
 
   constructor(stageRadius: number) {
@@ -46,7 +43,7 @@ export class GameLogic {
       pointerPosition: pointCartesian,
       arc: [pointSpherical, interpolate(0.5), audio].map((point) =>
         sphericalToCartesian(point, stageRadius)
-      ) as DisplayResult['arc'],
+      ) as DisplayResult["arc"],
     };
   }
 
@@ -55,15 +52,7 @@ export class GameLogic {
     const level = this.state.startLevel(this.randomAudioPoint());
     return {
       type: "play_audio",
-      audioPosition: sphericalToCartesian(level.audio, this.state.stageRadius)
+      audioPosition: sphericalToCartesian(level.audio, this.state.stageRadius),
     };
   }
-}
-
-const game = new GameLogic(15);
-
-self.onmessage = async (evt: MessageEvent) => {
-  self.postMessage(game.handlePlayerClick(evt.data.hand));
-  await timeout(game.waitTime());
-  self.postMessage(game.newAudioPoint());
 }

@@ -82,17 +82,21 @@ export function sphericalInterpolate(from: SphericalPoint, to: SphericalPoint) {
 }
 
 export function cartesianToSpherical(vector: Vector): SphericalPoint {
-  const polar = Math.atan(Math.sqrt(vector.x ** 2 + vector.y ** 2) / vector.z);
-  const azimuthal = Math.atan(vector.y / vector.x);
+  const polar = Math.atan(Math.sqrt(vector.x ** 2 + vector.z ** 2) / vector.y);
+  if (polar === 0) {
+    return { polar: 0, azimuthal: 0 }
+  }
+
+  const azimuthal = Math.atan(vector.z / vector.x);
   return { polar, azimuthal };
 }
 
 export function sphericalToCartesian(
   point: SphericalPoint,
-  radius: number
+  sphereRadius: number
 ): Vector {
-  const x = radius * Math.sin(point.polar) * Math.cos(point.azimuthal);
-  const y = radius * Math.sin(point.polar) * Math.sin(point.azimuthal);
-  const z = radius * Math.cos(point.polar);
+  const x = sphereRadius * Math.sin(point.polar) * Math.cos(point.azimuthal);
+  const z = sphereRadius * Math.sin(point.polar) * Math.sin(point.azimuthal);
+  const y = sphereRadius * Math.cos(point.polar);
   return { x, y, z };
 }

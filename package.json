@@ -2,7 +2,7 @@
   "name": "vr-audio-game",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -13,8 +13,21 @@
     "three": "^0.121.1"
   },
   "devDependencies": {
+    "@types/float-equal": "^2.0.0",
     "@types/three": "^0.103.2",
+    "ava": "^3.13.0",
+    "float-equal": "^2.0.0",
     "rollup": "^2.32.1",
+    "ts-node": "^9.0.0",
+    "tslib": "^2.0.3",
     "typescript": "^4.0.5"
+  },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   }
 }
