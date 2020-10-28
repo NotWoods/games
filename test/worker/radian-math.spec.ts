@@ -1,5 +1,4 @@
 import test from "ava";
-import floatEqual from "float-equal";
 import {
   cartesianToSpherical,
   raycastOnSphere,
@@ -7,12 +6,7 @@ import {
   sphericalInterpolate,
   sphericalToCartesian,
 } from "../../src/worker/radian-math";
-
-function closeTo(actual: number, expected: number, message?: string) {
-  if (!floatEqual(actual, expected)) {
-    throw new Error(message || `${actual} is not close to ${expected}`);
-  }
-}
+import { closeTo } from './assert';
 
 test("raycastOnSphere", (t) => {
   t.is(

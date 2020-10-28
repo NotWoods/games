@@ -33,10 +33,14 @@ export function raycastOnSphere(ray: Ray, sphereRadius: number): number | undefi
   return t0;
 }
 
+export function rayToPoint(ray: Ray, distance: number) {
+  return add(ray.origin, scale(distance, ray.direction));
+}
+
 export function raycastOnSphereToPoint(ray: Ray, sphereRadius: number): Vector | undefined {
   const t = raycastOnSphere(ray, sphereRadius);
   if (t == undefined) return undefined;
-  return add(ray.origin, scale(t, ray.direction));
+  return rayToPoint(ray, t);
 }
 
 /**

@@ -3,6 +3,7 @@ import { GameState, Ray, SphericalPoint } from "./level-record";
 import {
   cartesianToSpherical,
   raycastOnSphereToPoint,
+  rayToPoint,
   sphericalInterpolate,
   sphericalToCartesian,
 } from "./radian-math";
@@ -27,10 +28,15 @@ export class GameLogic {
 
   handlePlayerClick(hand: Ray): DisplayResult {
     const { stageRadius } = this.state;
+
     // raycast hand onto sphere
-    const pointCartesian = raycastOnSphereToPoint(hand, stageRadius);
+    // fallback to some point in distance if player exits the game dome
+    const pointCartesian =
+      raycastOnSphereToPoint(hand, stageRadius) ||
+      rayToPoint(hand, stageRadius);
 
     // go from raycast point to radian lat lng
+
     const pointSpherical = cartesianToSpherical(pointCartesian);
 
     // complete level
