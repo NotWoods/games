@@ -8,6 +8,14 @@ export function haversin(x: number) {
 }
 
 /**
+ * Function to generate random number
+ * https://www.geeksforgeeks.org/how-to-generate-random-number-in-given-range-using-javascript/
+ */
+export function random(min: number, max: number) {
+  return Math.random() * (max - min) + min;
+}
+
+/**
  * Get dot product for 2 vectors
  */
 export function dot(a: Vector, b: Vector) {

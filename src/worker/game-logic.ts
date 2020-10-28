@@ -1,5 +1,6 @@
 import type { DisplayResult, PlayAudio } from "../main/push-from-worker";
 import { GameState, Ray, SphericalPoint } from "./level-record";
+import { random } from "./math";
 import {
   cartesianToSpherical,
   raycastOnSphereToPoint,
@@ -17,8 +18,8 @@ export class GameLogic {
 
   randomAudioPoint(): SphericalPoint {
     return {
-      polar: 0,
-      azimuthal: 0,
+      polar: random(0, Math.PI / 2),
+      azimuthal: random(0, 2 * Math.PI),
     };
   }
 
@@ -36,7 +37,6 @@ export class GameLogic {
       rayToPoint(hand, stageRadius);
 
     // go from raycast point to radian lat lng
-
     const pointSpherical = cartesianToSpherical(pointCartesian);
 
     // complete level
