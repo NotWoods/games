@@ -19,5 +19,5 @@ export function scale(c: number, v: Vector) {
 }
 
 export function add(a: Vector, b: Vector) {
-  return { x: a.x + b.x, y: a.y * b.y, z: a.z * b.z };
+  return { x: a.x + b.x, y: a.y + b.y, z: a.z + b.z };
 }

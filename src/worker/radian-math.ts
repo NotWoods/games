@@ -3,24 +3,39 @@ import { add, dot, haversin, scale } from "./math";
 
 /**
  * Find the point where the ray intersects with a sphere centered at the origin.
- * http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
+ * https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
  */
-export function raycastOnSphere(ray: Ray, sphereRadius: number): number {
+export function raycastOnSphere(ray: Ray, sphereRadius: number): number | undefined {
   // sphere's origin is 0, 0, 0
-  const oc = ray.origin;
-  const a = dot(ray.direction, ray.direction);
-  const b = 2 * dot(oc, ray.direction);
-  const c = dot(oc, oc) - sphereRadius * sphereRadius;
-  const discriminant = b * b - 4 * a * c;
-  if (discriminant < 0) {
-    return -1;
-  } else {
-    return (-b - Math.sqrt(discriminant)) / (2 * a);
+  const radius2 = sphereRadius ** 2;
+  const L = { x: -ray.origin.x, y: -ray.origin.y, z: -ray.origin.z };
+  const tca = dot(L, ray.direction);
+  if (tca < 0) return undefined;
+  const d2 = dot(L, L) - (tca ** 2);
+  if (d2 > radius2) return undefined;
+  const thc = Math.sqrt(radius2 - d2);
+  let t0 = tca - thc;
+  let t1 = tca + thc;
+
+  if (t0 > t1) {
+    const oldt1 = t1;
+    t1 = t0;
+    t0 = oldt1;
   }
+
+  if (t0 < 0) {
+    // if t0 is negative, let's use t1 instead
+    t0 = t1;
+    // if both t0 and t1 are negative
+    if (t0 < 0) return undefined;
+  }
+
+  return t0;
 }
 
-export function raycastOnSphereToPoint(ray: Ray, sphereRadius: number): Vector {
+export function raycastOnSphereToPoint(ray: Ray, sphereRadius: number): Vector | undefined {
   const t = raycastOnSphere(ray, sphereRadius);
+  if (t == undefined) return undefined;
   return add(ray.origin, scale(t, ray.direction));
 }
 
