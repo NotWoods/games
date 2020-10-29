@@ -1,4 +1,4 @@
-import { Vector } from "./level-record";
+import { Vector } from './level-record';
 
 /**
  * Taken from d3-geo.

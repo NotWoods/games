@@ -1,4 +1,4 @@
-import floatEqual from "float-equal";
+import floatEqual from 'float-equal';
 
 export function closeTo(actual: number, expected: number, message?: string) {
   if (!floatEqual(actual, expected)) {

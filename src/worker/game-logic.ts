@@ -1,13 +1,13 @@
-import type { DisplayResult, PlayAudio } from "../main/push-from-worker";
-import { GameState, Ray, SphericalPoint } from "./level-record";
-import { random } from "./math";
+import type { DisplayResult, PlayAudio } from '../main/push-from-worker';
+import { GameState, Ray, SphericalPoint } from './level-record';
+import { random } from './math';
 import {
   cartesianToSpherical,
   raycastOnSphereToPoint,
   rayToPoint,
   sphericalInterpolate,
   sphericalToCartesian,
-} from "./radian-math";
+} from './radian-math';
 
 export class GameLogic {
   readonly state: GameState;
@@ -45,11 +45,11 @@ export class GameLogic {
     // return an arc
     const interpolate = sphericalInterpolate(pointSpherical, audio);
     return {
-      type: "display_result",
+      type: 'display_result',
       pointerPosition: pointCartesian,
       arc: [pointSpherical, interpolate(0.5), audio].map((point) =>
         sphericalToCartesian(point, stageRadius)
-      ) as DisplayResult["arc"],
+      ) as DisplayResult['arc'],
     };
   }
 
@@ -57,7 +57,7 @@ export class GameLogic {
     // send a new audio sound
     const level = this.state.startLevel(this.randomAudioPoint());
     return {
-      type: "play_audio",
+      type: 'play_audio',
       audioPosition: sphericalToCartesian(level.audio, this.state.stageRadius),
     };
   }

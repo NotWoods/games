@@ -1,14 +1,14 @@
-import test from "ava";
+import test from 'ava';
 import {
   cartesianToSpherical,
   raycastOnSphere,
   raycastOnSphereToPoint,
   sphericalInterpolate,
   sphericalToCartesian,
-} from "../../src/worker/radian-math";
+} from '../../src/worker/radian-math';
 import { closeTo } from './assert';
 
-test("raycastOnSphere", (t) => {
+test('raycastOnSphere', (t) => {
   t.is(
     raycastOnSphere(
       {
@@ -32,7 +32,7 @@ test("raycastOnSphere", (t) => {
   );
 });
 
-test("raycastOnSphereToPoint", (t) => {
+test('raycastOnSphereToPoint', (t) => {
   t.deepEqual(
     raycastOnSphereToPoint(
       {
@@ -56,7 +56,7 @@ test("raycastOnSphereToPoint", (t) => {
   );
 });
 
-test("sphericalInterpolate", (t) => {
+test('sphericalInterpolate', (t) => {
   const interpolate = sphericalInterpolate(
     { polar: 0, azimuthal: 0 },
     { polar: 0, azimuthal: Math.PI }
@@ -64,7 +64,7 @@ test("sphericalInterpolate", (t) => {
   t.deepEqual(interpolate(0.5), { polar: 0, azimuthal: Math.PI / 2 });
 });
 
-test("cartesianToSpherical", (t) => {
+test('cartesianToSpherical', (t) => {
   t.deepEqual(cartesianToSpherical({ x: 1, y: 0, z: 0 }), {
     polar: Math.PI / 2,
     azimuthal: 0,
@@ -81,7 +81,7 @@ test("cartesianToSpherical", (t) => {
   });
 });
 
-test("sphericalToCartesian", (t) => {
+test('sphericalToCartesian', (t) => {
   const toX = sphericalToCartesian({ polar: Math.PI / 2, azimuthal: 0 }, 1);
   closeTo(1, toX.x);
   closeTo(0, toX.y);

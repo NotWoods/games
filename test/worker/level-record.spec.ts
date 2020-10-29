@@ -1,7 +1,7 @@
-import test from "ava";
-import { GameState, SphericalPoint } from "../../src/worker/level-record";
+import test from 'ava';
+import { GameState, SphericalPoint } from '../../src/worker/level-record';
 
-test("gameState.completeLevel", (t) => {
+test('gameState.completeLevel', (t) => {
   const game = new GameState(15);
 
   t.throws(() => game.completeLevel({ polar: 0, azimuthal: 0 }));

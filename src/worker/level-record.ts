@@ -44,7 +44,7 @@ export class GameState {
 
   startLevel(audioPosition: SphericalPoint, now = Date.now()) {
     if (this.currentLevel) {
-      throw new Error("Level already started");
+      throw new Error('Level already started');
     }
     const level = {
       audio: audioPosition,
@@ -56,7 +56,7 @@ export class GameState {
 
   completeLevel(pointerPosition: SphericalPoint, now = Date.now()) {
     if (!this.currentLevel) {
-      throw new Error("Cannot complete level before it starts");
+      throw new Error('Cannot complete level before it starts');
     }
     const level = this.currentLevel as CompletedLevel;
     level.pointer = pointerPosition;

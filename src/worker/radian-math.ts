@@ -1,17 +1,20 @@
-import { Ray, SphericalPoint, Vector } from "./level-record";
-import { add, dot, haversin, scale } from "./math";
+import { Ray, SphericalPoint, Vector } from './level-record';
+import { add, dot, haversin, scale } from './math';
 
 /**
  * Find the point where the ray intersects with a sphere centered at the origin.
  * https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
  */
-export function raycastOnSphere(ray: Ray, sphereRadius: number): number | undefined {
+export function raycastOnSphere(
+  ray: Ray,
+  sphereRadius: number
+): number | undefined {
   // sphere's origin is 0, 0, 0
   const radius2 = sphereRadius ** 2;
   const L = { x: -ray.origin.x, y: -ray.origin.y, z: -ray.origin.z };
   const tca = dot(L, ray.direction);
   if (tca < 0) return undefined;
-  const d2 = dot(L, L) - (tca ** 2);
+  const d2 = dot(L, L) - tca ** 2;
   if (d2 > radius2) return undefined;
   const thc = Math.sqrt(radius2 - d2);
   let t0 = tca - thc;
@@ -37,7 +40,10 @@ export function rayToPoint(ray: Ray, distance: number) {
   return add(ray.origin, scale(distance, ray.direction));
 }
 
-export function raycastOnSphereToPoint(ray: Ray, sphereRadius: number): Vector | undefined {
+export function raycastOnSphereToPoint(
+  ray: Ray,
+  sphereRadius: number
+): Vector | undefined {
   const t = raycastOnSphere(ray, sphereRadius);
   if (t == undefined) return undefined;
   return rayToPoint(ray, t);
@@ -103,7 +109,7 @@ export function sphericalInterpolate(from: SphericalPoint, to: SphericalPoint) {
 export function cartesianToSpherical(vector: Vector): SphericalPoint {
   const polar = Math.atan(Math.sqrt(vector.x ** 2 + vector.z ** 2) / vector.y);
   if (polar === 0) {
-    return { polar: 0, azimuthal: 0 }
+    return { polar: 0, azimuthal: 0 };
   }
 
   const azimuthal = Math.atan(vector.z / vector.x);
