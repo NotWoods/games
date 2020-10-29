@@ -14,7 +14,7 @@ const main = {
   plugins: [
     typescript({ module: 'esnext' }),
     nodeResolve(),
-    consts({ workerUrl: '../worker/index.js' }),
+    consts({ workerUrl: 'dist/worker/index.js' }),
   ],
 };
 
