@@ -1,1 +1,2 @@
-import "./push-from-worker"
+import './push-from-worker';
+import './three';

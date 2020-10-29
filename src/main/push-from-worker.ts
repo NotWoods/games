@@ -17,4 +17,4 @@ const worker = new Worker(workerUrl);
 worker.onmessage = (evt) => {
   const data: PlayAudio | DisplayResult = evt.data;
   console.log(data);
-}
+};

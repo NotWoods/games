@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "format": "prettier src/**/*.ts test/**/*.ts *.html *.js --write",
+    "format": "prettier src/**/*.ts test/**/*.ts *.{html,css,js} --write",
     "test": "ava"
   },
   "repository": {
