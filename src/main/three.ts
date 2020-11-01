@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-import { BoxLineGeometry } from 'https://threejs.org/examples/jsm/geometries/BoxLineGeometry.js';
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import { XRControllerModelFactory } from 'https://threejs.org/examples/jsm/webxr/XRControllerModelFactory.js';
 
@@ -10,7 +9,7 @@ let camera: THREE.PerspectiveCamera,
 let controller1: THREE.Group, controller2: THREE.Group;
 let controllerGrip1, controllerGrip2;
 
-let room: THREE.LineSegments;
+let room: THREE.Object3D;
 
 let count = 0;
 const radius = 0.08;
@@ -34,12 +33,35 @@ function init() {
   );
   camera.position.set(0, 1.6, 3);
 
-  room = new THREE.LineSegments(
-    new BoxLineGeometry(6, 6, 6, 10, 10, 10),
+  const sphereGeometry = new THREE.SphereBufferGeometry(
+    4,
+    20,
+    20,
+    0,
+    undefined,
+    Math.PI / 2
+  );
+  sphereGeometry.rotateX(Math.PI);
+  const wireframe = new THREE.WireframeGeometry(sphereGeometry);
+  const dome = new THREE.LineSegments(
+    wireframe,
     new THREE.LineBasicMaterial({ color: 0x808080 })
   );
-  room.geometry.translate(0, 3, 0);
-  scene.add(room);
+  scene.add(dome);
+
+  const circle = new THREE.CircleBufferGeometry(4, 20)
+  const floor = new THREE.Mesh(
+    circle,
+    new THREE.MeshLambertMaterial({
+      color: 0x111111,
+    })
+  );
+  floor.geometry.rotateX(-Math.PI / 2);
+  scene.add(floor);
+
+  let roomBox = new THREE.Group();
+  scene.add(roomBox);
+  room = roomBox;
 
   scene.add(new THREE.HemisphereLight(0x606060, 0x404040));
 
@@ -158,6 +180,7 @@ function buildController(data: { targetRayMode: 'tracked-pointer' | 'gaze' }) {
       );
 
       material = new THREE.LineBasicMaterial({
+        color: 0xff0000,
         vertexColors: true,
         blending: THREE.AdditiveBlending,
       });
@@ -186,8 +209,11 @@ function onWindowResize() {
 }
 
 function handleController(controller: THREE.Group) {
+  const line = controller.children[0] as THREE.Line | undefined;
+  const lineMaterial = line?.material as THREE.LineBasicMaterial | undefined;
   if (controller.userData.isSelecting) {
     const object = room.children[count++];
+    lineMaterial?.color?.setHex(0x00ff00);
 
     object.position.copy(controller.position);
     object.userData.velocity.x = (Math.random() - 0.5) * 3;
@@ -196,6 +222,8 @@ function handleController(controller: THREE.Group) {
     object.userData.velocity.applyQuaternion(controller.quaternion);
 
     if (count === room.children.length) count = 0;
+  } else {
+    lineMaterial?.color?.setHex(0xff0000);
   }
 }
 
