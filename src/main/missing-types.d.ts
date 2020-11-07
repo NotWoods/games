@@ -3,9 +3,20 @@ declare module 'consts:workerUrl' {
   export default url;
 }
 
-declare module 'https://threejs.org/examples/jsm/*' {
-  const BoxLineGeometry: any;
-  const VRButton: any;
-  const XRControllerModelFactory: any;
-  export { BoxLineGeometry, VRButton, XRControllerModelFactory };
+declare module 'https://threejs.org/examples/jsm/webxr/VRButton.js' {
+  export class VRButton {
+    static createButton(renderer: THREE.Renderer): HTMLButtonElement;
+  }
+}
+
+declare module 'https://threejs.org/examples/jsm/webxr/XRControllerModelFactory.js' {
+  import * as THREE from 'three';
+
+  export class XRControllerModel extends THREE.Object3D {}
+
+  export class XRControllerModelFactory {
+    constructor(gltfLoader?: unknown | null);
+
+    createControllerModel(controller): XRControllerModel;
+  }
 }

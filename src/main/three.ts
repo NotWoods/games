@@ -1,17 +1,16 @@
 import * as THREE from 'three';
 
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
-import { XRControllerModelFactory } from 'https://threejs.org/examples/jsm/webxr/XRControllerModelFactory.js';
+import { ControllerManager } from './controller';
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
   renderer: THREE.WebGLRenderer;
-let controller1: THREE.Group, controller2: THREE.Group;
-let controllerGrip1, controllerGrip2;
+let controller1: ControllerManager, controller2: ControllerManager;
 
 let room: THREE.Object3D;
 
-let count = 0;
+// let count = 0;
 const radius = 0.08;
 let normal = new THREE.Vector3();
 const relativeVelocity = new THREE.Vector3();
@@ -104,101 +103,18 @@ function init() {
 
   // controllers
 
-  function onSelectStart(this: THREE.Group) {
-    this.userData.isSelecting = true;
-  }
+  controller1 = new ControllerManager(renderer.xr, 0);
+  scene.add(controller1.controller);
 
-  function onSelectEnd(this: THREE.Group) {
-    this.userData.isSelecting = false;
-  }
+  controller2 = new ControllerManager(renderer.xr, 1);
+  scene.add(controller2.controller);
 
-  controller1 = renderer.xr.getController(0);
-  controller1.addEventListener('selectstart', onSelectStart);
-  controller1.addEventListener('selectend', onSelectEnd);
-  controller1.addEventListener('connected', function (
-    this: THREE.Group,
-    event
-  ) {
-    this.add(buildController(event.data));
-  });
-  controller1.addEventListener('disconnected', function (this: THREE.Group) {
-    this.remove(this.children[0]);
-  });
-  scene.add(controller1);
-
-  controller2 = renderer.xr.getController(1);
-  controller2.addEventListener('selectstart', onSelectStart);
-  controller2.addEventListener('selectend', onSelectEnd);
-  controller2.addEventListener('connected', function (
-    this: THREE.Group,
-    event
-  ) {
-    this.add(buildController(event.data));
-  });
-  controller2.addEventListener('disconnected', function (this: THREE.Group) {
-    this.remove(this.children[0]);
-  });
-  scene.add(controller2);
-
-  // The XRControllerModelFactory will automatically fetch controller models
-  // that match what the user is holding as closely as possible. The models
-  // should be attached to the object returned from getControllerGrip in
-  // order to match the orientation of the held device.
-
-  const controllerModelFactory = new XRControllerModelFactory();
-
-  controllerGrip1 = renderer.xr.getControllerGrip(0);
-  controllerGrip1.add(
-    controllerModelFactory.createControllerModel(controllerGrip1)
-  );
-  scene.add(controllerGrip1);
-
-  controllerGrip2 = renderer.xr.getControllerGrip(1);
-  controllerGrip2.add(
-    controllerModelFactory.createControllerModel(controllerGrip2)
-  );
-  scene.add(controllerGrip2);
+  scene.add(controller1.grip);
+  scene.add(controller2.grip);
 
   //
 
   window.addEventListener('resize', onWindowResize, false);
-}
-
-function buildController(data: { targetRayMode: 'tracked-pointer' | 'gaze' }) {
-  let geometry, material;
-
-  switch (data.targetRayMode) {
-    case 'tracked-pointer':
-      geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(
-        'position',
-        new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3)
-      );
-      geometry.setAttribute(
-        'color',
-        new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3)
-      );
-
-      material = new THREE.LineBasicMaterial({
-        color: 0xff0000,
-        vertexColors: true,
-        blending: THREE.AdditiveBlending,
-      });
-
-      return new THREE.Line(geometry, material);
-
-    case 'gaze':
-      geometry = new THREE.RingBufferGeometry(0.02, 0.04, 32).translate(
-        0,
-        0,
-        -1
-      );
-      material = new THREE.MeshBasicMaterial({
-        opacity: 0.5,
-        transparent: true,
-      });
-      return new THREE.Mesh(geometry, material);
-  }
 }
 
 function onWindowResize() {
@@ -208,25 +124,6 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-function handleController(controller: THREE.Group) {
-  const line = controller.children[0] as THREE.Line | undefined;
-  const lineMaterial = line?.material as THREE.LineBasicMaterial | undefined;
-  if (controller.userData.isSelecting) {
-    const object = room.children[count++];
-    lineMaterial?.color?.setHex(0x00ff00);
-
-    object.position.copy(controller.position);
-    object.userData.velocity.x = (Math.random() - 0.5) * 3;
-    object.userData.velocity.y = (Math.random() - 0.5) * 3;
-    object.userData.velocity.z = Math.random() - 9;
-    object.userData.velocity.applyQuaternion(controller.quaternion);
-
-    if (count === room.children.length) count = 0;
-  } else {
-    lineMaterial?.color?.setHex(0xff0000);
-  }
-}
-
 //
 
 function animate() {
@@ -234,8 +131,8 @@ function animate() {
 }
 
 function render() {
-  handleController(controller1);
-  handleController(controller2);
+  controller1.render();
+  controller2.render();
 
   //
 
