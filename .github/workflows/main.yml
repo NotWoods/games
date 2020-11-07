@@ -28,6 +28,11 @@ jobs:
           npm install
           npm run build
 
+      - name: Edit .gitignore
+        run: |
+          echo "!dist" >> ./.gitignore
+          cat ./.gitignore
+
       # Runs a set of commands using the runners shell
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
