@@ -3,9 +3,10 @@ import * as THREE from 'three';
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import { ControllerManager } from './controller';
 
-let camera: THREE.PerspectiveCamera,
-  scene: THREE.Scene,
-  renderer: THREE.WebGLRenderer;
+let camera: THREE.PerspectiveCamera;
+let audioListener: THREE.AudioListener;
+let scene: THREE.Scene;
+let renderer: THREE.WebGLRenderer;
 let controller1: ControllerManager, controller2: ControllerManager;
 
 let room: THREE.Object3D;
@@ -32,6 +33,9 @@ function init() {
   );
   camera.position.set(0, 1.6, 3);
 
+  audioListener = new THREE.AudioListener();
+  camera.add(audioListener);
+
   const sphereGeometry = new THREE.SphereBufferGeometry(
     4,
     20,
@@ -48,7 +52,7 @@ function init() {
   );
   scene.add(dome);
 
-  const circle = new THREE.CircleBufferGeometry(4, 20)
+  const circle = new THREE.CircleBufferGeometry(4, 20);
   const floor = new THREE.Mesh(
     circle,
     new THREE.MeshLambertMaterial({

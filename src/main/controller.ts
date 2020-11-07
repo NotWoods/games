@@ -19,12 +19,25 @@ export class ControllerManager {
     | THREE.LineBasicMaterial
     | undefined;
 
-  private isSelecting = false;
+  isSelecting = false;
+  isSqueezing = false;
 
   constructor(xrManager: THREE.WebXRManager, id: number) {
     this.controller = xrManager.getController(id);
-    this.controller.addEventListener('selectstart', this.onSelectStart);
-    this.controller.addEventListener('selectend', this.onSelectEnd);
+
+    this.controller.addEventListener('selectstart', () => {
+      this.isSelecting = true;
+    });
+    this.controller.addEventListener('selectend', () => {
+      this.isSelecting = false;
+    });
+    this.controller.addEventListener('squeezestart', () => {
+      this.isSqueezing = true;
+    });
+    this.controller.addEventListener('squeezeend', () => {
+      this.isSqueezing = false;
+    });
+
     this.controller.addEventListener('connected', (event) => {
       this.controller.add(this.buildController(event.data)!);
     });
@@ -35,14 +48,6 @@ export class ControllerManager {
     this.grip = xrManager.getControllerGrip(id);
     this.grip.add(controllerModelFactory.createControllerModel(this.grip));
   }
-
-  onSelectStart = () => {
-    this.isSelecting = true;
-  };
-
-  onSelectEnd = () => {
-    this.isSelecting = false;
-  };
 
   buildController(data: XRInputSource) {
     switch (data.targetRayMode) {
