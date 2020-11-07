@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import { ControllerManager } from './controller';
+import { Sound } from './sound';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
