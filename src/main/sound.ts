@@ -25,6 +25,9 @@ export class Sound {
   }
 
   play(x: number, y: number, z: number) {
+    /*if (this.audio.isPlaying) {
+      this.audio.stop()
+    }*/
     this.mesh.position.set(x, y, z);
     this.audio.play();
   }

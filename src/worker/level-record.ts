@@ -3,12 +3,12 @@ export interface SphericalPoint {
    * Y-coordinate replaced by Polar Angle (θ).
    * Corresponds to latitude.
    */
-  readonly polar: number;
+  readonly theta: number;
   /**
    * Z-coordinate replaced by Azimuthal Angle (φ)
    * Corresponds to longitude.
    */
-  readonly azimuthal: number;
+  readonly phi: number;
 }
 
 export interface Vector {

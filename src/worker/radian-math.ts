@@ -62,10 +62,10 @@ export function raycastOnSphereToPoint(
  * Taken from d3-geo and modified to use radians.
  */
 export function sphericalInterpolate(from: SphericalPoint, to: SphericalPoint) {
-  const x0 = from.azimuthal;
-  const y0 = from.polar;
-  const x1 = to.azimuthal;
-  const y1 = to.polar;
+  const x0 = from.phi;
+  const y0 = from.theta;
+  const x1 = to.phi;
+  const y1 = to.theta;
 
   const cy0 = Math.cos(y0),
     sy0 = Math.sin(y0),
@@ -88,7 +88,7 @@ export function sphericalInterpolate(from: SphericalPoint, to: SphericalPoint) {
     interpolate.distance = 0;
     return interpolate;
   } else {
-    function interpolate(t: number) {
+    function interpolate(t: number): SphericalPoint {
       const B = Math.sin((t *= d)) / k,
         A = Math.sin(d - t) / k,
         x = A * kx0 + B * kx1,
@@ -96,8 +96,8 @@ export function sphericalInterpolate(from: SphericalPoint, to: SphericalPoint) {
         z = A * sy0 + B * sy1;
 
       return {
-        polar: Math.atan2(z, Math.sqrt(x * x + y * y)),
-        azimuthal: Math.atan2(y, x),
+        theta: Math.atan2(z, Math.sqrt(x * x + y * y)),
+        phi: Math.atan2(y, x),
       };
     }
 
@@ -109,19 +109,19 @@ export function sphericalInterpolate(from: SphericalPoint, to: SphericalPoint) {
 export function cartesianToSpherical(vector: Vector): SphericalPoint {
   const polar = Math.atan(Math.sqrt(vector.x ** 2 + vector.z ** 2) / vector.y);
   if (polar === 0) {
-    return { polar: 0, azimuthal: 0 };
+    return { theta: 0, phi: 0 };
   }
 
   const azimuthal = Math.atan(vector.z / vector.x);
-  return { polar, azimuthal };
+  return { theta: polar, phi: azimuthal };
 }
 
 export function sphericalToCartesian(
   point: SphericalPoint,
   sphereRadius: number
 ): Vector {
-  const x = sphereRadius * Math.sin(point.polar) * Math.cos(point.azimuthal);
-  const z = sphereRadius * Math.sin(point.polar) * Math.sin(point.azimuthal);
-  const y = sphereRadius * Math.cos(point.polar);
+  const x = sphereRadius * Math.sin(point.theta) * Math.cos(point.phi);
+  const z = sphereRadius * Math.sin(point.theta) * Math.sin(point.phi);
+  const y = sphereRadius * Math.cos(point.theta);
   return { x, y, z };
 }

@@ -58,36 +58,36 @@ test('raycastOnSphereToPoint', (t) => {
 
 test('sphericalInterpolate', (t) => {
   const interpolate = sphericalInterpolate(
-    { polar: 0, azimuthal: 0 },
-    { polar: 0, azimuthal: Math.PI }
+    { theta: 0, phi: 0 },
+    { theta: 0, phi: Math.PI }
   );
-  t.deepEqual(interpolate(0.5), { polar: 0, azimuthal: Math.PI / 2 });
+  t.deepEqual(interpolate(0.5), { theta: 0, phi: Math.PI / 2 });
 });
 
 test('cartesianToSpherical', (t) => {
   t.deepEqual(cartesianToSpherical({ x: 1, y: 0, z: 0 }), {
-    polar: Math.PI / 2,
-    azimuthal: 0,
+    theta: Math.PI / 2,
+    phi: 0,
   });
 
   t.deepEqual(cartesianToSpherical({ x: 0, y: 1, z: 0 }), {
-    polar: 0,
-    azimuthal: 0,
+    theta: 0,
+    phi: 0,
   });
 
   t.deepEqual(cartesianToSpherical({ x: 0, y: -1, z: 0 }), {
-    polar: 0,
-    azimuthal: 0,
+    theta: 0,
+    phi: 0,
   });
 });
 
 test('sphericalToCartesian', (t) => {
-  const toX = sphericalToCartesian({ polar: Math.PI / 2, azimuthal: 0 }, 1);
+  const toX = sphericalToCartesian({ theta: Math.PI / 2, phi: 0 }, 1);
   closeTo(1, toX.x);
   closeTo(0, toX.y);
   closeTo(0, toX.z);
 
-  t.deepEqual(sphericalToCartesian({ polar: 0, azimuthal: 0 }, 1), {
+  t.deepEqual(sphericalToCartesian({ theta: 0, phi: 0 }, 1), {
     x: 0,
     y: 1,
     z: 0,

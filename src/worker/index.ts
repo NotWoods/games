@@ -1,4 +1,4 @@
-import domeRadius from 'consts:radius'
+import domeRadius from 'consts:radius';
 import { GameLogic } from './game-logic';
 import { timeout } from './level-record';
 import { sphericalToCartesian } from './radian-math';
@@ -13,10 +13,10 @@ self.onmessage = async (evt: MessageEvent) => {
   self.postMessage(game.newAudioPoint());
 };
 
-setInterval(() =>  {
-  const point = game.randomAudioPoint()
+setInterval(() => {
+  const point = game.randomAudioPoint();
   self.postMessage({
     type: 'play_audio',
     audioPosition: sphericalToCartesian(point, game.state.stageRadius),
-  })
-}, 5000)
+  });
+}, 9000);

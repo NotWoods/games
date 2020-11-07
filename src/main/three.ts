@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
-import domeRadius from 'consts:radius'
+import domeRadius from 'consts:radius';
 import { ControllerManager } from './controller';
 import { Sound } from './sound';
 import { WorkerThread } from './push-from-worker';
@@ -11,6 +11,7 @@ let audioListener: THREE.AudioListener;
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 let controller1: ControllerManager, controller2: ControllerManager;
+let beepSound: Sound;
 
 let room: THREE.Object3D;
 
@@ -39,7 +40,7 @@ function init() {
   audioListener = new THREE.AudioListener();
   camera.add(audioListener);
 
-  const beepSound = new Sound(audioListener);
+  beepSound = new Sound(audioListener);
   beepSound.load('assets/audio/echo.wav');
   scene.add(beepSound.mesh);
 
@@ -50,7 +51,6 @@ function init() {
       case 'play_audio': {
         const { x, y, z } = evt.data.audioPosition;
         beepSound.play(x, y, z);
-        beepSound.mesh.visible = true;
         break;
       }
     }
@@ -135,6 +135,9 @@ function animate() {
 }
 
 function render() {
+  const debug = controller1.isSqueezing || controller2.isSqueezing;
+  beepSound.mesh.visible = debug;
+
   controller1.render();
   controller2.render();
 
