@@ -30,7 +30,7 @@ jobs:
 
       - name: Edit .gitignore
         run: |
-          echo "!dist" >> ./.gitignore
+          echo "node_modules" > ./.gitignore
           cat ./.gitignore
 
       # Runs a set of commands using the runners shell
