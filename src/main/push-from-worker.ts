@@ -12,9 +12,10 @@ export interface DisplayResult {
   arc: [Vector, Vector, Vector];
 }
 
-const worker = new Worker(workerUrl);
+export class WorkerThread {
+  private readonly worker = new Worker(workerUrl);
 
-worker.onmessage = (evt) => {
-  const data: PlayAudio | DisplayResult = evt.data;
-  console.log(data);
-};
+  set onmessage(value: (evt: MessageEvent<PlayAudio | DisplayResult>) => void) {
+    this.worker.onmessage = value;
+  }
+}

@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import { ControllerManager } from './controller';
 import { Sound } from './sound';
+import { WorkerThread } from './push-from-worker';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
@@ -36,6 +37,20 @@ function init() {
 
   audioListener = new THREE.AudioListener();
   camera.add(audioListener);
+
+  const beepSound = new Sound(audioListener);
+  beepSound.load('assets/audio/echo.wav');
+  const worker = new WorkerThread();
+  worker.onmessage = (evt) => {
+    console.log(evt.data);
+    switch (evt.data.type) {
+      case 'play_audio': {
+        const { x, y, z } = evt.data.audioPosition;
+        beepSound.play(x, y, z);
+        break;
+      }
+    }
+  };
 
   const sphereGeometry = new THREE.SphereBufferGeometry(
     4,

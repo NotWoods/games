@@ -13,7 +13,7 @@ export class Sound {
     const wireframe = new THREE.WireframeGeometry(sphere);
     this.mesh = new THREE.LineSegments(
       wireframe,
-      new THREE.LineBasicMaterial({ color: 0xAA3939 })
+      new THREE.LineBasicMaterial({ color: 0xaa3939 })
     );
     this.mesh.add(this.audio);
   }
@@ -21,5 +21,10 @@ export class Sound {
   async load(url: string) {
     const buffer: AudioBuffer = await audioLoader.loadAsync(url);
     this.audio.setBuffer(buffer);
+  }
+
+  play(x: number, y: number, z: number) {
+    this.mesh.position.set(x, y, z);
+    this.audio.play();
   }
 }
