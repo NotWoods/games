@@ -12,6 +12,7 @@ let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 let controller1: ControllerManager, controller2: ControllerManager;
 let beepSound: Sound;
+let pointerResult: THREE.LineSegments;
 
 let room: THREE.Object3D;
 
@@ -44,6 +45,14 @@ function init() {
   beepSound.load('assets/audio/echo.wav');
   scene.add(beepSound.mesh);
 
+  const pointerSphere = new THREE.SphereBufferGeometry(0.25, 8, 6);
+  const pointerWireframe = new THREE.WireframeGeometry(pointerSphere);
+  pointerResult = new THREE.LineSegments(
+    pointerWireframe,
+    new THREE.LineBasicMaterial({ color: 0x0ad0ff })
+  );
+  scene.add(pointerResult);
+
   const worker = new WorkerThread();
   worker.onmessage = (evt) => {
     console.log(evt.data);
@@ -51,6 +60,11 @@ function init() {
       case 'play_audio': {
         const { x, y, z } = evt.data.audioPosition;
         beepSound.play(x, y, z);
+        break;
+      }
+      case 'display_result': {
+        const { x, y, z } = evt.data.pointerPosition;
+        pointerResult.position.set(x, y, z);
         break;
       }
     }
@@ -116,6 +130,12 @@ function init() {
   scene.add(controller1.grip);
   scene.add(controller2.grip);
 
+  function onSelect(this: ControllerManager) {
+    worker.sendPlayerClick(this);
+  }
+  controller1.onselect = onSelect
+  controller2.onselect = onSelect
+
   //
 
   window.addEventListener('resize', onWindowResize, false);
@@ -137,6 +157,7 @@ function animate() {
 function render() {
   const debug = controller1.isSqueezing || controller2.isSqueezing;
   beepSound.mesh.visible = debug;
+  pointerResult.visible = debug;
 
   controller1.render();
   controller2.render();

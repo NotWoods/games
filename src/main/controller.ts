@@ -22,11 +22,14 @@ export class ControllerManager {
   isSelecting = false;
   isSqueezing = false;
 
+  onselect: ((this: ControllerManager) => void) | undefined;
+
   constructor(xrManager: THREE.WebXRManager, id: number) {
     this.controller = xrManager.getController(id);
 
     this.controller.addEventListener('selectstart', () => {
       this.isSelecting = true;
+      this.onselect?.call(this);
     });
     this.controller.addEventListener('selectend', () => {
       this.isSelecting = false;

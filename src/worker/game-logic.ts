@@ -1,5 +1,5 @@
 import type { DisplayResult, PlayAudio } from '../main/push-from-worker';
-import { GameState, Ray, SphericalPoint } from './level-record';
+import { GameState, Ray, SphericalPoint, Vector } from './level-record';
 import { random } from './math';
 import {
   cartesianToSpherical,
@@ -18,7 +18,7 @@ export class GameLogic {
 
   randomAudioPoint(): SphericalPoint {
     return {
-      theta: Math.PI / 6, // random(Math.PI / 6, (Math.PI / 2) - 0.15),
+      theta: random(Math.PI / 6, (Math.PI / 2) - 0.15),
       phi: random(0, 2 * Math.PI),
     };
   }
@@ -27,7 +27,7 @@ export class GameLogic {
     return 10_000;
   }
 
-  handlePlayerClick(hand: Ray): DisplayResult {
+  raycast(hand: Ray): Vector {
     const { stageRadius } = this.state;
 
     // raycast hand onto sphere
@@ -35,6 +35,16 @@ export class GameLogic {
     const pointCartesian =
       raycastOnSphereToPoint(hand, stageRadius) ||
       rayToPoint(hand, stageRadius);
+
+    return pointCartesian;
+  }
+
+  handlePlayerClick(hand: Ray): DisplayResult {
+    const { stageRadius } = this.state;
+
+    // raycast hand onto sphere
+    // fallback to some point in distance if player exits the game dome
+    const pointCartesian = this.raycast(hand);
 
     // go from raycast point to radian lat lng
     const pointSpherical = cartesianToSpherical(pointCartesian);
