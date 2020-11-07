@@ -133,8 +133,8 @@ function init() {
   function onSelect(this: ControllerManager) {
     worker.sendPlayerClick(this);
   }
-  controller1.onselect = onSelect
-  controller2.onselect = onSelect
+  controller1.onselect = onSelect;
+  controller2.onselect = onSelect;
 
   //
 

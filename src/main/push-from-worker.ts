@@ -14,7 +14,7 @@ export interface DisplayResult {
   arc: [Vector, Vector, Vector];
 }
 
-const ray = new THREE.Ray()
+const ray = new THREE.Ray();
 const tempMatrix = new THREE.Matrix4();
 
 export class WorkerThread {
@@ -40,8 +40,8 @@ export class WorkerThread {
           x: ray.direction.x,
           y: ray.direction.y,
           z: ray.direction.z,
-        }
-      }
-    })
+        },
+      },
+    });
   }
 }

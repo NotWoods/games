@@ -18,7 +18,7 @@ export class GameLogic {
 
   randomAudioPoint(): SphericalPoint {
     return {
-      theta: random(Math.PI / 6, (Math.PI / 2) - 0.15),
+      theta: random(Math.PI / 6, Math.PI / 2 - 0.15),
       phi: random(0, 2 * Math.PI),
     };
   }
