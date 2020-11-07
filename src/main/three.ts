@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
+import domeRadius from 'consts:radius'
 import { ControllerManager } from './controller';
 import { Sound } from './sound';
 import { WorkerThread } from './push-from-worker';
@@ -40,6 +41,8 @@ function init() {
 
   const beepSound = new Sound(audioListener);
   beepSound.load('assets/audio/echo.wav');
+  scene.add(beepSound.mesh);
+
   const worker = new WorkerThread();
   worker.onmessage = (evt) => {
     console.log(evt.data);
@@ -47,13 +50,14 @@ function init() {
       case 'play_audio': {
         const { x, y, z } = evt.data.audioPosition;
         beepSound.play(x, y, z);
+        beepSound.mesh.visible = true;
         break;
       }
     }
   };
 
   const sphereGeometry = new THREE.SphereBufferGeometry(
-    4,
+    domeRadius,
     20,
     20,
     0,
@@ -68,7 +72,7 @@ function init() {
   );
   scene.add(dome);
 
-  const circle = new THREE.CircleBufferGeometry(4, 20);
+  const circle = new THREE.CircleBufferGeometry(domeRadius, 20);
   const floor = new THREE.Mesh(
     circle,
     new THREE.MeshLambertMaterial({
@@ -87,26 +91,6 @@ function init() {
   const light = new THREE.DirectionalLight(0xffffff);
   light.position.set(1, 1, 1).normalize();
   scene.add(light);
-
-  const geometry = new THREE.IcosahedronBufferGeometry(radius, 3);
-
-  for (let i = 0; i < 200; i++) {
-    const object = new THREE.Mesh(
-      geometry,
-      new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
-    );
-
-    object.position.x = Math.random() * 4 - 2;
-    object.position.y = Math.random() * 4;
-    object.position.z = Math.random() * 4 - 2;
-
-    object.userData.velocity = new THREE.Vector3();
-    object.userData.velocity.x = Math.random() * 0.01 - 0.005;
-    object.userData.velocity.y = Math.random() * 0.01 - 0.005;
-    object.userData.velocity.z = Math.random() * 0.01 - 0.005;
-
-    room.add(object);
-  }
 
   //
 

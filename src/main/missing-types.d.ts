@@ -3,6 +3,11 @@ declare module 'consts:workerUrl' {
   export default url;
 }
 
+declare module 'consts:radius' {
+  const radius: number;
+  export default radius;
+}
+
 declare module 'https://threejs.org/examples/jsm/webxr/VRButton.js' {
   export class VRButton {
     static createButton(renderer: THREE.Renderer): HTMLButtonElement;

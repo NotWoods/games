@@ -9,13 +9,14 @@ export class Sound {
   constructor(listener: THREE.AudioListener) {
     this.audio = new THREE.PositionalAudio(listener);
 
-    const sphere = new THREE.SphereBufferGeometry(4, 8, 6);
+    const sphere = new THREE.SphereBufferGeometry(0.25, 8, 6);
     const wireframe = new THREE.WireframeGeometry(sphere);
     this.mesh = new THREE.LineSegments(
       wireframe,
       new THREE.LineBasicMaterial({ color: 0xaa3939 })
     );
     this.mesh.add(this.audio);
+    this.mesh.visible = false;
   }
 
   async load(url: string) {
