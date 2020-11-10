@@ -30,9 +30,10 @@ jobs:
 
       - name: Copy files
         run: |
+          mkdir -p build
+          cp index.html build
           cp -r dist build
           cp -r assets build
-          cp index.html build
 
       # Runs a set of commands using the runners shell
       - name: Deploy
