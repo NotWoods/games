@@ -28,7 +28,7 @@ export interface CurrentLevel {
 }
 
 export interface CompletedLevel extends CurrentLevel {
-  pointer: SphericalPoint;
+  pointer?: SphericalPoint;
   endTime: number;
 }
 
@@ -44,7 +44,7 @@ export class GameState {
 
   startLevel(audioPosition: SphericalPoint, now = Date.now()) {
     if (this.currentLevel) {
-      throw new Error('Level already started');
+      this.completeLevel(undefined, now);
     }
     const level = {
       audio: audioPosition,
@@ -54,7 +54,7 @@ export class GameState {
     return level;
   }
 
-  completeLevel(pointerPosition: SphericalPoint, now = Date.now()) {
+  completeLevel(pointerPosition: SphericalPoint | undefined, now = Date.now()) {
     if (!this.currentLevel) {
       throw new Error('Cannot complete level before it starts');
     }

@@ -5,6 +5,7 @@ import domeRadius from 'consts:radius';
 import { ControllerManager } from './controller';
 import { Sound } from './sound';
 import { WorkerThread } from './push-from-worker';
+import { Vector } from '../worker/level-record';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
@@ -13,6 +14,7 @@ let renderer: THREE.WebGLRenderer;
 let controller1: ControllerManager, controller2: ControllerManager;
 let beepSound: Sound;
 let pointerResult: THREE.LineSegments;
+let arcLine: THREE.Line;
 
 let room: THREE.Object3D;
 
@@ -53,6 +55,16 @@ function init() {
   );
   scene.add(pointerResult);
 
+  const arcGeometry = new THREE.BufferGeometry();
+  const arcMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+  arcLine = new THREE.Line(arcGeometry, arcMaterial);
+  scene.add(arcLine);
+
+  function toThreeVector(workerVector: Vector) {
+    const { x, y, z } = workerVector;
+    return new THREE.Vector3(x, y, z);
+  }
+
   const worker = new WorkerThread();
   worker.onmessage = (evt) => {
     console.log(evt.data);
@@ -63,8 +75,16 @@ function init() {
         break;
       }
       case 'display_result': {
-        const { x, y, z } = evt.data.pointerPosition;
-        pointerResult.position.set(x, y, z);
+        const { pointerPosition, arc } = evt.data;
+        pointerResult.position.copy(toThreeVector(pointerPosition));
+
+        const curve = new THREE.QuadraticBezierCurve3(
+          toThreeVector(arc[0]),
+          toThreeVector(arc[1]),
+          toThreeVector(arc[2])
+        );
+        const points = curve.getPoints(50);
+        arcGeometry.setFromPoints(points);
         break;
       }
     }
