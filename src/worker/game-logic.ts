@@ -5,7 +5,6 @@ import {
   cartesianToSpherical,
   raycastOnSphereToPoint,
   rayToPoint,
-  sphericalInterpolate,
   sphericalToCartesian,
 } from './radian-math';
 
@@ -44,22 +43,33 @@ export class GameLogic {
 
     // raycast hand onto sphere
     // fallback to some point in distance if player exits the game dome
-    const pointCartesian = this.raycast(hand);
+    const pointCartesian = raycastOnSphereToPoint(hand, stageRadius);
 
     // go from raycast point to radian lat lng
-    const pointSpherical = cartesianToSpherical(pointCartesian);
+    const pointSpherical = cartesianToSpherical(
+      pointCartesian || rayToPoint(hand, stageRadius)
+    );
 
     // complete level
     const { audio } = this.state.completeLevel(pointSpherical);
 
-    // return an arc
-    const interpolate = sphericalInterpolate(pointSpherical, audio);
+    const height = stageRadius / 2;
+    const h = stageRadius - height;
+    const rSquared = (2 * h * stageRadius) - (h ** 2);
+
     return {
       type: 'display_result',
-      pointerPosition: pointCartesian,
-      arc: [pointSpherical, interpolate(0.5), audio].map((point) =>
-        sphericalToCartesian(point, stageRadius)
-      ) as DisplayResult['arc'],
+      pointerPosition: sphericalToCartesian(pointSpherical, stageRadius),
+      arc: [
+        sphericalToCartesian(pointSpherical, stageRadius),
+        sphericalToCartesian(audio, stageRadius),
+      ] as DisplayResult['arc'],
+      arcCurve: {
+        height,
+        radius: Math.sqrt(rSquared),
+        startAngle: pointSpherical.phi,
+        endAngle: audio.phi,
+      }
     };
   }
 

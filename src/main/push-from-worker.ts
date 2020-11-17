@@ -11,7 +11,13 @@ export interface PlayAudio {
 export interface DisplayResult {
   type: 'display_result';
   pointerPosition: Vector;
-  arc: [Vector, Vector, Vector];
+  arc: [Vector, Vector];
+  arcCurve: {
+    height: number;
+    radius: number;
+    startAngle: number;
+    endAngle: number
+  }
 }
 
 const ray = new THREE.Ray();

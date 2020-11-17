@@ -6,6 +6,7 @@ import { ControllerManager } from './controller';
 import { Sound } from './sound';
 import { WorkerThread } from './push-from-worker';
 import { Vector } from '../worker/level-record';
+import { getPoints } from './arc';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
@@ -56,9 +57,13 @@ function init() {
   scene.add(pointerResult);
 
   const arcGeometry = new THREE.BufferGeometry();
+  arcGeometry.setFromPoints(getPoints(domeRadius, 0, 2 * Math.PI));
   const arcMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
   arcLine = new THREE.Line(arcGeometry, arcMaterial);
+  arcLine.lookAt(0, 1, 0);
+  arcLine.rotateX(Math.PI);
   scene.add(arcLine);
+  (window as any).arcLine = arcLine;
 
   function toThreeVector(workerVector: Vector) {
     const { x, y, z } = workerVector;
@@ -75,16 +80,12 @@ function init() {
         break;
       }
       case 'display_result': {
-        const { pointerPosition, arc } = evt.data;
+        const { pointerPosition, arcCurve } = evt.data;
         pointerResult.position.copy(toThreeVector(pointerPosition));
-
-        const curve = new THREE.QuadraticBezierCurve3(
-          toThreeVector(arc[0]),
-          toThreeVector(arc[1]),
-          toThreeVector(arc[2])
+        arcGeometry.setFromPoints(
+          getPoints(arcCurve.radius, arcCurve.startAngle, arcCurve.endAngle)
         );
-        const points = curve.getPoints(50);
-        arcGeometry.setFromPoints(points);
+        arcLine.position.y = arcCurve.height;
         break;
       }
     }
@@ -178,6 +179,7 @@ function render() {
   const debug = controller1.isSqueezing || controller2.isSqueezing;
   beepSound.mesh.visible = debug;
   pointerResult.visible = debug;
+  arcLine.visible = debug;
 
   controller1.render();
   controller2.render();
