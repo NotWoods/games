@@ -1,10 +1,9 @@
 import type { DisplayResult, PlayAudio } from '../main/push-from-worker';
-import { GameState, Ray, SphericalPoint, Vector } from './level-record';
+import { GameState, SphericalPoint, Vector } from './level-record';
 import { random } from './math';
 import {
   cartesianToSpherical,
-  raycastOnSphereToPoint,
-  rayToPoint,
+  positiveRadian,
   sphericalToCartesian,
 } from './radian-math';
 
@@ -26,53 +25,44 @@ export class GameLogic {
     return 10_000;
   }
 
-  raycast(hand: Ray): Vector {
+  handlePlayerClick(pointerPosition: Vector | undefined): DisplayResult {
     const { stageRadius } = this.state;
 
-    // raycast hand onto sphere
-    // fallback to some point in distance if player exits the game dome
-    const pointCartesian =
-      raycastOnSphereToPoint(hand, stageRadius) ||
-      rayToPoint(hand, stageRadius);
-
-    return pointCartesian;
-  }
-
-  handlePlayerClick(hand: Ray): DisplayResult {
-    const { stageRadius } = this.state;
-
-    // raycast hand onto sphere
-    // fallback to some point in distance if player exits the game dome
-    const pointCartesian = raycastOnSphereToPoint(hand, stageRadius);
+    if (!pointerPosition) {
+      this.state.completeLevel(undefined)
+      return {
+        type: 'display_result',
+        pointerPosition: undefined,
+        arcCurve: undefined,
+        goodGuess: false
+      }
+    }
 
     // go from raycast point to radian lat lng
-    const pointSpherical = cartesianToSpherical(
-      pointCartesian || rayToPoint(hand, stageRadius)
-    );
+    const pointSpherical = cartesianToSpherical(pointerPosition);
 
     // complete level
     const { audio } = this.state.completeLevel(pointSpherical);
 
-    const height = stageRadius / 2;
+    const height = stageRadius / 4;
     const h = stageRadius - height;
     const rSquared = (2 * h * stageRadius) - (h ** 2);
 
-    const startAngle = pointSpherical.phi;
-    const endAngle = audio.phi;
+    const startAngle = positiveRadian(pointSpherical.phi);
+    const endAngle = positiveRadian(audio.phi);
 
     const GOOD_GUESS_THRESHOLD = 1;
 
     return {
       type: 'display_result',
-      pointerPosition: sphericalToCartesian(pointSpherical, stageRadius),
-      raycastSuccess: Boolean(pointCartesian),
+      pointerPosition,
       arcCurve: {
         height,
         radius: Math.sqrt(rSquared),
         startAngle,
         endAngle,
       },
-      goodGuess: Math.abs(endAngle - startAngle) < GOOD_GUESS_THRESHOLD
+      goodGuess: positiveRadian(endAngle - startAngle) < GOOD_GUESS_THRESHOLD
     };
   }
 

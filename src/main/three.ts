@@ -5,7 +5,7 @@ import domeRadius from 'consts:radius';
 import { ControllerManager } from './controller';
 import { Sound, SoundSphere } from './sound';
 import { toThreeVector, WorkerThread } from './push-from-worker';
-import { getPoints } from './arc';
+import { Arc } from './arc';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
@@ -16,7 +16,8 @@ let beepSound: SoundSphere;
 let goodSound: Sound;
 let badSound: Sound;
 let pointerResult: THREE.LineSegments;
-let arcLine: THREE.Line;
+let raycaster: THREE.Raycaster;
+let arc: Arc;
 
 let room: THREE.Object3D;
 
@@ -45,6 +46,9 @@ function init() {
   audioListener = new THREE.AudioListener();
   camera.add(audioListener);
 
+  raycaster = new THREE.Raycaster();
+  raycaster.camera = camera;
+
   beepSound = new SoundSphere(audioListener, 0xaa3939);
   beepSound.load('assets/audio/echo.wav');
   scene.add(beepSound.mesh);
@@ -63,35 +67,33 @@ function init() {
   badSound.load('assets/audio/wrong.wav');
   pointerResult.add(badSound.audio);
 
-  const arcGeometry = new THREE.BufferGeometry();
-  arcGeometry.setFromPoints(getPoints(domeRadius, 0, 2 * Math.PI));
-  const arcMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
-  arcLine = new THREE.Line(arcGeometry, arcMaterial);
-  arcLine.lookAt(0, 1, 0);
-  arcLine.rotateX(Math.PI);
-  scene.add(arcLine);
+  arc = new Arc(domeRadius, domeRadius / 4);
+  scene.add(arc.line);
 
-  const worker = new WorkerThread();
+  const worker = new WorkerThread(raycaster);
   worker.onMessage = (data) => {
     switch (data.type) {
       case 'play_audio': {
         const { x, y, z } = data.audioPosition;
         beepSound.play(x, y, z);
+
+        arc.reset();
         break;
       }
       case 'display_result': {
-        const { pointerPosition, arcCurve, raycastSuccess, goodGuess } = data;
-        pointerResult.position.copy(toThreeVector(pointerPosition));
-        pointerMaterial.color.setHex(raycastSuccess ? 0x0ad0ff : 0x2150ff);
-        arcGeometry.setFromPoints(
-          getPoints(arcCurve.radius, arcCurve.startAngle, arcCurve.endAngle)
-        );
-        arcLine.position.y = arcCurve.height;
+        const { pointerPosition, arcCurve, goodGuess } = data;
+        if (pointerPosition) {
+          pointerResult.position.copy(toThreeVector(pointerPosition));
+        }
+
+        if (arcCurve) {
+          arc.set(arcCurve.startAngle, arcCurve.endAngle);
+        }
 
         if (goodGuess) {
-          goodSound.play()
+          goodSound.play();
         } else {
-          badSound.play()
+          badSound.play();
         }
         break;
       }
@@ -159,7 +161,7 @@ function init() {
   scene.add(controller2.grip);
 
   function onSelect(this: ControllerManager) {
-    worker.sendPlayerClick(this);
+    worker.sendPlayerClick(this, [dome, floor]);
   }
   controller1.onselect = onSelect;
   controller2.onselect = onSelect;
@@ -186,7 +188,6 @@ function render() {
   const debug = controller1.isSqueezing || controller2.isSqueezing;
   beepSound.mesh.visible = debug;
   pointerResult.visible = debug;
-  arcLine.visible = debug;
 
   controller1.render();
   controller2.render();

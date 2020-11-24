@@ -110,3 +110,10 @@ export function sphericalToCartesian(
   const y = sphereRadius * Math.cos(point.theta);
   return { x, y, z };
 }
+
+/**
+ * Normalize a radian angle
+ */
+export function positiveRadian(angle: number) {
+  return ((angle + Math.PI) % (Math.PI * 2)) - Math.PI;
+}

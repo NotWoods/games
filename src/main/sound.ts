@@ -15,9 +15,10 @@ export class Sound {
   }
 
   play() {
-    /*if (this.audio.isPlaying) {
-      this.audio.stop()
-    }*/
+    if (this.audio.isPlaying) {
+      this.audio.stop();
+      this.audio.isPlaying = false;
+    }
     this.audio.play();
   }
 }

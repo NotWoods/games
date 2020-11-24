@@ -10,9 +10,8 @@ export interface PlayAudio {
 
 export interface DisplayResult {
   type: 'display_result';
-  pointerPosition: Vector;
-  raycastSuccess: boolean;
-  arcCurve: {
+  pointerPosition?: Vector;
+  arcCurve?: {
     height: number;
     radius: number;
     startAngle: number;
@@ -41,24 +40,24 @@ export class WorkerThread {
   private readonly worker = new Worker(workerUrl);
   onMessage?: (data: PlayAudio | DisplayResult) => void;
 
-  constructor() {
+  constructor(private readonly raycaster: THREE.Raycaster) {
     this.worker.onmessage = (evt) => {
       console.log(evt.data);
       this.onMessage?.(evt.data);
     };
   }
 
-  sendPlayerClick(controller: ControllerManager) {
+  sendPlayerClick(controller: ControllerManager, dome: THREE.Object3D[]) {
     tempMatrix.identity().extractRotation(controller.controller.matrixWorld);
     ray.origin.setFromMatrixPosition(controller.controller.matrixWorld);
     ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
     ray.direction.normalize();
 
+    this.raycaster.set(ray.origin, ray.direction);
+
+    const [{point}] = this.raycaster.intersectObjects(dome);
     const message = {
-      hand: {
-        origin: fromThreeVector(ray.origin),
-        direction: fromThreeVector(ray.direction),
-      },
+      hand: fromThreeVector(point),
     };
     console.log(message);
     this.worker.postMessage(message);
