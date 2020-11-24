@@ -11,23 +11,41 @@ export interface PlayAudio {
 export interface DisplayResult {
   type: 'display_result';
   pointerPosition: Vector;
+  raycastSuccess: boolean;
   arc: [Vector, Vector];
   arcCurve: {
     height: number;
     radius: number;
     startAngle: number;
-    endAngle: number
-  }
+    endAngle: number;
+  };
 }
 
 const ray = new THREE.Ray();
 const tempMatrix = new THREE.Matrix4();
 
+export function toThreeVector(workerVector: Vector) {
+  const { x, y, z } = workerVector;
+  return new THREE.Vector3(x, y, z);
+}
+
+export function fromThreeVector(threeVector: THREE.Vector3): Vector {
+  return {
+    x: threeVector.x,
+    y: threeVector.y,
+    z: threeVector.z,
+  };
+}
+
 export class WorkerThread {
   private readonly worker = new Worker(workerUrl);
+  onMessage?: (data: PlayAudio | DisplayResult) => void;
 
-  set onmessage(value: (evt: MessageEvent<PlayAudio | DisplayResult>) => void) {
-    this.worker.onmessage = value;
+  constructor() {
+    this.worker.onmessage = (evt) => {
+      console.log(evt.data);
+      this.onMessage?.(evt.data);
+    };
   }
 
   sendPlayerClick(controller: ControllerManager) {
@@ -35,19 +53,14 @@ export class WorkerThread {
     ray.origin.setFromMatrixPosition(controller.controller.matrixWorld);
     ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
     ray.direction.normalize();
-    this.worker.postMessage({
+
+    const message = {
       hand: {
-        origin: {
-          x: ray.origin.x,
-          y: ray.origin.y,
-          z: ray.origin.z,
-        },
-        direction: {
-          x: ray.direction.x,
-          y: ray.direction.y,
-          z: ray.direction.z,
-        },
+        origin: fromThreeVector(ray.origin),
+        direction: fromThreeVector(ray.direction),
       },
-    });
+    };
+    console.log(message);
+    this.worker.postMessage(message);
   }
 }

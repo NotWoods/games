@@ -1,42 +1,18 @@
 import test from 'ava';
+import { ZERO } from '../../src/worker/math';
 import {
   cartesianToSpherical,
-  raycastOnSphere,
   raycastOnSphereToPoint,
   sphericalInterpolate,
   sphericalToCartesian,
 } from '../../src/worker/radian-math';
 import { closeTo } from './assert';
 
-test('raycastOnSphere', (t) => {
-  t.is(
-    raycastOnSphere(
-      {
-        origin: { x: 0, y: 0, z: 0 },
-        direction: { x: 0, y: 1, z: 0 },
-      },
-      1
-    ),
-    1
-  );
-
-  t.is(
-    raycastOnSphere(
-      {
-        origin: { x: 0, y: 0, z: 0 },
-        direction: { x: 1, y: 0, z: 0 },
-      },
-      15
-    ),
-    15
-  );
-});
-
 test('raycastOnSphereToPoint', (t) => {
   t.deepEqual(
     raycastOnSphereToPoint(
       {
-        origin: { x: 0, y: 0, z: 0 },
+        origin: ZERO,
         direction: { x: 0, y: 1, z: 0 },
       },
       1
@@ -47,10 +23,21 @@ test('raycastOnSphereToPoint', (t) => {
   t.deepEqual(
     raycastOnSphereToPoint(
       {
-        origin: { x: 0, y: 0, z: 0 },
+        origin: ZERO,
         direction: { x: 1, y: 0, z: 0 },
       },
       15
+    ),
+    { x: 15, y: 0, z: 0 }
+  );
+
+  t.deepEqual(
+    raycastOnSphereToPoint(
+      {
+        origin: { x: -0.27254772186279297, y: 1.426231026649475, z: 0.015554174780845642 },
+        direction: { x: 0.5681502185421388, y: 0.3375724233702126, z: -0.7504999587944574 },
+      },
+      4
     ),
     { x: 15, y: 0, z: 0 }
   );

@@ -64,6 +64,7 @@ export class GameLogic {
         sphericalToCartesian(pointSpherical, stageRadius),
         sphericalToCartesian(audio, stageRadius),
       ] as DisplayResult['arc'],
+      raycastSuccess: Boolean(pointCartesian),
       arcCurve: {
         height,
         radius: Math.sqrt(rSquared),

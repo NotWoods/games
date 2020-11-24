@@ -4,8 +4,7 @@ import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import domeRadius from 'consts:radius';
 import { ControllerManager } from './controller';
 import { Sound } from './sound';
-import { WorkerThread } from './push-from-worker';
-import { Vector } from '../worker/level-record';
+import { toThreeVector, WorkerThread } from './push-from-worker';
 import { getPoints } from './arc';
 
 let camera: THREE.PerspectiveCamera;
@@ -50,10 +49,8 @@ function init() {
 
   const pointerSphere = new THREE.SphereBufferGeometry(0.25, 8, 6);
   const pointerWireframe = new THREE.WireframeGeometry(pointerSphere);
-  pointerResult = new THREE.LineSegments(
-    pointerWireframe,
-    new THREE.LineBasicMaterial({ color: 0x0ad0ff })
-  );
+  const pointerMaterial = new THREE.LineBasicMaterial({ color: 0x0ad0ff });
+  pointerResult = new THREE.LineSegments(pointerWireframe, pointerMaterial);
   scene.add(pointerResult);
 
   const arcGeometry = new THREE.BufferGeometry();
@@ -63,25 +60,19 @@ function init() {
   arcLine.lookAt(0, 1, 0);
   arcLine.rotateX(Math.PI);
   scene.add(arcLine);
-  (window as any).arcLine = arcLine;
-
-  function toThreeVector(workerVector: Vector) {
-    const { x, y, z } = workerVector;
-    return new THREE.Vector3(x, y, z);
-  }
 
   const worker = new WorkerThread();
-  worker.onmessage = (evt) => {
-    console.log(evt.data);
-    switch (evt.data.type) {
+  worker.onMessage = (data) => {
+    switch (data.type) {
       case 'play_audio': {
-        const { x, y, z } = evt.data.audioPosition;
+        const { x, y, z } = data.audioPosition;
         beepSound.play(x, y, z);
         break;
       }
       case 'display_result': {
-        const { pointerPosition, arcCurve } = evt.data;
+        const { pointerPosition, arcCurve, raycastSuccess } = data;
         pointerResult.position.copy(toThreeVector(pointerPosition));
+        pointerMaterial.color.setHex(raycastSuccess ? 0x0ad0ff : 0x2150ff);
         arcGeometry.setFromPoints(
           getPoints(arcCurve.radius, arcCurve.startAngle, arcCurve.endAngle)
         );

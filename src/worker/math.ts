@@ -1,5 +1,7 @@
 import { Vector } from './level-record';
 
+export const ZERO: Vector = { x: 0, y: 0, z: 0 };
+
 /**
  * Taken from d3-geo.
  */
@@ -28,4 +30,13 @@ export function scale(c: number, v: Vector) {
 
 export function add(a: Vector, b: Vector) {
   return { x: a.x + b.x, y: a.y + b.y, z: a.z + b.z };
+}
+
+export function subtract(a: Vector, b: Vector) {
+  return add(a, scale(-1, b));
+}
+
+export function distanceSquared(a: Vector, b: Vector) {
+  const parts = subtract(b, a);
+  return dot(parts, parts);
 }

@@ -1,52 +1,37 @@
 import { Ray, SphericalPoint, Vector } from './level-record';
-import { add, dot, haversin, scale } from './math';
+import {
+  add,
+  distanceSquared,
+  dot,
+  haversin,
+  scale,
+  subtract,
+  ZERO,
+} from './math';
 
 /**
  * Find the point where the ray intersects with a sphere centered at the origin.
- * https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
+ * https://github.com/libgdx/libgdx/blob/9eba80c6694160c743e43d4c3a5d60a5bad06f30/gdx/src/com/badlogic/gdx/math/Intersector.java#L353
  */
-export function raycastOnSphere(
-  ray: Ray,
-  sphereRadius: number
-): number | undefined {
-  // sphere's origin is 0, 0, 0
-  const radius2 = sphereRadius ** 2;
-  const L = { x: -ray.origin.x, y: -ray.origin.y, z: -ray.origin.z };
-  const tca = dot(L, ray.direction);
-  if (tca < 0) return undefined;
-  const d2 = dot(L, L) - tca ** 2;
-  if (d2 > radius2) return undefined;
-  const thc = Math.sqrt(radius2 - d2);
-  let t0 = tca - thc;
-  let t1 = tca + thc;
-
-  if (t0 > t1) {
-    const oldt1 = t1;
-    t1 = t0;
-    t0 = oldt1;
-  }
-
-  if (t0 < 0) {
-    // if t0 is negative, let's use t1 instead
-    t0 = t1;
-    // if both t0 and t1 are negative
-    if (t0 < 0) return undefined;
-  }
-
-  return t0;
-}
-
-export function rayToPoint(ray: Ray, distance: number) {
-  return add(ray.origin, scale(distance, ray.direction));
-}
-
 export function raycastOnSphereToPoint(
   ray: Ray,
   sphereRadius: number
 ): Vector | undefined {
-  const t = raycastOnSphere(ray, sphereRadius);
-  if (t == undefined) return undefined;
-  return rayToPoint(ray, t);
+  const center = ZERO;
+  const len = dot(ray.direction, subtract(center, ray.origin));
+  // behind the ray
+  if (len < 0) return undefined;
+  const dst2 = distanceSquared(
+    center,
+    add(ray.origin, scale(len, ray.direction))
+  );
+  const r2 = sphereRadius * sphereRadius;
+  if (dst2 > r2) return undefined;
+  return rayToPoint(ray, len - Math.sqrt(r2 - dst2));
+}
+
+export function rayToPoint(ray: Ray, distance: number) {
+  return add(ray.origin, scale(distance, ray.direction));
 }
 
 /**
