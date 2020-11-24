@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import domeRadius from 'consts:radius';
 import { ControllerManager } from './controller';
-import { Sound } from './sound';
+import { Sound, SoundSphere } from './sound';
 import { toThreeVector, WorkerThread } from './push-from-worker';
 import { getPoints } from './arc';
 
@@ -12,7 +12,9 @@ let audioListener: THREE.AudioListener;
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 let controller1: ControllerManager, controller2: ControllerManager;
-let beepSound: Sound;
+let beepSound: SoundSphere;
+let goodSound: Sound;
+let badSound: Sound;
 let pointerResult: THREE.LineSegments;
 let arcLine: THREE.Line;
 
@@ -43,7 +45,7 @@ function init() {
   audioListener = new THREE.AudioListener();
   camera.add(audioListener);
 
-  beepSound = new Sound(audioListener);
+  beepSound = new SoundSphere(audioListener, 0xaa3939);
   beepSound.load('assets/audio/echo.wav');
   scene.add(beepSound.mesh);
 
@@ -52,6 +54,14 @@ function init() {
   const pointerMaterial = new THREE.LineBasicMaterial({ color: 0x0ad0ff });
   pointerResult = new THREE.LineSegments(pointerWireframe, pointerMaterial);
   scene.add(pointerResult);
+
+  goodSound = new Sound(audioListener);
+  goodSound.load('assets/audio/correct.wav');
+  pointerResult.add(goodSound.audio);
+
+  badSound = new Sound(audioListener);
+  badSound.load('assets/audio/wrong.wav');
+  pointerResult.add(badSound.audio);
 
   const arcGeometry = new THREE.BufferGeometry();
   arcGeometry.setFromPoints(getPoints(domeRadius, 0, 2 * Math.PI));
@@ -70,13 +80,19 @@ function init() {
         break;
       }
       case 'display_result': {
-        const { pointerPosition, arcCurve, raycastSuccess } = data;
+        const { pointerPosition, arcCurve, raycastSuccess, goodGuess } = data;
         pointerResult.position.copy(toThreeVector(pointerPosition));
         pointerMaterial.color.setHex(raycastSuccess ? 0x0ad0ff : 0x2150ff);
         arcGeometry.setFromPoints(
           getPoints(arcCurve.radius, arcCurve.startAngle, arcCurve.endAngle)
         );
         arcLine.position.y = arcCurve.height;
+
+        if (goodGuess) {
+          goodSound.play()
+        } else {
+          badSound.play()
+        }
         break;
       }
     }

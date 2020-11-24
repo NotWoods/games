@@ -57,20 +57,22 @@ export class GameLogic {
     const h = stageRadius - height;
     const rSquared = (2 * h * stageRadius) - (h ** 2);
 
+    const startAngle = pointSpherical.phi;
+    const endAngle = audio.phi;
+
+    const GOOD_GUESS_THRESHOLD = 1;
+
     return {
       type: 'display_result',
       pointerPosition: sphericalToCartesian(pointSpherical, stageRadius),
-      arc: [
-        sphericalToCartesian(pointSpherical, stageRadius),
-        sphericalToCartesian(audio, stageRadius),
-      ] as DisplayResult['arc'],
       raycastSuccess: Boolean(pointCartesian),
       arcCurve: {
         height,
         radius: Math.sqrt(rSquared),
-        startAngle: pointSpherical.phi,
-        endAngle: audio.phi,
-      }
+        startAngle,
+        endAngle,
+      },
+      goodGuess: Math.abs(endAngle - startAngle) < GOOD_GUESS_THRESHOLD
     };
   }
 

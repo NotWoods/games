@@ -12,13 +12,13 @@ export interface DisplayResult {
   type: 'display_result';
   pointerPosition: Vector;
   raycastSuccess: boolean;
-  arc: [Vector, Vector];
   arcCurve: {
     height: number;
     radius: number;
     startAngle: number;
     endAngle: number;
   };
+  goodGuess: boolean;
 }
 
 const ray = new THREE.Ray();
