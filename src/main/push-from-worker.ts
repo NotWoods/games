@@ -55,7 +55,7 @@ export class WorkerThread {
 
     this.raycaster.set(ray.origin, ray.direction);
 
-    const [{point}] = this.raycaster.intersectObjects(dome);
+    const [{ point }] = this.raycaster.intersectObjects(dome);
     const message = {
       hand: fromThreeVector(point),
     };

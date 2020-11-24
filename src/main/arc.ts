@@ -20,14 +20,13 @@ export function getPoints(
 }
 
 export class Arc {
-
   geometry: THREE.BufferGeometry;
   line: THREE.Line;
-  radius: number
+  radius: number;
 
   constructor(sphereRadius: number, height: number) {
     const h = sphereRadius - height;
-    const rSquared = (2 * h * sphereRadius) - (h ** 2);
+    const rSquared = 2 * h * sphereRadius - h ** 2;
     this.radius = Math.sqrt(rSquared);
 
     this.geometry = new THREE.BufferGeometry();

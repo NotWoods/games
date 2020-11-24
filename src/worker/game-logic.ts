@@ -29,13 +29,13 @@ export class GameLogic {
     const { stageRadius } = this.state;
 
     if (!pointerPosition) {
-      this.state.completeLevel(undefined)
+      this.state.completeLevel(undefined);
       return {
         type: 'display_result',
         pointerPosition: undefined,
         arcCurve: undefined,
-        goodGuess: false
-      }
+        goodGuess: false,
+      };
     }
 
     // go from raycast point to radian lat lng
@@ -46,7 +46,7 @@ export class GameLogic {
 
     const height = stageRadius / 4;
     const h = stageRadius - height;
-    const rSquared = (2 * h * stageRadius) - (h ** 2);
+    const rSquared = 2 * h * stageRadius - h ** 2;
 
     const startAngle = positiveRadian(pointSpherical.phi);
     const endAngle = positiveRadian(audio.phi);
@@ -62,7 +62,7 @@ export class GameLogic {
         startAngle,
         endAngle,
       },
-      goodGuess: positiveRadian(endAngle - startAngle) < GOOD_GUESS_THRESHOLD
+      goodGuess: positiveRadian(endAngle - startAngle) < GOOD_GUESS_THRESHOLD,
     };
   }
 
