@@ -3,7 +3,8 @@ import * as THREE from 'three';
 export function getPoints(
   radius: number,
   startAngle: number,
-  endAngle: number
+  endAngle: number,
+  clockwise = false
 ) {
   const curve = new THREE.EllipseCurve(
     0,
@@ -12,7 +13,7 @@ export function getPoints(
     radius,
     startAngle,
     endAngle,
-    false,
+    clockwise,
     0
   );
 
@@ -40,10 +41,12 @@ export class Arc {
   }
 
   reset() {
-    this.geometry.setFromPoints(getPoints(this.radius, 0, 2 * Math.PI));
+    this.geometry.setFromPoints(getPoints(this.radius, 0, 2 * Math.PI, false));
   }
 
-  set(startAngle: number, endAngle: number) {
-    this.geometry.setFromPoints(getPoints(this.radius, startAngle, endAngle));
+  set(startAngle: number, endAngle: number, clockwise: boolean = false) {
+    this.geometry.setFromPoints(
+      getPoints(this.radius, startAngle, endAngle, clockwise)
+    );
   }
 }

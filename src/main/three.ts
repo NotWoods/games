@@ -69,6 +69,7 @@ function init() {
 
   arc = new Arc(domeRadius, domeRadius / 4);
   scene.add(arc.line);
+  arc.line.visible = false;
 
   const worker = new WorkerThread(raycaster);
   worker.onMessage = (data) => {
@@ -77,7 +78,7 @@ function init() {
         const { x, y, z } = data.audioPosition;
         beepSound.play(x, y, z);
 
-        arc.reset();
+        arc.line.visible = false;
         break;
       }
       case 'display_result': {
@@ -88,6 +89,7 @@ function init() {
 
         if (arcCurve) {
           arc.set(arcCurve.startAngle, arcCurve.endAngle);
+          arc.line.visible = true;
         }
 
         if (goodGuess) {
