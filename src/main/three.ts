@@ -3,21 +3,16 @@ import * as THREE from 'three';
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import domeRadius from 'consts:radius';
 import { ControllerManager } from './controller';
-import { Sound, SoundSphere } from './sound';
+import { Sound, Sphere } from './sound';
 import { toThreeVector, WorkerThread } from './push-from-worker';
-import { Arc } from './arc';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 let controller1: ControllerManager, controller2: ControllerManager;
-let beepSound: SoundSphere;
-let goodSound: Sound;
-let badSound: Sound;
-let pointerResult: THREE.LineSegments;
+let beepMesh: Sphere, pointerResult: Sphere;
 let raycaster: THREE.Raycaster;
-let arc: Arc;
 
 let room: THREE.Object3D;
 
@@ -33,13 +28,13 @@ animate();
 
 function init() {
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x505050);
+  scene.background = new THREE.Color(0x040611);
 
   camera = new THREE.PerspectiveCamera(
     50,
     window.innerWidth / window.innerHeight,
     0.1,
-    10
+    7
   );
   camera.position.set(0, 1.6, 3);
 
@@ -49,47 +44,69 @@ function init() {
   raycaster = new THREE.Raycaster();
   raycaster.camera = camera;
 
-  beepSound = new SoundSphere(audioListener, 0xaa3939);
+  const beepSound = new Sound(audioListener);
   beepSound.load('assets/audio/echo.wav');
-  scene.add(beepSound.mesh);
+  beepMesh = new Sphere(0.1);
+  beepMesh.mesh.add(beepSound.audio);
+  scene.add(beepMesh.mesh);
 
-  const pointerSphere = new THREE.SphereBufferGeometry(0.25, 8, 6);
-  const pointerWireframe = new THREE.WireframeGeometry(pointerSphere);
-  const pointerMaterial = new THREE.LineBasicMaterial({ color: 0x0ad0ff });
-  pointerResult = new THREE.LineSegments(pointerWireframe, pointerMaterial);
-  scene.add(pointerResult);
+  pointerResult = new Sphere(0.15);
+  scene.add(pointerResult.mesh);
 
-  goodSound = new Sound(audioListener);
+  const goodSound = new Sound(audioListener);
   goodSound.load('assets/audio/correct.wav');
-  pointerResult.add(goodSound.audio);
+  pointerResult.mesh.add(goodSound.audio);
 
-  badSound = new Sound(audioListener);
+  const badSound = new Sound(audioListener);
   badSound.load('assets/audio/wrong.wav');
-  pointerResult.add(badSound.audio);
+  pointerResult.mesh.add(badSound.audio);
 
-  arc = new Arc(domeRadius, domeRadius / 4);
-  scene.add(arc.line);
-  arc.line.visible = false;
+  const coneGeometry = new THREE.CylinderBufferGeometry(
+    0.02,
+    0.045,
+    1,
+    10,
+    1,
+    true
+  );
+  coneGeometry.rotateX(Math.PI / 2);
+  const coneMaterial = new THREE.MeshLambertMaterial({
+    color: 0x404444,
+    emissive: 0x898989,
+  });
+  const coneInner = new THREE.Mesh(coneGeometry, coneMaterial);
+  const cone = new THREE.Object3D();
+  coneInner.position.set(0, 0, 0.5);
+  cone.add(coneInner);
+  cone.visible = false;
+  scene.add(cone);
 
   const worker = new WorkerThread(raycaster);
   worker.onMessage = (data) => {
     switch (data.type) {
       case 'play_audio': {
-        const { x, y, z } = data.audioPosition;
-        beepSound.play(x, y, z);
+        const { audioPosition } = data;
+        beepMesh.mesh.position.copy(toThreeVector(audioPosition));
+        beepSound.play();
 
-        arc.line.visible = false;
+        cone.visible = false;
+        beepMesh.visible = false;
+        pointerResult.visible = false;
         break;
       }
       case 'display_result': {
-        const { pointerPosition, arcCurve, goodGuess } = data;
+        const { pointerPosition, line, goodGuess } = data;
         if (pointerPosition) {
-          pointerResult.position.copy(toThreeVector(pointerPosition));
-        }
+          pointerResult.mesh.position.copy(toThreeVector(pointerPosition));
+          pointerResult.visible = true;
+          beepMesh.visible = true;
 
-        if (arcCurve) {
-          arc.set(arcCurve.startAngle, arcCurve.endAngle);
-          arc.line.visible = true;
+          if (line) {
+            cone.scale.z = line.length;
+            cone.position.copy(toThreeVector(pointerPosition));
+            cone.lookAt(toThreeVector(line.end));
+            cone.visible = true;
+          }
         }
 
         if (goodGuess) {
@@ -114,7 +131,7 @@ function init() {
   const wireframe = new THREE.WireframeGeometry(sphereGeometry);
   const dome = new THREE.LineSegments(
     wireframe,
-    new THREE.LineBasicMaterial({ color: 0x808080 })
+    new THREE.LineBasicMaterial({ color: 0x010207 })
   );
   scene.add(dome);
 
@@ -122,7 +139,7 @@ function init() {
   const floor = new THREE.Mesh(
     circle,
     new THREE.MeshLambertMaterial({
-      color: 0x111111,
+      color: 0x000001,
     })
   );
   floor.geometry.rotateX(-Math.PI / 2);
@@ -188,8 +205,10 @@ function animate() {
 
 function render() {
   const debug = controller1.isSqueezing || controller2.isSqueezing;
-  beepSound.mesh.visible = debug;
-  pointerResult.visible = debug;
+  beepMesh.debug = debug;
+
+  beepMesh.render();
+  pointerResult.render();
 
   controller1.render();
   controller2.render();

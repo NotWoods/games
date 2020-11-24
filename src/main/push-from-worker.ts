@@ -11,6 +11,10 @@ export interface PlayAudio {
 export interface DisplayResult {
   type: 'display_result';
   pointerPosition?: Vector;
+  line?: {
+    length: number;
+    end: Vector;
+  };
   arcCurve?: {
     height: number;
     radius: number;

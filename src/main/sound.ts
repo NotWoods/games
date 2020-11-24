@@ -23,32 +23,24 @@ export class Sound {
   }
 }
 
-export class SoundSphere {
-  sound: Sound;
-  mesh: THREE.LineSegments;
+export class Sphere {
+  material: THREE.MeshLambertMaterial;
+  mesh: THREE.Mesh;
 
-  constructor(listener: THREE.AudioListener, color: number) {
-    this.sound = new Sound(listener);
+  debug = false;
+  visible = false;
 
-    const sphere = new THREE.SphereBufferGeometry(0.25, 8, 6);
-    const wireframe = new THREE.WireframeGeometry(sphere);
-    this.mesh = new THREE.LineSegments(
-      wireframe,
-      new THREE.LineBasicMaterial({ color })
-    );
-    this.mesh.visible = false;
-    this.mesh.add(this.sound.audio);
+  constructor(radius: number) {
+    const geometry = new THREE.SphereBufferGeometry(radius, 8, 6);
+    this.material = new THREE.MeshLambertMaterial({
+      color: 0x404444,
+      emissive: 0x898989,
+    });
+    this.mesh = new THREE.Mesh(geometry, this.material);
   }
 
-  async load(url: string) {
-    return this.sound.load(url);
-  }
-
-  play(x: number, y: number, z: number) {
-    /*if (this.audio.isPlaying) {
-      this.audio.stop()
-    }*/
-    this.mesh.position.set(x, y, z);
-    this.sound.play();
+  render() {
+    this.material.wireframe = this.debug;
+    this.mesh.visible = this.visible || this.debug;
   }
 }

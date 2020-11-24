@@ -75,7 +75,6 @@ export class ControllerManager {
         );
 
         this.material = new THREE.LineBasicMaterial({
-          color: 0xff0000,
           vertexColors: true,
           blending: THREE.AdditiveBlending,
         });
@@ -104,11 +103,5 @@ export class ControllerManager {
     }
   }
 
-  render() {
-    if (this.isSelecting) {
-      this.material?.color?.setHex(0x00ff00);
-    } else {
-      this.material?.color?.setHex(0xff0000);
-    }
-  }
+  render() {}
 }

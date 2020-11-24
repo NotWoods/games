@@ -1,6 +1,6 @@
 import type { DisplayResult, PlayAudio } from '../main/push-from-worker';
 import { GameState, SphericalPoint, Vector } from './level-record';
-import { random } from './math';
+import { distanceSquared, random } from './math';
 import {
   cartesianToSpherical,
   positiveRadian,
@@ -50,12 +50,17 @@ export class GameLogic {
 
     const startAngle = positiveRadian(pointSpherical.phi);
     const endAngle = positiveRadian(audio.phi);
+    const end = sphericalToCartesian(audio, stageRadius);
 
     const GOOD_GUESS_THRESHOLD = 1;
 
     return {
       type: 'display_result',
       pointerPosition,
+      line: {
+        length: Math.sqrt(distanceSquared(pointerPosition, end)),
+        end,
+      },
       arcCurve: {
         height,
         radius: Math.sqrt(rSquared),
