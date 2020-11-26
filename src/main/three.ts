@@ -6,6 +6,7 @@ import { ControllerManager } from './controller';
 import { Sound, Sphere } from './sound';
 import { toThreeVector, WorkerThread } from './push-from-worker';
 import { IndicatorCone } from './cone';
+import { Dome } from './dome';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
@@ -16,6 +17,7 @@ let beepMesh: Sphere, pointerResult: Sphere;
 let raycaster: THREE.Raycaster;
 let cone: IndicatorCone;
 let bgm: HTMLAudioElement;
+let dome: Dome
 
 let room: THREE.Object3D;
 
@@ -48,21 +50,8 @@ function init() {
   raycaster = new THREE.Raycaster();
   raycaster.camera = camera;
 
-  const sphereGeometry = new THREE.SphereBufferGeometry(
-    domeRadius,
-    20,
-    20,
-    0,
-    undefined,
-    Math.PI / 2
-  );
-  sphereGeometry.rotateX(Math.PI);
-  const wireframe = new THREE.WireframeGeometry(sphereGeometry);
-  const dome = new THREE.LineSegments(
-    wireframe,
-    new THREE.LineBasicMaterial({ color: 0x000000 })
-  );
-  scene.add(dome);
+  dome = new Dome(domeRadius);
+  scene.add(dome.obj);
 
   cone = new IndicatorCone();
   scene.add(cone.obj);
@@ -76,7 +65,7 @@ function init() {
     new THREE.SphereBufferGeometry(0.08, 12, 10),
     new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.BackSide })
   );
-  beepOutline.scale.multiplyScalar(1.10);
+  beepOutline.scale.multiplyScalar(1.1);
   beepOutline.visible = false;
   scene.add(beepOutline);
   scene.add(beepMesh.mesh);
@@ -92,12 +81,15 @@ function init() {
   badSound.load('assets/audio/incorrect.wav');
   pointerResult.mesh.add(badSound.audio);
 
-  const outlineMaterial = new THREE.MeshBasicMaterial({ color: 0xf76a6f, side: THREE.BackSide });
+  const outlineMaterial = new THREE.MeshBasicMaterial({
+    color: 0xf76a6f,
+    side: THREE.BackSide,
+  });
   const pointerResultOutline = new THREE.Mesh(
     new THREE.SphereBufferGeometry(pointerResultRadius, 12, 10),
     outlineMaterial
   );
-  pointerResultOutline.scale.multiplyScalar(1.10);
+  pointerResultOutline.scale.multiplyScalar(1.1);
   pointerResultOutline.visible = false;
   scene.add(pointerResultOutline);
   scene.add(pointerResult.mesh);
@@ -108,7 +100,7 @@ function init() {
       case 'play_audio': {
         const { audioPosition } = data;
         beepMesh.mesh.position.copy(toThreeVector(audioPosition));
-        beepOutline.position.copy(beepMesh.mesh.position)
+        beepOutline.position.copy(beepMesh.mesh.position);
         beepSound.play();
 
         cone.hide();
@@ -144,6 +136,7 @@ function init() {
         } else {
           badSound.play();
         }
+        dome.fade();
         break;
       }
     }
@@ -199,7 +192,7 @@ function init() {
   scene.add(controller2.grip);
 
   function onSelect(this: ControllerManager) {
-    worker.sendPlayerClick(this, [dome, floor]);
+    worker.sendPlayerClick(this, [dome.obj, floor]);
   }
   controller1.onselect = onSelect;
   controller2.onselect = onSelect;
@@ -226,6 +219,7 @@ let xrSessionStarted = false;
 function render() {
   const delta = clock.getDelta(); // slow down simulation
   cone.mixer.update(delta);
+  dome.mixer.update(delta);
 
   const xrSession = renderer.xr.getSession() != null;
   if (xrSession !== xrSessionStarted) {
@@ -247,6 +241,7 @@ function render() {
   controller1.render();
   controller2.render();
   cone.render();
+  dome.render();
 
   //
 

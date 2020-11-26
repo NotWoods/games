@@ -50,7 +50,7 @@ export class IndicatorCone {
   render() {
     if (this.startTime < 0) return;
 
-    if (this.mixer.time > this.startTime + 1) {
+    if (this.mixer.time > this.startTime + ANIMATION_LENGTH) {
       this.obj.scale.z = this.targetLength;
     } else {
       const timePassed = this.mixer.time - this.startTime;
