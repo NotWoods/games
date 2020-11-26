@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import domeRadius from 'consts:radius';
 import { ControllerManager } from './controller';
-import { Sound, Sphere } from './sound';
+import { Sound } from './sound';
+import { Sphere } from './sphere';
 import { toThreeVector, WorkerThread } from './push-from-worker';
 import { IndicatorCone } from './cone';
 import { Dome } from './dome';
@@ -52,20 +53,11 @@ function init() {
 
   const beepSound = new Sound(audioListener);
   beepSound.load('assets/audio/echo.wav');
-  beepMesh = new Sphere(0.08);
+  beepMesh = new Sphere(0.08, 0xffffff);
   beepMesh.mesh.add(beepSound.audio);
+  beepMesh.addToGroup(scene);
 
-  const beepOutline = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(0.08, 12, 10),
-    new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.BackSide })
-  );
-  beepOutline.scale.multiplyScalar(1.1);
-  beepOutline.visible = false;
-  scene.add(beepOutline);
-  scene.add(beepMesh.mesh);
-
-  const pointerResultRadius = 0.08;
-  pointerResult = new Sphere(pointerResultRadius);
+  pointerResult = new Sphere(0.08, 0xf76a6f);
 
   const goodSound = new Sound(audioListener);
   goodSound.load('assets/audio/correct.wav');
@@ -75,44 +67,27 @@ function init() {
   badSound.load('assets/audio/incorrect.wav');
   pointerResult.mesh.add(badSound.audio);
 
-  const outlineMaterial = new THREE.MeshBasicMaterial({
-    color: 0xf76a6f,
-    side: THREE.BackSide,
-  });
-  const pointerResultOutline = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(pointerResultRadius, 12, 10),
-    outlineMaterial
-  );
-  pointerResultOutline.scale.multiplyScalar(1.1);
-  pointerResultOutline.visible = false;
-  scene.add(pointerResultOutline);
-  scene.add(pointerResult.mesh);
+  pointerResult.addToGroup(scene);
 
   worker = new WorkerThread(raycaster);
   worker.onMessage = (data) => {
     switch (data.type) {
       case 'play_audio': {
         const { audioPosition } = data;
-        beepMesh.mesh.position.copy(toThreeVector(audioPosition));
-        beepOutline.position.copy(beepMesh.mesh.position);
+        beepMesh.setPosition(toThreeVector(audioPosition));
         beepSound.play();
 
         cone.hide();
         beepMesh.visible = false;
-        beepOutline.visible = false;
-        pointerResultOutline.visible = false;
         pointerResult.visible = false;
         break;
       }
       case 'display_result': {
         const { pointerPosition, line, goodGuess } = data;
         if (pointerPosition) {
-          pointerResult.mesh.position.copy(toThreeVector(pointerPosition));
-          pointerResultOutline.position.copy(pointerResult.mesh.position);
-          pointerResultOutline.visible = true;
+          pointerResult.setPosition(toThreeVector(pointerPosition));
           pointerResult.visible = true;
           beepMesh.visible = true;
-          beepOutline.visible = true;
 
           if (line) {
             cone.show(
@@ -122,7 +97,7 @@ function init() {
             );
           }
 
-          outlineMaterial.color.setHex(goodGuess ? 0x6af797 : 0xf76a6f);
+          pointerResult.outlineMaterial.color.setHex(goodGuess ? 0x6af797 : 0xf76a6f);
         }
 
         if (goodGuess) {
@@ -224,9 +199,6 @@ function render() {
 
   const debug = controller1.isSqueezing || controller2.isSqueezing;
   beepMesh.debug = debug;
-
-  beepMesh.render();
-  pointerResult.render();
 
   controller1.render();
   controller2.render();

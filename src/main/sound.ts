@@ -22,24 +22,3 @@ export class Sound {
     this.audio.play();
   }
 }
-
-export class Sphere {
-  material: THREE.MeshBasicMaterial;
-  mesh: THREE.Mesh;
-
-  debug = false;
-  visible = false;
-
-  constructor(radius: number) {
-    const geometry = new THREE.SphereBufferGeometry(radius, 12, 10);
-    this.material = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-    });
-    this.mesh = new THREE.Mesh(geometry, this.material);
-  }
-
-  render() {
-    this.material.wireframe = this.debug;
-    this.mesh.visible = this.visible || this.debug;
-  }
-}
