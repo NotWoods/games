@@ -18,7 +18,7 @@ let beepMesh: Sphere, pointerResult: Sphere;
 let raycaster: THREE.Raycaster;
 let cone: IndicatorCone;
 let bgm: HTMLAudioElement;
-let dome: Dome
+let dome: Dome;
 
 let worker: WorkerThread;
 
@@ -53,7 +53,7 @@ function init() {
 
   const beepSound = new Sound(audioListener);
   beepSound.load('assets/audio/echo.wav');
-  beepMesh = new Sphere(0.08, 0xffffff);
+  beepMesh = new Sphere(0.08, 0xffffff, true);
   beepMesh.mesh.add(beepSound.audio);
   beepMesh.addToGroup(scene);
 
@@ -68,6 +68,8 @@ function init() {
   pointerResult.mesh.add(badSound.audio);
 
   pointerResult.addToGroup(scene);
+
+  //
 
   worker = new WorkerThread(raycaster);
   worker.onMessage = (data) => {
@@ -97,7 +99,9 @@ function init() {
             );
           }
 
-          pointerResult.outlineMaterial.color.setHex(goodGuess ? 0x6af797 : 0xf76a6f);
+          pointerResult.outlineMaterial.color.setHex(
+            goodGuess ? 0x6af797 : 0xf76a6f
+          );
         }
 
         if (goodGuess) {

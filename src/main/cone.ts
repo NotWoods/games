@@ -3,6 +3,7 @@ import * as THREE from 'three';
 const ANIMATION_LENGTH = 1;
 
 export class IndicatorCone {
+  private readonly scaled: THREE.Object3D;
   readonly obj: THREE.Object3D;
   readonly mixer: THREE.AnimationMixer;
 
@@ -21,13 +22,19 @@ export class IndicatorCone {
     coneGeometry.rotateX(Math.PI / 2);
     const coneMaterial = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      depthTest: false
+      depthTest: false,
     });
     const coneInner = new THREE.Mesh(coneGeometry, coneMaterial);
-    const cone = new THREE.Object3D();
     coneInner.position.set(0, 0, 0.5);
-    cone.add(coneInner);
+
+    const scaled = new THREE.Object3D();
+    scaled.add(coneInner);
+
+    const cone = new THREE.Object3D();
+    cone.add(scaled);
     cone.visible = false;
+
+    this.scaled = scaled;
     this.obj = cone;
 
     this.mixer = new THREE.AnimationMixer(cone);
@@ -38,12 +45,16 @@ export class IndicatorCone {
     this.startTime = -1;
   }
 
+  set length(value: number) {
+    this.scaled.scale.z = value;
+  }
+
   show(length: number, start: THREE.Vector3, end: THREE.Vector3) {
     this.startTime = this.mixer.time;
     this.targetLength = length;
     this.obj.position.copy(start);
     this.obj.lookAt(end);
-    this.obj.scale.z = 0.01;
+    this.length = 0.01;
     this.obj.visible = true;
   }
 
@@ -51,11 +62,11 @@ export class IndicatorCone {
     if (this.startTime < 0) return;
 
     if (this.mixer.time > this.startTime + ANIMATION_LENGTH) {
-      this.obj.scale.z = this.targetLength;
+      this.length = this.targetLength;
     } else {
       const timePassed = this.mixer.time - this.startTime;
       const percentagePassed = timePassed / ANIMATION_LENGTH;
-      this.obj.scale.z = this.targetLength * percentagePassed;
+      this.length = this.targetLength * percentagePassed;
     }
   }
 }

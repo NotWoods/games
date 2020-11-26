@@ -9,12 +9,13 @@ export class Sphere {
   private _debug = false;
   private _visible = false;
 
-  constructor(radius: number, outlineColor: number) {
+  constructor(radius: number, outlineColor: number, transparent = false) {
     const geometry = new THREE.SphereBufferGeometry(radius, 12, 10);
 
     this.outlineMaterial = new THREE.MeshBasicMaterial({
       color: outlineColor,
       side: THREE.BackSide,
+      transparent,
     });
     const beepOutline = new THREE.Mesh(
       new THREE.SphereBufferGeometry(0.08, 12, 10),
@@ -26,6 +27,7 @@ export class Sphere {
 
     this.material = new THREE.MeshBasicMaterial({
       color: 0x000000,
+      transparent,
     });
     this.mesh = new THREE.Mesh(geometry, this.material);
     this.mesh.visible = false;
@@ -37,8 +39,8 @@ export class Sphere {
   }
 
   setPosition(position: THREE.Vector3) {
-    this.mesh.position.copy(position)
-    this.outlineMesh.position.copy(position)
+    this.mesh.position.copy(position);
+    this.outlineMesh.position.copy(position);
   }
 
   set debug(value: boolean) {
@@ -50,6 +52,11 @@ export class Sphere {
   set visible(value: boolean) {
     this._visible = value;
     this.render();
+  }
+
+  set opacity(value: number) {
+    this.outlineMaterial.opacity = value;
+    this.material.opacity = value;
   }
 
   private render() {

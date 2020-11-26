@@ -68,6 +68,6 @@ export class WorkerThread {
   }
 
   start() {
-    this.worker.postMessage({})
+    this.worker.postMessage({});
   }
 }
