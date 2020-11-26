@@ -24,17 +24,16 @@ export class Sound {
 }
 
 export class Sphere {
-  material: THREE.MeshLambertMaterial;
+  material: THREE.MeshBasicMaterial;
   mesh: THREE.Mesh;
 
   debug = false;
   visible = false;
 
   constructor(radius: number) {
-    const geometry = new THREE.SphereBufferGeometry(radius, 8, 6);
-    this.material = new THREE.MeshLambertMaterial({
-      color: 0x404444,
-      emissive: 0x898989,
+    const geometry = new THREE.SphereBufferGeometry(radius, 12, 10);
+    this.material = new THREE.MeshBasicMaterial({
+      color: 0x000000,
     });
     this.mesh = new THREE.Mesh(geometry, this.material);
   }

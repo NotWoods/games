@@ -19,6 +19,7 @@
     "@rollup/plugin-typescript": "^6.1.0",
     "@types/float-equal": "^2.0.0",
     "@types/three": "^0.103.2",
+    "@types/webxr": "^0.1.0",
     "ava": "^3.13.0",
     "float-equal": "^2.0.0",
     "prettier": "^2.1.2",

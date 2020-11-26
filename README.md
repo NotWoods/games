@@ -7,7 +7,11 @@ WebXR game around positional audio.
 - Grip button to view sound & marker locations
 
 ## Sound Credits
-wrong: https://freesound.org/people/pan14/sounds/263122/
 level up: https://freesound.org/people/pan14/sounds/263655/
-correct: https://freesound.org/people/pan14/sounds/263133/
+correct & incorrect: https://freesound.org/people/pan14/sounds/263133/
 echo: https://freesound.org/people/pan14/sounds/263127/
+
+bgm:
+Tranquility Base by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/4542-tranquility-base
+License: http://creativecommons.org/licenses/by/4.0/

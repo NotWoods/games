@@ -66,4 +66,8 @@ export class WorkerThread {
     console.log(message);
     this.worker.postMessage(message);
   }
+
+  start() {
+    this.worker.postMessage({})
+  }
 }
