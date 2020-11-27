@@ -2,9 +2,9 @@
 
 WebXR game around positional audio.
 
-## Debug Controls for Oculus Quest
+## Controls for Oculus Quest
 - Trigger button to place marker
-- Grip button to view sound & marker locations
+- **Debug mode**: Grip button to view sound location
 
 ## Sound Credits
 level up: https://freesound.org/people/pan14/sounds/263655/
