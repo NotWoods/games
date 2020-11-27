@@ -12,6 +12,8 @@ test('gameState.completeLevel', (t) => {
   t.deepEqual(game.completeLevel(pointerPosition, 590), {
     audio: audioPosition,
     pointer: pointerPosition,
+    score: 0,
+    goodScore: true,
     startTime: 500,
     endTime: 590,
   });

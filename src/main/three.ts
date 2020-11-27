@@ -8,6 +8,7 @@ import { Sphere } from './sphere';
 import { toThreeVector, WorkerThread } from './push-from-worker';
 import { IndicatorCone } from './cone';
 import { Dome } from './dome';
+import { Score } from './score';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
@@ -69,6 +70,9 @@ function init() {
 
   pointerResult.addToGroup(scene);
 
+  const score = new Score();
+  score.setScore('0')
+
   //
 
   worker = new WorkerThread(raycaster);
@@ -86,6 +90,7 @@ function init() {
       }
       case 'display_result': {
         const { pointerPosition, line, goodGuess } = data;
+        score.setScore(data.score.toString());
         if (pointerPosition) {
           pointerResult.setPosition(toThreeVector(pointerPosition));
           pointerResult.visible = true;
@@ -128,6 +133,7 @@ function init() {
   );
   floor.geometry.rotateX(-Math.PI / 2);
   floor.add(bgmPanner);
+  floor.add(score.group);
   scene.add(floor);
 
   scene.add(new THREE.HemisphereLight(0x606060, 0x404040));

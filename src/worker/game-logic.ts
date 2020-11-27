@@ -1,11 +1,7 @@
 import type { DisplayResult, PlayAudio } from '../main/push-from-worker';
 import { GameState, SphericalPoint, Vector } from './level-record';
-import { distanceSquared, random } from './math';
-import {
-  cartesianToSpherical,
-  positiveRadian,
-  sphericalToCartesian,
-} from './radian-math';
+import { random } from './math';
+import { cartesianToSpherical, sphericalToCartesian } from './radian-math';
 
 export class GameLogic {
   readonly state: GameState;
@@ -33,7 +29,7 @@ export class GameLogic {
       return {
         type: 'display_result',
         pointerPosition: undefined,
-        arcCurve: undefined,
+        score: this.state.totalScore(),
         goodGuess: false,
       };
     }
@@ -42,32 +38,19 @@ export class GameLogic {
     const pointSpherical = cartesianToSpherical(pointerPosition);
 
     // complete level
-    const { audio } = this.state.completeLevel(pointSpherical);
+    const { audio, score } = this.state.completeLevel(pointSpherical);
 
-    const height = stageRadius / 4;
-    const h = stageRadius - height;
-    const rSquared = 2 * h * stageRadius - h ** 2;
-
-    const startAngle = positiveRadian(pointSpherical.phi);
-    const endAngle = positiveRadian(audio.phi);
     const end = sphericalToCartesian(audio, stageRadius);
-
-    const GOOD_GUESS_THRESHOLD = 1;
 
     return {
       type: 'display_result',
       pointerPosition,
       line: {
-        length: Math.sqrt(distanceSquared(pointerPosition, end)),
+        length: Math.sqrt(score),
         end,
       },
-      arcCurve: {
-        height,
-        radius: Math.sqrt(rSquared),
-        startAngle,
-        endAngle,
-      },
-      goodGuess: positiveRadian(endAngle - startAngle) < GOOD_GUESS_THRESHOLD,
+      score: this.state.totalScore(),
+      goodGuess: this.state.goodScore(score),
     };
   }
 

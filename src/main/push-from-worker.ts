@@ -15,12 +15,7 @@ export interface DisplayResult {
     length: number;
     end: Vector;
   };
-  arcCurve?: {
-    height: number;
-    radius: number;
-    startAngle: number;
-    endAngle: number;
-  };
+  score: number;
   goodGuess: boolean;
 }
 
