@@ -27,7 +27,6 @@ export class Sphere {
 
     this.material = new THREE.MeshBasicMaterial({
       color: 0x000000,
-      transparent,
     });
     this.mesh = new THREE.Mesh(geometry, this.material);
     this.mesh.visible = false;
@@ -56,7 +55,6 @@ export class Sphere {
 
   set opacity(value: number) {
     this.outlineMaterial.opacity = value;
-    this.material.opacity = value;
   }
 
   private render() {

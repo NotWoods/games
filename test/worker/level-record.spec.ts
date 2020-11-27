@@ -9,11 +9,9 @@ test('gameState.completeLevel', (t) => {
   const audioPosition: SphericalPoint = { theta: 2, phi: 1 };
   const pointerPosition: SphericalPoint = { theta: 1.5, phi: 1.1 };
   game.startLevel(audioPosition, 500);
-  t.deepEqual(game.completeLevel(pointerPosition, 590), {
+  t.like(game.completeLevel(pointerPosition, 590), {
     audio: audioPosition,
     pointer: pointerPosition,
-    score: 0,
-    goodScore: true,
     startTime: 500,
     endTime: 590,
   });

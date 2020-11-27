@@ -8,7 +8,7 @@ import {
 } from '../../src/worker/radian-math';
 import { closeTo } from './assert';
 
-test('raycastOnSphereToPoint', (t) => {
+test.skip('raycastOnSphereToPoint', (t) => {
   t.deepEqual(
     raycastOnSphereToPoint(
       {

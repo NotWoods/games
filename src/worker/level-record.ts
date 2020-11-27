@@ -1,6 +1,3 @@
-import { distanceSquared } from './math';
-import { sphericalToCartesian } from './radian-math';
-
 export interface SphericalPoint {
   /**
    * Y-coordinate replaced by Polar Angle (θ).
@@ -32,8 +29,6 @@ export interface CurrentLevel {
 
 export interface CompletedLevel extends CurrentLevel {
   pointer?: SphericalPoint;
-  score: number;
-  goodScore: boolean;
   endTime: number;
 }
 
@@ -41,12 +36,9 @@ export function timeout(ms: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms));
 }
 
-const GOOD_SCORE_THRESHOLD = 1.5 ** 2;
-
 export class GameState {
   completedLevels: Readonly<CompletedLevel>[] = [];
   currentLevel?: CurrentLevel;
-  lastLostLevelIndex = -1;
 
   constructor(public readonly stageRadius: number) {}
 
@@ -68,31 +60,9 @@ export class GameState {
     }
     const level = this.currentLevel as CompletedLevel;
     level.pointer = pointerPosition;
-    level.score = pointerPosition
-      ? this.score(level.audio, pointerPosition)
-      : -1;
-    level.goodScore = this.goodScore(level.score);
     level.endTime = now;
     this.completedLevels.push(level);
     this.currentLevel = undefined;
-    if (!level.goodScore) {
-      this.lastLostLevelIndex = this.completedLevels.length - 1;
-    }
     return level;
-  }
-
-  totalScore() {
-    if (this.lastLostLevelIndex === -1) return this.completedLevels.length;
-    return this.completedLevels.length - this.lastLostLevelIndex - 1;
-  }
-
-  goodScore(score: number) {
-    return score >= 0 && score < GOOD_SCORE_THRESHOLD;
-  }
-
-  private score(audioPos: SphericalPoint, pointerPos: SphericalPoint) {
-    const audio = sphericalToCartesian(audioPos, this.stageRadius);
-    const pointer = sphericalToCartesian(pointerPos, this.stageRadius);
-    return distanceSquared(audio, pointer);
   }
 }

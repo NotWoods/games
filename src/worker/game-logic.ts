@@ -1,10 +1,13 @@
 import type { DisplayResult, PlayAudio } from '../main/push-from-worker';
 import { GameState, SphericalPoint, Vector } from './level-record';
-import { random } from './math';
+import { distanceSquared, random } from './math';
 import { cartesianToSpherical, sphericalToCartesian } from './radian-math';
+
+const GOOD_SCORE_THRESHOLD = 2 ** 2;
 
 export class GameLogic {
   readonly state: GameState;
+  score = 0;
 
   constructor(stageRadius: number) {
     this.state = new GameState(stageRadius);
@@ -26,10 +29,11 @@ export class GameLogic {
 
     if (!pointerPosition) {
       this.state.completeLevel(undefined);
+      this.score = 0;
       return {
         type: 'display_result',
         pointerPosition: undefined,
-        score: this.state.totalScore(),
+        score: this.score,
         goodGuess: false,
       };
     }
@@ -38,19 +42,28 @@ export class GameLogic {
     const pointSpherical = cartesianToSpherical(pointerPosition);
 
     // complete level
-    const { audio, score } = this.state.completeLevel(pointSpherical);
+    const { audio } = this.state.completeLevel(pointSpherical);
 
     const end = sphericalToCartesian(audio, stageRadius);
+
+    const distSq = distanceSquared(pointerPosition, end);
+    const goodGuess = distSq <= GOOD_SCORE_THRESHOLD;
+
+    if (goodGuess) {
+      this.score++;
+    } else {
+      this.score = 0;
+    }
 
     return {
       type: 'display_result',
       pointerPosition,
       line: {
-        length: Math.sqrt(score),
+        length: Math.sqrt(distSq),
         end,
       },
-      score: this.state.totalScore(),
-      goodGuess: this.state.goodScore(score),
+      score: this.score,
+      goodGuess,
     };
   }
 
