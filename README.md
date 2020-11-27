@@ -7,9 +7,9 @@ WebXR game around positional audio.
 - **Debug mode**: Grip button to view sound location
 
 ## Sound Credits
-level up: https://freesound.org/people/pan14/sounds/263655/
-correct & incorrect: https://freesound.org/people/pan14/sounds/263133/
-echo: https://freesound.org/people/pan14/sounds/263127/
+- level up: https://freesound.org/people/pan14/sounds/263655/
+- correct & incorrect: https://freesound.org/people/pan14/sounds/263133/
+- echo: https://freesound.org/people/pan14/sounds/263127/
 
 bgm:
 Tranquility Base by Kevin MacLeod
