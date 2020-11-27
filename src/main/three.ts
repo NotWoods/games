@@ -24,6 +24,7 @@ let dome: Dome;
 let worker: WorkerThread;
 
 const clock = new THREE.Clock();
+const mixers: THREE.AnimationMixer[] = [];
 
 init();
 animate();
@@ -51,12 +52,14 @@ function init() {
 
   cone = new IndicatorCone();
   scene.add(cone.obj);
+  mixers.push(cone.mixer);
 
   const beepSound = new Sound(audioListener);
   beepSound.load('assets/audio/echo.wav');
   beepMesh = new Sphere(0.08, 0xffffff, true);
   beepMesh.mesh.add(beepSound.audio);
   beepMesh.addToGroup(scene);
+  cone.endpoints.push(beepMesh.material, beepMesh.outlineMaterial);
 
   pointerResult = new Sphere(0.08, 0xf76a6f);
 
@@ -71,7 +74,26 @@ function init() {
   pointerResult.addToGroup(scene);
 
   const score = new Score();
-  score.setScore('0')
+  score.setScore('0');
+
+  //
+
+  const fadeOutKF = new THREE.NumberKeyframeTrack(
+    '.material.opacity',
+    [0, 5],
+    [1, 0]
+  );
+
+  const domeMixer = new THREE.AnimationMixer(dome.obj);
+  mixers.push(domeMixer);
+  const fadeOutAction = domeMixer.clipAction(
+    new THREE.AnimationClip('FadeOutDome', 5, [fadeOutKF])
+  );
+  fadeOutAction.clampWhenFinished = true;
+  fadeOutAction.loop = THREE.LoopOnce;
+  domeMixer.addEventListener('finished', () => {
+    dome.obj.visible = false;
+  });
 
   //
 
@@ -114,7 +136,7 @@ function init() {
         } else {
           badSound.play();
         }
-        dome.fade();
+        fadeOutAction.play();
         break;
       }
     }
@@ -193,8 +215,9 @@ function animate() {
 let xrSessionStarted = false;
 function render() {
   const delta = clock.getDelta(); // slow down simulation
-  cone.mixer.update(delta);
-  dome.mixer.update(delta);
+  for (const mixer of mixers) {
+    mixer.update(delta);
+  }
 
   const xrSession = renderer.xr.getSession() != null;
   if (xrSession !== xrSessionStarted) {
@@ -213,7 +236,6 @@ function render() {
   controller1.render();
   controller2.render();
   cone.render();
-  dome.render();
 
   //
 

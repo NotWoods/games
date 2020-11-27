@@ -6,6 +6,7 @@ export class IndicatorCone {
   private readonly scaled: THREE.Object3D;
   readonly obj: THREE.Object3D;
   readonly mixer: THREE.AnimationMixer;
+  readonly endpoints: THREE.Material[] = [];
 
   private startTime: number = -1;
   private targetLength: number = 1;
@@ -56,6 +57,9 @@ export class IndicatorCone {
     this.obj.lookAt(end);
     this.length = 0.01;
     this.obj.visible = true;
+    for (const endpoint of this.endpoints) {
+      endpoint.opacity = 0;
+    }
   }
 
   render() {
@@ -63,10 +67,16 @@ export class IndicatorCone {
 
     if (this.mixer.time > this.startTime + ANIMATION_LENGTH) {
       this.length = this.targetLength;
+      for (const endpoint of this.endpoints) {
+        endpoint.opacity = 1;
+      }
     } else {
       const timePassed = this.mixer.time - this.startTime;
       const percentagePassed = timePassed / ANIMATION_LENGTH;
       this.length = this.targetLength * percentagePassed;
+      for (const endpoint of this.endpoints) {
+        endpoint.opacity = percentagePassed;
+      }
     }
   }
 }
