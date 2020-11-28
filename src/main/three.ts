@@ -1,14 +1,14 @@
-import * as THREE from 'three';
-
-import { VRButton } from 'https://threejs.org/examples/jsm/webxr/VRButton.js';
 import domeRadius from 'consts:radius';
+import * as THREE from 'three';
+import { IndicatorCone } from './cone';
 import { ControllerManager } from './controller';
+import { Dome } from './dome';
+import { toThreeVector, WorkerThread } from './push-from-worker';
+import { Score } from './score';
 import { Sound } from './sound';
 import { Sphere } from './sphere';
-import { toThreeVector, WorkerThread } from './push-from-worker';
-import { IndicatorCone } from './cone';
-import { Dome } from './dome';
-import { Score } from './score';
+import { Timer } from './timer';
+import { VRButton } from './vr-button';
 
 let camera: THREE.PerspectiveCamera;
 let audioListener: THREE.AudioListener;
@@ -20,6 +20,7 @@ let raycaster: THREE.Raycaster;
 let cone: IndicatorCone;
 let bgm: HTMLAudioElement;
 let dome: Dome;
+let timer: Timer;
 
 let worker: WorkerThread;
 
@@ -75,6 +76,8 @@ function init() {
 
   const score = new Score();
   score.setScore('0');
+  timer = new Timer(domeRadius);
+  scene.add(timer.line);
 
   //
 
@@ -95,24 +98,31 @@ function init() {
     dome.obj.visible = false;
   });
 
+  const url = new URL(location.toString());
+  if (url.searchParams.has('demo')) {
+    domeMixer.timeScale = 0;
+  }
+
   //
 
   worker = new WorkerThread(raycaster);
   worker.onMessage = (data) => {
     switch (data.type) {
       case 'play_audio': {
-        const { audioPosition } = data;
+        const { audioPosition, maxTime } = data;
         beepMesh.setPosition(toThreeVector(audioPosition));
         beepSound.play();
 
         cone.hide();
         beepMesh.visible = false;
         pointerResult.visible = false;
+        timer.reset(maxTime);
         break;
       }
       case 'display_result': {
         const { pointerPosition, line, goodGuess } = data;
         score.setScore(data.score.toString());
+        timer.paused = true;
         if (pointerPosition) {
           pointerResult.setPosition(toThreeVector(pointerPosition));
           pointerResult.visible = true;
@@ -141,6 +151,9 @@ function init() {
       }
     }
   };
+  timer.addEventListener('out_of_time', () => {
+    worker.sendOutOfTime();
+  });
 
   bgm = document.getElementById('bgm') as HTMLAudioElement;
   const bgmPanner = new THREE.PositionalAudio(audioListener);
@@ -218,6 +231,7 @@ function render() {
   for (const mixer of mixers) {
     mixer.update(delta);
   }
+  timer.update(delta);
 
   const xrSession = renderer.xr.getSession() != null;
   if (xrSession !== xrSessionStarted) {

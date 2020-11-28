@@ -3,7 +3,7 @@ import { GameState, SphericalPoint, Vector } from './level-record';
 import { distanceSquared, random } from './math';
 import { cartesianToSpherical, sphericalToCartesian } from './radian-math';
 
-const GOOD_SCORE_THRESHOLD = 2 ** 2;
+const GOOD_SCORE_THRESHOLD = 2.5 ** 2;
 
 export class GameLogic {
   readonly state: GameState;
@@ -73,6 +73,7 @@ export class GameLogic {
     return {
       type: 'play_audio',
       audioPosition: sphericalToCartesian(level.audio, this.state.stageRadius),
+      maxTime: 15,
     };
   }
 }

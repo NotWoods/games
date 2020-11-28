@@ -3,7 +3,10 @@ import * as THREE from 'three';
 const loader = new THREE.FontLoader();
 
 export class Score {
-  private readonly material = new THREE.MeshBasicMaterial({ color: 0x111111, side: THREE.FrontSide });
+  private readonly material = new THREE.MeshBasicMaterial({
+    color: 0x111111,
+    side: THREE.FrontSide,
+  });
   private font: THREE.Font | undefined;
   private mesh: THREE.Mesh | undefined;
 
@@ -14,7 +17,7 @@ export class Score {
     this.ready = this.load();
     this.group = new THREE.Group();
     this.group.position.y = 0.01;
-    this.group.rotateX(-Math.PI / 2)
+    this.group.rotateX(-Math.PI / 2);
   }
 
   async load() {
