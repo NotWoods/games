@@ -2,7 +2,8 @@
   "name": "vr-audio-game",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
     "format": "prettier src/**/*.ts test/**/*.ts *.{html,css,js} --write",
     "test": "ava"
   },
@@ -15,19 +16,16 @@
     "three": "^0.134.0"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.6",
-    "@rollup/plugin-typescript": "^8.3.0",
     "@types/float-equal": "^3.0.0",
     "@types/three": "^0.133.1",
     "@types/webxr": "^0.2.3",
     "ava": "^3.15.0",
     "float-equal": "^3.0.0",
     "prettier": "~2.4.1",
-    "rollup": "^2.59.0",
-    "rollup-plugin-consts": "^1.0.2",
-    "ts-node": "^9.0.0",
-    "tslib": "^2.0.3",
-    "typescript": "^4.0.5"
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4",
+    "vite": "^2.6.13"
   },
   "ava": {
     "files": [

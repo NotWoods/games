@@ -56,7 +56,7 @@ function init() {
   mixers.push(cone.mixer);
 
   const beepSound = new Sound(audioListener);
-  beepSound.load('assets/audio/echo.wav');
+  beepSound.load('/audio/echo.wav');
   beepMesh = new Sphere(0.08, 0xffffff, true);
   beepMesh.mesh.add(beepSound.audio);
   beepMesh.addToGroup(scene);
@@ -65,11 +65,11 @@ function init() {
   pointerResult = new Sphere(0.08, 0xf76a6f);
 
   const goodSound = new Sound(audioListener);
-  goodSound.load('assets/audio/correct.wav');
+  goodSound.load('/audio/correct.wav');
   pointerResult.mesh.add(goodSound.audio);
 
   const badSound = new Sound(audioListener);
-  badSound.load('assets/audio/incorrect.wav');
+  badSound.load('/audio/incorrect.wav');
   pointerResult.mesh.add(badSound.audio);
 
   pointerResult.addToGroup(scene);

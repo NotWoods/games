@@ -1,7 +1,7 @@
-import workerUrl from 'consts:workerUrl';
 import * as THREE from 'three';
 import type { OutOfTime, PlayerClick, StartGame } from '../worker';
 import type { Vector } from '../worker/level-record';
+import Worker from '../worker/index?worker';
 import { ControllerManager } from './controller';
 
 export interface PlayAudio {
@@ -38,7 +38,7 @@ export function fromThreeVector(threeVector: THREE.Vector3): Vector {
 }
 
 export class WorkerThread {
-  private readonly worker = new Worker(workerUrl);
+  private readonly worker = new Worker();
   onMessage?: (data: PlayAudio | DisplayResult) => void;
 
   constructor(private readonly raycaster: THREE.Raycaster) {
