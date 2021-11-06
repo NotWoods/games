@@ -1,14 +1,19 @@
 import * as THREE from 'three';
+import {
+  Font,
+  FontLoader,
+} from 'https://threejs.org/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'https://threejs.org/examples/jsm/geometries/TextGeometry.js';
 
-const loader = new THREE.FontLoader();
+const loader = new FontLoader();
 
 export class Score {
   private readonly material = new THREE.MeshBasicMaterial({
     color: 0x111111,
     side: THREE.FrontSide,
   });
-  private font: THREE.Font | undefined;
-  private mesh: THREE.Mesh | undefined;
+  private font?: Font;
+  private mesh?: THREE.Mesh;
 
   readonly ready: Promise<void>;
   readonly group: THREE.Group;
@@ -28,7 +33,7 @@ export class Score {
 
   async setScore(value: string) {
     await this.ready;
-    const geometry = new THREE.TextGeometry(value, {
+    const geometry = new TextGeometry(value, {
       font: this.font!,
       size: 0.5,
       height: 0,

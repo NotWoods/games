@@ -1,4 +1,4 @@
-import domeRadius from 'consts:radius';
+import { domeRadius } from '../consts';
 import { GameLogic } from './game-logic';
 import { timeout, Vector } from './level-record';
 

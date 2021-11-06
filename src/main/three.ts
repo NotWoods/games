@@ -1,5 +1,5 @@
-import domeRadius from 'consts:radius';
 import * as THREE from 'three';
+import { domeRadius } from '../consts';
 import { IndicatorCone } from './cone';
 import { ControllerManager } from './controller';
 import { Dome } from './dome';

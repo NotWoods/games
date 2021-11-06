@@ -11,19 +11,19 @@
     "url": "git+https://github.com/NotWoods/vr-audio-game.git"
   },
   "dependencies": {
-    "spherical-geometry-js": "^2.0.0",
-    "three": "^0.121.1"
+    "spherical-geometry-js": "^3.0.0",
+    "three": "^0.134.0"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^10.0.0",
-    "@rollup/plugin-typescript": "^6.1.0",
-    "@types/float-equal": "^2.0.0",
-    "@types/three": "^0.103.2",
-    "@types/webxr": "^0.1.0",
-    "ava": "^3.13.0",
-    "float-equal": "^2.0.0",
-    "prettier": "^2.1.2",
-    "rollup": "^2.32.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@types/float-equal": "^3.0.0",
+    "@types/three": "^0.133.1",
+    "@types/webxr": "^0.2.3",
+    "ava": "^3.15.0",
+    "float-equal": "^3.0.0",
+    "prettier": "~2.4.1",
+    "rollup": "^2.59.0",
     "rollup-plugin-consts": "^1.0.2",
     "ts-node": "^9.0.0",
     "tslib": "^2.0.3",
