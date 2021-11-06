@@ -3,6 +3,10 @@ declare module 'consts:workerUrl' {
   export default url;
 }
 
+declare module 'https://threejs.org/build/three.module.js' {
+  export * from 'three';
+}
+
 declare module 'https://threejs.org/examples/jsm/geometries/TextGeometry.js' {
   import * as THREE from 'three';
   import { Font } from 'https://threejs.org/examples/jsm/loaders/FontLoader.js';
