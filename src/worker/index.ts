@@ -1,6 +1,6 @@
-import { domeRadius } from '../consts';
-import { GameLogic } from './game-logic';
-import { timeout, Vector } from './level-record';
+import { domeRadius } from '../consts.js';
+import { GameLogic } from './game-logic.js';
+import { timeout, Vector } from './level-record.js';
 
 declare var self: DedicatedWorkerGlobalScope;
 

@@ -1,4 +1,4 @@
-import { Ray, SphericalPoint, Vector } from './level-record';
+import { Ray, SphericalPoint, Vector } from './level-record.js';
 import {
   add,
   distanceSquared,
@@ -7,7 +7,7 @@ import {
   scale,
   subtract,
   ZERO,
-} from './math';
+} from './math.js';
 
 /**
  * Find the point where the ray intersects with a sphere centered at the origin.

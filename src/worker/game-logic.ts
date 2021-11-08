@@ -1,7 +1,7 @@
-import type { DisplayResult, PlayAudio } from '../main/push-from-worker';
-import { GameState, SphericalPoint, Vector } from './level-record';
-import { distanceSquared, random } from './math';
-import { cartesianToSpherical, sphericalToCartesian } from './radian-math';
+import type { DisplayResult, PlayAudio } from '../main/push-from-worker.js';
+import { GameState, SphericalPoint, Vector } from './level-record.js';
+import { distanceSquared, random } from './math.js';
+import { cartesianToSpherical, sphericalToCartesian } from './radian-math.js';
 
 const GOOD_SCORE_THRESHOLD = 2.5 ** 2;
 

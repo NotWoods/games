@@ -1,12 +1,12 @@
 import test from 'ava';
-import { ZERO } from '../../src/worker/math';
+import { ZERO } from '../../src/worker/math.js';
 import {
   cartesianToSpherical,
   raycastOnSphereToPoint,
   sphericalInterpolate,
   sphericalToCartesian,
-} from '../../src/worker/radian-math';
-import { closeTo } from './assert';
+} from '../../src/worker/radian-math.js';
+import { closeTo } from './assert.js';
 
 test.skip('raycastOnSphereToPoint', (t) => {
   t.deepEqual(

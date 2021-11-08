@@ -1,4 +1,4 @@
-import { Vector } from './level-record';
+import { Vector } from './level-record.js';
 
 export const ZERO: Vector = { x: 0, y: 0, z: 0 };
 

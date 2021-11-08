@@ -1,6 +1,6 @@
 import test from 'ava';
-import { distanceSquared } from '../../src/worker/math';
-import { closeTo } from './assert';
+import { distanceSquared } from '../../src/worker/math.js';
+import { closeTo } from './assert.js';
 
 test('distanceSquared', (t) => {
   const distSq = distanceSquared(

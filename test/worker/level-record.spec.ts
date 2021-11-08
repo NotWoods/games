@@ -1,5 +1,5 @@
 import test from 'ava';
-import { GameState, SphericalPoint } from '../../src/worker/level-record';
+import { GameState, SphericalPoint } from '../../src/worker/level-record.js';
 
 test('gameState.completeLevel', (t) => {
   const game = new GameState(15);
