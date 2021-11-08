@@ -1,6 +1,6 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
-import { XRControllerModelFactory } from 'https://threejs.org/examples/jsm/webxr/XRControllerModelFactory.js';
-import { XRInputSource } from 'https://threejs.org/build/three.module.js';
+import * as THREE from 'three';
+import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.js';
+import { XRInputSource } from 'three';
 
 // The XRControllerModelFactory will automatically fetch controller models
 // that match what the user is holding as closely as possible. The models

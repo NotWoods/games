@@ -1,4 +1,4 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
+import * as THREE from 'three';
 
 function clamp(n: number, min: number, max: number) {
   if (n < min) return min;

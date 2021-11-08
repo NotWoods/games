@@ -12,13 +12,4 @@ export default defineConfig({
       },
     }),
   ],
-  build: {
-    rollupOptions: {
-      output: {
-        paths: {
-          three: 'https://threejs.org/build/three.module.js',
-        },
-      },
-    },
-  },
 });

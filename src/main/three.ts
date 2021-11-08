@@ -1,4 +1,4 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
+import * as THREE from 'three';
 import { domeRadius } from '../consts';
 import { IndicatorCone } from './cone';
 import { ControllerManager } from './controller';

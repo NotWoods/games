@@ -1,4 +1,4 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
+import * as THREE from 'three';
 import type { OutOfTime, PlayerClick, StartGame } from '../worker';
 import type { Vector } from '../worker/level-record';
 import Worker from '../worker/index?worker';

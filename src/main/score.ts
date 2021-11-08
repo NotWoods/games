@@ -1,9 +1,9 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
+import * as THREE from 'three';
 import {
   Font,
   FontLoader,
-} from 'https://threejs.org/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'https://threejs.org/examples/jsm/geometries/TextGeometry.js';
+} from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 const loader = new FontLoader();
 
