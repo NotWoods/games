@@ -1,4 +1,7 @@
-import type { DisplayResultMessage, PlayAudioMessage } from '../main/push-from-worker.js';
+import type {
+  DisplayResultMessage,
+  PlayAudioMessage,
+} from '../main/push-from-worker.js';
 import { GameState, SphericalPoint, Vector } from './level-record.js';
 import { distanceSquared, random } from './math.js';
 import { cartesianToSpherical, sphericalToCartesian } from './radian-math.js';
