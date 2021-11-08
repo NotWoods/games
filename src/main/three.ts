@@ -3,7 +3,7 @@ import { domeRadius } from '../consts';
 import { IndicatorCone } from './cone';
 import { ControllerManager } from './controller';
 import { Dome } from './dome';
-import { toThreeVector, WorkerThread } from './push-from-worker';
+import { WorkerThread } from './push-from-worker';
 import { Score } from './score';
 import { Sound } from './sound';
 import { Sphere } from './sphere';
@@ -106,50 +106,39 @@ function init() {
   //
 
   worker = new WorkerThread(raycaster);
-  worker.onMessage = (data) => {
-    switch (data.type) {
-      case 'play_audio': {
-        const { audioPosition, maxTime } = data;
-        beepMesh.setPosition(toThreeVector(audioPosition));
-        beepSound.play();
+  worker.onPlayAudio = ({ audioPosition, maxTime }) => {
+    beepMesh.setPosition(audioPosition);
+    beepSound.play();
 
-        cone.hide();
-        beepMesh.visible = false;
-        pointerResult.visible = false;
-        timer.reset(maxTime);
-        break;
+    cone.hide();
+    beepMesh.visible = false;
+    pointerResult.visible = false;
+    timer.reset(maxTime);
+  };
+  worker.onDisplayResult = (data) => {
+    const { pointerPosition, line, goodGuess } = data;
+    score.setScore(data.score.toString());
+    timer.paused = true;
+    if (pointerPosition) {
+      pointerResult.setPosition(pointerPosition);
+      pointerResult.visible = true;
+      beepMesh.visible = true;
+
+      if (line) {
+        cone.show(line.length, pointerPosition, line.end);
       }
-      case 'display_result': {
-        const { pointerPosition, line, goodGuess } = data;
-        score.setScore(data.score.toString());
-        timer.paused = true;
-        if (pointerPosition) {
-          pointerResult.setPosition(toThreeVector(pointerPosition));
-          pointerResult.visible = true;
-          beepMesh.visible = true;
 
-          if (line) {
-            cone.show(
-              line.length,
-              toThreeVector(pointerPosition),
-              toThreeVector(line.end)
-            );
-          }
-
-          pointerResult.outlineMaterial.color.setHex(
-            goodGuess ? 0x6af797 : 0xf76a6f
-          );
-        }
-
-        if (goodGuess) {
-          goodSound.play();
-        } else {
-          badSound.play();
-        }
-        fadeOutAction.play();
-        break;
-      }
+      pointerResult.outlineMaterial.color.setHex(
+        goodGuess ? 0x6af797 : 0xf76a6f
+      );
     }
+
+    if (goodGuess) {
+      goodSound.play();
+    } else {
+      badSound.play();
+    }
+    fadeOutAction.play();
   };
   timer.addEventListener('out_of_time', () => {
     worker.sendOutOfTime();

@@ -4,13 +4,18 @@ import type { Vector } from '../worker/level-record';
 import Worker from '../worker/index?worker';
 import { ControllerManager } from './controller';
 
-export interface PlayAudio {
+export interface PlayAudioMessage {
   type: 'play_audio';
   audioPosition: Vector;
   maxTime: number;
 }
 
-export interface DisplayResult {
+export interface PlayAudio {
+  audioPosition: THREE.Vector3;
+  maxTime: number;
+}
+
+export interface DisplayResultMessage {
   type: 'display_result';
   pointerPosition?: Vector;
   line?: {
@@ -21,15 +26,25 @@ export interface DisplayResult {
   goodGuess: boolean;
 }
 
+export interface DisplayResult {
+  pointerPosition?: THREE.Vector3;
+  line?: {
+    length: number;
+    end: THREE.Vector3;
+  };
+  score: number;
+  goodGuess: boolean;
+}
+
 const ray = new THREE.Ray();
 const tempMatrix = new THREE.Matrix4();
 
-export function toThreeVector(workerVector: Vector) {
+function toThreeVector(workerVector: Vector) {
   const { x, y, z } = workerVector;
   return new THREE.Vector3(x, y, z);
 }
 
-export function fromThreeVector(threeVector: THREE.Vector3): Vector {
+function fromThreeVector(threeVector: THREE.Vector3): Vector {
   return {
     x: threeVector.x,
     y: threeVector.y,
@@ -39,12 +54,33 @@ export function fromThreeVector(threeVector: THREE.Vector3): Vector {
 
 export class WorkerThread {
   private readonly worker = new Worker();
-  onMessage?: (data: PlayAudio | DisplayResult) => void;
+  onPlayAudio?: (data: PlayAudio) => void;
+  onDisplayResult?: (data: DisplayResult) => void;
 
   constructor(private readonly raycaster: THREE.Raycaster) {
     this.worker.onmessage = (evt) => {
-      console.log(evt.data);
-      this.onMessage?.(evt.data);
+      const data = evt.data as PlayAudioMessage | DisplayResultMessage;
+      console.log(data);
+      switch (data.type) {
+        case 'play_audio':
+          return this.onPlayAudio?.({
+            audioPosition: toThreeVector(data.audioPosition),
+            maxTime: data.maxTime,
+          });
+
+        case 'display_result': {
+          return this.onDisplayResult?.({
+            pointerPosition:
+              data.pointerPosition && toThreeVector(data.pointerPosition),
+            line: data.line && {
+              length: data.line.length,
+              end: toThreeVector(data.line.end),
+            },
+            score: data.score,
+            goodGuess: data.goodGuess,
+          });
+        }
+      }
     };
   }
 

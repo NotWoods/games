@@ -1,4 +1,4 @@
-import type { DisplayResult, PlayAudio } from '../main/push-from-worker.js';
+import type { DisplayResultMessage, PlayAudioMessage } from '../main/push-from-worker.js';
 import { GameState, SphericalPoint, Vector } from './level-record.js';
 import { distanceSquared, random } from './math.js';
 import { cartesianToSpherical, sphericalToCartesian } from './radian-math.js';
@@ -24,7 +24,7 @@ export class GameLogic {
     return 10_000;
   }
 
-  handlePlayerClick(pointerPosition: Vector | undefined): DisplayResult {
+  handlePlayerClick(pointerPosition: Vector | undefined): DisplayResultMessage {
     const { stageRadius } = this.state;
 
     if (!pointerPosition) {
@@ -67,7 +67,7 @@ export class GameLogic {
     };
   }
 
-  newAudioPoint(): PlayAudio {
+  newAudioPoint(): PlayAudioMessage {
     // send a new audio sound
     const level = this.state.startLevel(this.randomAudioPoint());
     return {
