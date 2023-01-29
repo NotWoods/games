@@ -1,0 +1,113 @@
+html,
+body,
+.container {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+
+  background: #312e2b;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 5em;
+  text-align: center;
+}
+
+.container {
+  display: grid;
+  width: 100%;
+  grid-template:
+    'clock_top' 1fr
+    'buttons' auto
+    'clock_bottom' 1fr
+    / auto;
+
+  max-width: 25rem;
+  max-height: 50rem;
+}
+
+.buttons {
+  grid-area: buttons;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.button {
+  padding: 0.75rem;
+
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.button svg {
+  display: block;
+}
+
+.clock__container {
+  display: flex;
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+  background: none;
+  position: relative;
+
+  cursor: pointer;
+  font: inherit;
+}
+.clock--top {
+  grid-area: clock_top;
+}
+.clock--bottom {
+  grid-area: clock_bottom;
+}
+
+.clock {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+
+  color: #000;
+  background: #524e48;
+  border-radius: 0.5rem;
+}
+.clock--active {
+  color: #fff;
+  background: linear-gradient(135deg, #eba249, #e38528);
+}
+.clock[datetime='PT0M0S'] {
+  color: #fff;
+  background: linear-gradient(135deg, #ae2c33, #ec3339);
+}
+
+.clock--top .clock {
+  transform: rotate(180deg);
+}
+
+@media (orientation: landscape) {
+  .container {
+    grid-template:
+      'buttons buttons' auto
+      'clock_top clock_bottom' 1fr
+      / 1fr 1fr;
+
+    max-width: 50rem;
+    max-height: 25rem;
+  }
+  .clock--top .clock {
+    transform: none;
+  }
+}

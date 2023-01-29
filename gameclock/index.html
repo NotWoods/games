@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GameClock</title>
+    <link href="./style/clock.css" rel="stylesheet" />
+    <script type="module" src="./src/clock.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/app-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/app-512.png" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href="icons/app.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icons/app-512.png" />
+    <meta name="theme-color" content="#312e2b" />
+    <meta name="description" content="Time your chess games, jenga games, and other board games." />
+    <meta name="monetization" content="$ilp.uphold.com/p2WKq3nJHA8w" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Not_Woods" />
+    <meta name="twitter:title" content="GameClock" />
+    <meta name="twitter:description" content="Time your chess games, jenga games, and other board games." />
+    <meta name="twitter:image" content="https://notwoods.github.io/gameclock/icons/github_social.png" />
+    <meta name="og:title" content="GameClock" />
+    <meta name="og:type" content="" />
+    <meta name="og:image" content="https://notwoods.github.io/gameclock/icons/github_social.png" />
+    <meta name="og:url" content="https://notwoods.github.io/gameclock" />
+    <meta name="og:description" content="Time your chess games, jenga games, and other board games." />
+
+    <script
+      src="https://fortunate-twentyseven.tigeroakes.com/script.js"
+      data-site="FMVLGCSF"
+      data-honor-dnt="true"
+      defer
+    ></script>
+  </head>
+
+  <body>
+    <main class="container">
+      <nav class="buttons">
+        <a href="settings.html" class="button button--settings" title="Settings">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#6f6862" height="24" viewBox="0 0 24 24" width="24" role="img">
+            <title>Settings</title>
+            <path
+              d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"
+            />
+          </svg>
+        </a>
+        <button class="button button--pause" type="button" title="Pause" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#6f6862" height="24" viewBox="0 0 24 24" width="24" role="img">
+            <title>Pause</title>
+            <path
+              d="M8 19c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2s-2 .9-2 2v10c0 1.1.9 2 2 2zm6-12v10c0 1.1.9 2 2 2s2-.9 2-2V7c0-1.1-.9-2-2-2s-2 .9-2 2z"
+            />
+          </svg>
+        </button>
+        <button class="button button--reset" type="button" title="Reset">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#6f6862" height="24" viewBox="0 0 24 24" width="24" role="img">
+            <title>Reset</title>
+            <path
+              d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"
+            />
+          </svg>
+        </button>
+      </nav>
+
+      <button class="clock__container clock--top" type="button">
+        <time class="clock" datetime="PT1M0S">1:00</time>
+      </button>
+
+      <button class="clock__container clock--bottom" type="button">
+        <time class="clock" datetime="PT1M0S">1:00</time>
+      </button>
+    </main>
+  </body>
+</html>

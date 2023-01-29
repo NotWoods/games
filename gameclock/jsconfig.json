@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["dom"],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "checkJs": true
+  },
+  "include": [
+    "src/**/*.js",
+    "workbox-config.js",
+    "rollup.config.js",
+    "vite.config.js"
+  ]
+}
