@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/web-manifest.json",
+  "id": "https://notwoods.github.io/gameclock/",
   "name": "GameClock",
   "start_url": ".",
   "display": "fullscreen",
