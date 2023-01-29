@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" sizes="any" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" sizes="48x48" type="image/png" href="/icon-small.png" />
+    <link rel="icon" sizes="512x512" type="image/png" href="/icon.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/maskable.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="./app.webmanifest" />
+    <title>Last Finger Standing</title>
+    <link
+      rel="canonical"
+      href="https://games.tigeroakes.com/last-finger-standing/app"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <button
+          type="button"
+          class="icon-button fullscreen-button"
+          aria-pressed="false"
+        >
+          Fullscreen
+        </button>
+      </header>
+      <svg
+        class="hint"
+        id="hint"
+        viewBox="0 0 500 500"
+        aria-label="Everyone put a finger on the screen and wait"
+      >
+        <path
+          id="curve"
+          d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97"
+          fill="none"
+        ></path>
+        <text class="hint-text" width="500">
+          <textPath xlink:href="#curve">
+            Everyone put a finger on the screen and wait
+          </textPath>
+        </text>
+        <text class="hint-text hint-text-flipped" width="500">
+          <textPath xlink:href="#curve">
+            Everyone put a finger on the screen and wait
+          </textPath>
+        </text>
+      </svg>
+      <main id="arena"></main>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+    <script type="module" src="./src/fullscreen.ts"></script>
+    <script
+      src="https://fortunate-twentyseven.tigeroakes.com/script.js"
+      data-site="FMVLGCSF"
+      defer
+    ></script>
+  </body>
+</html>

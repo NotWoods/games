@@ -1,0 +1,158 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.25;
+  }
+}
+
+@keyframes clock {
+  0% {
+    clip-path: polygon(50% 50%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  }
+  12.5% {
+    clip-path: polygon(
+      50% 50%,
+      50% 0%,
+      100% 0%,
+      100% 0%,
+      100% 0%,
+      100% 0%,
+      100% 0%
+    );
+  }
+  37.5% {
+    clip-path: polygon(
+      50% 50%,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      100% 100%
+    );
+  }
+  62.5% {
+    clip-path: polygon(
+      50% 50%,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%,
+      0% 100%,
+      0% 100%
+    );
+  }
+  75% {
+    clip-path: polygon(
+      50% 50%,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%,
+      0% 50%,
+      0% 50%
+    );
+  }
+  87.5% {
+    clip-path: polygon(
+      50% 50%,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%,
+      0% 0%,
+      0% 0%
+    );
+  }
+  100% {
+    clip-path: polygon(
+      50% 50%,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%,
+      0% 0%,
+      50% 0%
+    );
+  }
+}
+
+/* Make arena takeup full screen */
+body {
+  height: 100vh;
+  overflow: hidden;
+  overflow: clip;
+}
+#app,
+#arena {
+  overflow: hidden;
+  overflow: clip;
+  width: 100%;
+  height: 100%;
+}
+.fullscreen-button {
+  margin: 8px;
+}
+
+.finger,
+.finger::before,
+.finger::after {
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+}
+.finger {
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-delay: 300ms;
+  --indicator-radius: 25px;
+}
+.finger::before {
+  content: "";
+  background-color: currentColor;
+  top: calc(var(--indicator-radius) * -1);
+  left: calc(var(--indicator-radius) * -1);
+  right: calc(var(--indicator-radius) * -1);
+  bottom: calc(var(--indicator-radius) * -1);
+}
+.finger::after {
+  content: "";
+  border: currentColor 10px solid;
+  top: calc(calc(var(--indicator-radius) + 20px) * -1);
+  left: calc(calc(var(--indicator-radius) + 20px) * -1);
+  right: calc(calc(var(--indicator-radius) + 20px) * -1);
+  bottom: calc(calc(var(--indicator-radius) + 20px) * -1);
+}
+
+.finger--spin::after {
+  animation: clock 1.5s linear forwards, spin 1s linear infinite;
+}
+
+.hint {
+  animation: spin 90s linear infinite;
+  transition: opacity 1s ease;
+  width: min(90vw, calc(90vh - 2.5rem));
+}
+.hint-text {
+  fill: currentColor;
+}
+.hint-text-flipped {
+  transform-origin: center;
+  transform: rotate(180deg);
+}

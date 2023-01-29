@@ -1,0 +1,90 @@
+:root {
+  font-family: Inter, Avenir, system-ui, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #000;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+header {
+  position: fixed;
+}
+
+.icon-button {
+  position: relative;
+  border: 0;
+  border-radius: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  row-gap: 0.5em;
+  min-height: 2.5em;
+  padding-block: 0;
+  padding-inline-start: 1em;
+  padding-inline-end: 1.5em;
+  font-weight: 500;
+  color: #e8def8;
+  background-color: #4a4458;
+  text-decoration: none;
+  text-align: center;
+}
+.icon-button::after {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  border-radius: 1000px;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  background-color: #e8def8;
+}
+.icon-button:hover::after {
+  opacity: 0.08;
+}
+.icon-button:focus-visible::after,
+.icon-button:active::after {
+  opacity: 0.12;
+}
+
+.fullscreen-button::before {
+  content: "";
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  background: url("/fullscreen.svg") no-repeat;
+  background-size: 3em 1.5em;
+  background-position: right center;
+}
+.fullscreen-button:fullscreen::before,
+.fullscreen-button[aria-pressed="true"]::before {
+  background-position: left center;
+}
+
+.hint {
+  position: fixed;
+  top: 3.5rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: min(90vw, calc(90vh - 3.5rem));
+  pointer-events: none;
+  font-size: 1.1rem;
+}
+.hidden {
+  opacity: 0;
+}
+
+@media (display-mode: fullscreen) {
+  .fullscreen-button {
+    display: none;
+  }
+}
