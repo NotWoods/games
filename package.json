@@ -1,0 +1,6 @@
+{
+  "workspaces": [
+    "gameclock",
+    "last-finger-standing"
+  ]
+}

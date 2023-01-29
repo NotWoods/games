@@ -4,6 +4,8 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
+    outDir: '../dist/gameclock',
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         main: 'index.html',

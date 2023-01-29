@@ -1,8 +1,8 @@
 module.exports = {
   cacheId: 'gameclock',
-  globDirectory: 'dist',
+  globDirectory: '../dist/gameclock',
   globPatterns: ['**/*'],
-  swDest: 'dist/sw.js',
+  swDest: '../dist/gameclock/sw.js',
   ignoreURLParametersMatching: [/fbclid/],
   dontCacheBustURLsMatching: new RegExp('^assets/'),
 };

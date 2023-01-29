@@ -8,7 +8,8 @@ export default defineConfig({
     host: "0.0.0.0",
   },
   build: {
-    outDir: "dist/last-finger-standing",
+    outDir: "../dist/last-finger-standing",
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         landing: "index.html",
