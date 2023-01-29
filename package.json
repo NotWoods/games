@@ -2,5 +2,8 @@
   "workspaces": [
     "gameclock",
     "last-finger-standing"
-  ]
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=gameclock && npm run build --workspace=last-finger-standing && cp _redirects dist"
+  }
 }
