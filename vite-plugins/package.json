@@ -1,0 +1,16 @@
+{
+  "name": "@notwoods/games-vite-plugins",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "node-html-parser": "^6.1.4"
+  }
+}

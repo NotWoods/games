@@ -1,7 +1,8 @@
 {
   "workspaces": [
     "gameclock",
-    "last-finger-standing"
+    "last-finger-standing",
+    "vite-plugins"
   ],
   "scripts": {
     "build": "npm run build --workspace=gameclock && npm run build --workspace=last-finger-standing && cp _redirects dist"
