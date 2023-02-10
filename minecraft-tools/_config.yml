@@ -2,6 +2,6 @@ title: Minecraft Tools
 
 defaults:
   - scope:
-      path: ""
+      path: ''
     values:
       layout: default

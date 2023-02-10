@@ -2,14 +2,14 @@
   display: grid;
   grid-template-columns: 2fr 50ch 345px 2fr;
   grid-template-rows: auto;
-  grid-template-areas: ". text image .";
+  grid-template-areas: '. text image .';
 }
 
 @media (max-width: 800px) {
   .landing {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    grid-template-areas: "text" "image";
+    grid-template-areas: 'text' 'image';
     justify-content: center;
   }
 }

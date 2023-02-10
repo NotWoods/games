@@ -38,7 +38,7 @@ header {
   text-align: center;
 }
 .icon-button::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   inset: 0;
@@ -56,16 +56,16 @@ header {
 }
 
 .fullscreen-button::before {
-  content: "";
+  content: '';
   display: block;
   width: 1.5em;
   height: 1.5em;
-  background: url("/fullscreen.svg") no-repeat;
+  background: url('/fullscreen.svg') no-repeat;
   background-size: 3em 1.5em;
   background-position: right center;
 }
 .fullscreen-button:fullscreen::before,
-.fullscreen-button[aria-pressed="true"]::before {
+.fullscreen-button[aria-pressed='true']::before {
   background-position: left center;
 }
 

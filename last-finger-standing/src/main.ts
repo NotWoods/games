@@ -1,6 +1,6 @@
-import "./style.css";
-import "./animation.css";
-import { colors } from "./colors";
+import './style.css';
+import './animation.css';
+import { colors } from './colors';
 
 /**
  * Returns a random integer between 0 (included) and length (excluded).
@@ -10,8 +10,8 @@ function randomIndex(length: number) {
   return Math.floor(Math.random() * length);
 }
 
-const arena = document.getElementById("arena")!;
-const hint = document.getElementById("hint")!;
+const arena = document.getElementById('arena')!;
+const hint = document.getElementById('hint')!;
 
 interface Indicator {
   readonly clientX: number;
@@ -22,9 +22,9 @@ class TouchIndicator {
   readonly element: HTMLElement;
 
   constructor(color: string) {
-    this.element = document.createElement("div");
-    this.element.classList.add("finger", "finger--spin");
-    this.element.style.setProperty("color", color);
+    this.element = document.createElement('div');
+    this.element.classList.add('finger', 'finger--spin');
+    this.element.style.setProperty('color', color);
   }
 
   animateIn() {
@@ -41,8 +41,8 @@ class TouchIndicator {
 
   updatePosition(touch: Indicator) {
     this.element.style.setProperty(
-      "translate",
-      `${touch.clientX}px ${touch.clientY}px`
+      'translate',
+      `${touch.clientX}px ${touch.clientY}px`,
     );
   }
 }
@@ -89,7 +89,7 @@ class TouchPicker {
   updateList(touchList: ArrayLike<Touch>) {
     this.touchList = touchList;
     if (this.touchList.length > 0) {
-      hint.classList.add("hidden");
+      hint.classList.add('hidden');
     }
   }
 
@@ -110,16 +110,16 @@ class TouchPicker {
   pick = () => {
     this.picked = this.touchList[randomIndex(this.touchList.length)];
     navigator.vibrate(100);
-    console.log("Picked", this.picked.identifier);
+    console.log('Picked', this.picked.identifier);
   };
 
   reset = () => {
     this.picked = undefined;
-    console.log("Reset");
+    console.log('Reset');
   };
 
   showHint = () => {
-    hint.classList.remove("hidden");
+    hint.classList.remove('hidden');
   };
 
   resetTimers() {
@@ -171,6 +171,6 @@ function addOrRemoveTouch(event: TouchEvent) {
   picker.resetTimers();
 }
 
-arena.addEventListener("touchmove", updateAllTouches);
-arena.addEventListener("touchstart", addOrRemoveTouch);
-arena.addEventListener("touchend", addOrRemoveTouch);
+arena.addEventListener('touchmove', updateAllTouches);
+arena.addEventListener('touchstart', addOrRemoveTouch);
+arena.addEventListener('touchend', addOrRemoveTouch);

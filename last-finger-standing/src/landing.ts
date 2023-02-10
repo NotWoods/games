@@ -1,2 +1,2 @@
-import "./style.css";
-import "./landing.css";
+import './style.css';
+import './landing.css';

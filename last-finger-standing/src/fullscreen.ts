@@ -1,7 +1,7 @@
 {
-  const fullscreenButton = document.querySelector(".fullscreen-button")!;
+  const fullscreenButton = document.querySelector('.fullscreen-button')!;
 
-  fullscreenButton.addEventListener("click", () => {
+  fullscreenButton.addEventListener('click', () => {
     if (document.fullscreenElement) {
       document.exitFullscreen();
     } else {
@@ -9,23 +9,23 @@
     }
   });
 
-  document.addEventListener("fullscreenchange", () => {
+  document.addEventListener('fullscreenchange', () => {
     fullscreenButton.textContent = document.fullscreenElement
-      ? "Exit fullscreen"
-      : "Fullscreen";
+      ? 'Exit fullscreen'
+      : 'Fullscreen';
     fullscreenButton.setAttribute(
-      "aria-pressed",
-      document.fullscreenElement ? "true" : "false"
+      'aria-pressed',
+      document.fullscreenElement ? 'true' : 'false',
     );
   });
 }
 
-if ("wakeLock" in navigator) {
+if ('wakeLock' in navigator) {
   let wakeLock: WakeLockSentinel | undefined;
 
   async function requestWakeLock() {
     try {
-      wakeLock = await navigator.wakeLock.request("screen");
+      wakeLock = await navigator.wakeLock.request('screen');
     } catch (err) {
       if (!(err instanceof Error)) throw err;
       console.error(`${err.name}, ${err.message}`);
@@ -33,8 +33,8 @@ if ("wakeLock" in navigator) {
   }
 
   requestWakeLock();
-  document.addEventListener("visibilitychange", () => {
-    if (!wakeLock && document.visibilityState === "visible") {
+  document.addEventListener('visibilitychange', () => {
+    if (!wakeLock && document.visibilityState === 'visible') {
       requestWakeLock();
     }
   });

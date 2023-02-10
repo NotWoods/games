@@ -4,30 +4,14 @@
   "scripts": {
     "build": "vite build",
     "postbuild": "workbox generateSW workbox-config.js",
-    "dev": "vite",
-    "lint": "prettier \"src/**/*\" \"style/**/*.css\" \"*.{html,md,json,yml}\" \"{workbox-,rollup.,vite.}config.js\" --check",
-    "format": "prettier \"src/**/*\" \"style/**/*.css\" \"*.{html,md,json,yml}\" \"{workbox-,rollup.,vite.}config.js\" --write"
+    "dev": "vite"
   },
   "dependencies": {
     "fathom-client": "^3.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^3.0.1",
-    "prettier": "~2.8.1",
     "vite": "^4.0.0",
     "workbox-cli": "^6.5.4"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "proseWrap": "always",
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "printWidth": 120
-        }
-      }
-    ]
   }
 }

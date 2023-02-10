@@ -124,7 +124,7 @@ body {
   --indicator-radius: 25px;
 }
 .finger::before {
-  content: "";
+  content: '';
   background-color: currentColor;
   top: calc(var(--indicator-radius) * -1);
   left: calc(var(--indicator-radius) * -1);
@@ -132,7 +132,7 @@ body {
   bottom: calc(var(--indicator-radius) * -1);
 }
 .finger::after {
-  content: "";
+  content: '';
   border: currentColor 10px solid;
   top: calc(calc(var(--indicator-radius) + 20px) * -1);
   left: calc(calc(var(--indicator-radius) + 20px) * -1);

@@ -6,6 +6,24 @@
     "wheres-the-beep"
   ],
   "scripts": {
-    "build": "npm run build --workspace=gameclock --workspace=last-finger-standing --workspace=wheres-the-beep && cp _redirects dist"
+    "build": "npm run build --workspace=gameclock --workspace=last-finger-standing --workspace=wheres-the-beep && cp _redirects dist",
+    "format": "prettier --ignore-path .gitignore --write .",
+    "format:check": "prettier --ignore-path .gitignore --check ."
+  },
+  "devDependencies": {
+    "prettier": "~2.8.4"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "proseWrap": "always",
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "printWidth": 120
+        }
+      }
+    ]
   }
 }

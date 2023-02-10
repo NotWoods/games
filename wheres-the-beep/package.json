@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "format": "prettier src/**/*.ts test/**/*.ts *.{html,css,js} --write",
     "test": "ava"
   },
   "repository": {
@@ -23,7 +22,6 @@
     "@types/webxr": "^0.5.1",
     "ava": "^5.2.0",
     "float-equal": "^3.0.0",
-    "prettier": "~2.4.1",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5",
@@ -39,18 +37,6 @@
     },
     "nodeArguments": [
       "--loader=ts-node/esm"
-    ]
-  },
-  "prettier": {
-    "singleQuote": true,
-    "proseWrap": "always",
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "printWidth": 120
-        }
-      }
     ]
   }
 }

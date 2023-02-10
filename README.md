@@ -6,13 +6,17 @@
   </picture>
 </h1>
 
-Games and tools I've created! All available under [games.tigeroakes.com](https://games.tigeroakes.com).
+Games and tools I've created! All available under
+[games.tigeroakes.com](https://games.tigeroakes.com).
 
 ## [Last Finger Standing](last-finger-standing)
 
 <img alt="" src="last-finger-standing/public/icon.svg" width="64" height="64">
 
-Need to pick someone to go first? To pay the bill? To buy milk? Just have everyone put a finger on the screen and wait. Last Finger Standing will make your choice automatically! A quick and easy app to randomly select someone from a group of people.
+Need to pick someone to go first? To pay the bill? To buy milk? Just have
+everyone put a finger on the screen and wait. Last Finger Standing will make
+your choice automatically! A quick and easy app to randomly select someone from
+a group of people.
 
 https://games.tigeroakes.com/last-finger-standing/
 
@@ -36,7 +40,9 @@ https://questkit.app/
 
 <img alt="" src="https://github.com/NotWoods/pass-the-bomb/raw/master/public/bomb.svg" width="64" height="64">
 
-A multiplayer word game where players must quickly think of words to pass the bomb to another player before time runs out. Created with a hackathon team for UBC Local Hack Day 2016.
+A multiplayer word game where players must quickly think of words to pass the
+bomb to another player before time runs out. Created with a hackathon team for
+UBC Local Hack Day 2016.
 
 https://pass-the-bomb.glitch.me/
 
@@ -50,6 +56,7 @@ https://games.tigeroakes.com/minecraft-tools/
 
 <img alt="" src="https://raw.githubusercontent.com/NotWoods/bit-ball/master/src/Icon-512.png" width="64" height="64">
 
-A physics puzzle game for Android and one of my very first large programming projects, originally built in 2012.
+A physics puzzle game for Android and one of my very first large programming
+projects, originally built in 2012.
 
 https://games.tigeroakes.com/bit-ball/

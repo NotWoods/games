@@ -1,4 +1,4 @@
-import { insertHtml, h } from "vite-plugin-insert-html";
+import { insertHtml, h } from 'vite-plugin-insert-html';
 
 /**
  * @returns {import('vite').Plugin}
@@ -6,10 +6,10 @@ import { insertHtml, h } from "vite-plugin-insert-html";
 export const sharedHtml = () =>
   insertHtml({
     head: [
-      h("script", {
-        src: "https://fortunate-twentyseven.tigeroakes.com/script.js",
-        "data-site": "FMVLGCSF",
-        "data-honor-dnt": "true",
+      h('script', {
+        src: 'https://fortunate-twentyseven.tigeroakes.com/script.js',
+        'data-site': 'FMVLGCSF',
+        'data-honor-dnt': 'true',
         defer: true,
       }),
     ],
