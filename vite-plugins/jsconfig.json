@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "target": "esnext",
+    "noEmit": true,
+    "moduleResolution": "node16"
+  },
+  "include": ["**/*.mjs"]
+}
