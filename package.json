@@ -2,9 +2,10 @@
   "workspaces": [
     "gameclock",
     "last-finger-standing",
-    "vite-plugins"
+    "vite-plugins",
+    "wheres-the-beep"
   ],
   "scripts": {
-    "build": "npm run build --workspace=gameclock && npm run build --workspace=last-finger-standing && cp _redirects dist"
+    "build": "npm run build --workspace=gameclock --workspace=last-finger-standing --workspace=wheres-the-beep && cp _redirects dist"
   }
 }
