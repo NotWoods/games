@@ -1,6 +1,7 @@
 // @ts-check
 import legacy from '@vitejs/plugin-legacy';
 import { defineConfig } from 'vite';
+import { sharedHtml } from '../vite-plugins/shared-html.mjs';
 import { socialMetadata } from '../vite-plugins/social-metadata.mjs';
 
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    sharedHtml(),
     socialMetadata({
       title: 'GameClock',
       description: 'Time your chess games, jenga games, and other board games.',

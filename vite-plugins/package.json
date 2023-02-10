@@ -11,6 +11,7 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
-    "node-html-parser": "^6.1.4"
+    "node-html-parser": "^6.1.4",
+    "vite-plugin-insert-html": "^1.0.1"
   }
 }
