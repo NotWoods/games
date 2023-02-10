@@ -1,4 +1,5 @@
 ---
+layout: default.liquid
 title: Minecraft Tools
 icon: /favicon.png
 ---

@@ -1,0 +1,16 @@
+{
+  "name": "@notwoods/minecraft-tools",
+  "description": "A collection of Javascript programs to use with Minecraft.",
+  "private": true,
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NotWoods/vr-audio-game.git"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0"
+  }
+}

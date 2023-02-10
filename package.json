@@ -2,6 +2,7 @@
   "workspaces": [
     "gameclock",
     "last-finger-standing",
+    "minecraft-tools",
     "vite-plugins",
     "wheres-the-beep"
   ],
