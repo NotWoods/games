@@ -10,8 +10,8 @@
     "fathom-client": "^3.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-legacy": "^4.0.0",
-    "vite": "^4.0.0",
+    "@vitejs/plugin-legacy": "^4.0.1",
+    "vite": "^4.1.1",
     "workbox-cli": "^6.5.4"
   }
 }
