@@ -1,6 +1,6 @@
 // @ts-check
 import legacy from '@vitejs/plugin-legacy';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { sharedHtml } from '../vite-plugins/shared-html.mjs';
 import { socialMetadata } from '../vite-plugins/social-metadata.mjs';
 
@@ -29,4 +29,7 @@ export default defineConfig({
       targets: ['defaults', 'not IE 11'],
     }),
   ],
+  test: {
+    environment: 'jsdom',
+  },
 });

@@ -9,7 +9,6 @@
   "include": [
     "src/**/*.js",
     "workbox-config.js",
-    "rollup.config.js",
     "vite.config.js"
   ]
 }

@@ -64,6 +64,7 @@ function getDuration(clock, now) {
 function pauseClock(clock, now) {
   // Remove class from previously active clock
   clock.display.classList.remove('clock--active');
+  clock.button.setAttribute('aria-pressed', 'true');
 
   if (clock.lastPaused !== -1) {
     clock.elapsedSoFar = getDuration(clock, now);
@@ -103,6 +104,7 @@ function switchActive(index, now = Date.now()) {
     pauseClock(clocks[activeIndex], now);
   }
 
+  clocks[nextIndex].button.setAttribute('aria-pressed', 'false');
   clocks[nextIndex].display.classList.add('clock--active');
   activeIndex = nextIndex;
 
