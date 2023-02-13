@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { VitePWA } from 'vite-plugin-pwa';
 import { socialMetadata } from '../vite-plugins/social-metadata.mjs';
 
@@ -29,4 +29,7 @@ export default defineConfig({
     }),
     VitePWA({ registerType: 'autoUpdate', manifest: false }),
   ],
+  test: {
+    environment: 'jsdom',
+  },
 });

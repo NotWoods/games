@@ -11,6 +11,7 @@ function randomIndex(length: number) {
 }
 
 const arena = document.getElementById('arena')!;
+const status = document.getElementById('status')!;
 const hint = document.getElementById('hint')!;
 
 interface Indicator {
@@ -51,6 +52,7 @@ class IndicatorManager {
   indicators = new Map<number, TouchIndicator>();
   pickedId: number | undefined;
   pickedIndicator: TouchIndicator | undefined;
+  private rules = new Intl.PluralRules();
 
   getOrCreateIndicator(identifier: number) {
     return this.indicators.get(identifier) ?? this.addIndicator(identifier);
@@ -60,6 +62,8 @@ class IndicatorManager {
     const indicator = new TouchIndicator(colors[randomIndex(colors.length)]);
 
     this.indicators.set(identifier, indicator);
+    this.countIndicators();
+
     arena.append(indicator.element);
     indicator.animateIn();
     return indicator;
@@ -71,7 +75,15 @@ class IndicatorManager {
       const animation = indicator.animateOut();
       animation.onfinish = () => indicator.element.remove();
     }
-    return this.indicators.delete(identifier);
+    const result = this.indicators.delete(identifier);
+    this.countIndicators();
+    return result;
+  }
+
+  private countIndicators() {
+    const count = this.rules.select(this.indicators.size);
+    const fingerText = count === 'one' ? 'finger' : 'fingers';
+    status.textContent = `${this.indicators.size} ${fingerText} on the screen`;
   }
 }
 
@@ -111,6 +123,7 @@ class TouchPicker {
     this.picked = this.touchList[randomIndex(this.touchList.length)];
     navigator.vibrate(100);
     console.log('Picked', this.picked.identifier);
+    status.textContent = `Picked ${this.picked.identifier}`;
   };
 
   reset = () => {
