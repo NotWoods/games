@@ -46,6 +46,13 @@ UBC Local Hack Day 2016.
 
 https://pass-the-bomb.glitch.me/
 
+## [Where's the Beep?](wheres-the-beep)
+
+Test your echolocation abilities in this WebXR game based around positional
+audio.
+
+https://games.tigeroakes.com/wheres-the-beep/
+
 ## [Minecraft Tools](minecraft-tools)
 
 A collection of Javascript programs to use with Minecraft.
