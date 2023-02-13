@@ -52,7 +52,7 @@ function colorFillerRGB() {
   if (red == '' || green == '' || blue == '') return;
 
   console.log(red + ', ' + green + ', ' + blue);
-  value = rgbToHex(red, green, blue);
+  const value = rgbToHex(red, green, blue);
   console.log(value);
 
   document.color.picker.value = '#' + cutHex(value);
@@ -63,7 +63,7 @@ function colorFillerRGB() {
 }
 
 function result(red, green, blue) {
-  newCode = blue + 256 * green + 65536 * red;
+  const newCode = blue + 256 * green + 65536 * red;
 
   document.color.output.value = newCode;
   document.getElementById('code').innerHTML =

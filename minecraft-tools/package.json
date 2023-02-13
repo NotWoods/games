@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "lint": "eslint --ext .js ."
   },
   "repository": {
     "type": "git",

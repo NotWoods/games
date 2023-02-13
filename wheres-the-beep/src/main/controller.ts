@@ -67,11 +67,11 @@ export class ControllerManager {
         this.geometry = new THREE.BufferGeometry();
         this.geometry.setAttribute(
           'position',
-          new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3)
+          new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, -1], 3),
         );
         this.geometry.setAttribute(
           'color',
-          new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3)
+          new THREE.Float32BufferAttribute([0.5, 0.5, 0.5, 0, 0, 0], 3),
         );
 
         this.material = new THREE.LineBasicMaterial({
@@ -90,7 +90,7 @@ export class ControllerManager {
         this.geometry = new THREE.RingBufferGeometry(0.02, 0.04, 32).translate(
           0,
           0,
-          -1
+          -1,
         );
         this.material = new THREE.MeshBasicMaterial({
           opacity: 0.5,
@@ -103,5 +103,6 @@ export class ControllerManager {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   render() {}
 }

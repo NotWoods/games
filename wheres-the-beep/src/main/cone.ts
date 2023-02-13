@@ -8,8 +8,8 @@ export class IndicatorCone {
   readonly mixer: THREE.AnimationMixer;
   readonly endpoints: THREE.Material[] = [];
 
-  private startTime: number = -1;
-  private targetLength: number = 1;
+  private startTime = -1;
+  private targetLength = 1;
 
   constructor() {
     const coneGeometry = new THREE.CylinderBufferGeometry(
@@ -18,7 +18,7 @@ export class IndicatorCone {
       1,
       10,
       1,
-      false
+      false,
     );
     coneGeometry.rotateX(Math.PI / 2);
     const coneMaterial = new THREE.MeshBasicMaterial({

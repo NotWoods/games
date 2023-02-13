@@ -1,15 +1,9 @@
-import {
-  getAllByText,
-  getAllByRole,
-  fireEvent,
-  queryByRole,
-  getByRole,
-} from '@testing-library/dom';
+import { fireEvent, screen } from '@testing-library/dom';
 import { readFile } from 'fs/promises';
 import { beforeAll, beforeEach, expect, test, vi } from 'vitest';
 
 function changeFullscreen(fullscreenElement: Element | null) {
-  // @ts-expect-error
+  // @ts-expect-error - mocking a readonly property
   document.fullscreenElement = fullscreenElement;
   fireEvent(document, new Event('fullscreenchange'));
 }
@@ -36,7 +30,7 @@ beforeEach(() => {
 });
 
 test('fullscreen button enters fullscreen', () => {
-  const fullscreen = getByRole(document.body, 'button', {
+  const fullscreen = screen.getByRole('button', {
     name: 'Fullscreen',
     pressed: false,
   });
@@ -50,7 +44,7 @@ test('fullscreen button enters fullscreen', () => {
 test('fullscreen button exists fullscreen', () => {
   changeFullscreen(document.documentElement);
 
-  const fullscreen = getByRole(document.body, 'button', {
+  const fullscreen = screen.getByRole('button', {
     name: 'Exit fullscreen',
     pressed: true,
   });

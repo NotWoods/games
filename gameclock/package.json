@@ -3,8 +3,9 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "postbuild": "workbox generateSW workbox-config.js",
+    "postbuild": "workbox generateSW workbox-config.cjs",
     "dev": "vite",
+    "lint": "eslint --ext .js,.ts src test *.js",
     "test": "vitest"
   },
   "dependencies": {

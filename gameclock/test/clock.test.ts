@@ -14,7 +14,7 @@ beforeAll(async () => {
   vi.useFakeTimers();
 
   document.body.innerHTML = body;
-  // @ts-expect-error
+  // @ts-expect-error - importing non-module
   await import('../src/clock.js');
 });
 

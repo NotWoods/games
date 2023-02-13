@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "tsc -p jsconfig.json"
+    "build": "tsc -p jsconfig.json",
+    "lint": "eslint *.mjs"
   },
   "devDependencies": {
     "typescript": "^4.9.5",

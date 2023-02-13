@@ -2,7 +2,7 @@ import { domeRadius } from '../consts.js';
 import { GameLogic } from './game-logic.js';
 import { timeout, Vector } from './level-record.js';
 
-declare var self: DedicatedWorkerGlobalScope;
+declare const self: DedicatedWorkerGlobalScope;
 
 const game = new GameLogic(domeRadius);
 
@@ -20,7 +20,7 @@ export interface OutOfTime {
 }
 
 self.onmessage = async (
-  evt: MessageEvent<StartGame | PlayerClick | OutOfTime>
+  evt: MessageEvent<StartGame | PlayerClick | OutOfTime>,
 ) => {
   switch (evt.data.type) {
     case 'start_game':

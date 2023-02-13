@@ -10,9 +10,16 @@
     "build": "npm run build --workspaces && cp _redirects dist",
     "format": "prettier --ignore-path .gitignore --write .",
     "format:check": "prettier --ignore-path .gitignore --check .",
-    "test": "npm run test --workspaces --if-present"
+    "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspaces --if-present -- run"
   },
   "devDependencies": {
+    "@types/eslint": "^8.21.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "^8.34.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-testing-library": "^5.10.1",
     "prettier": "~2.8.4"
   },
   "prettier": {
