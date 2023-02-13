@@ -1,10 +1,4 @@
-import {
-  getAllByText,
-  getAllByRole,
-  fireEvent,
-  queryByRole,
-  getByRole,
-} from '@testing-library/dom';
+import { fireEvent, screen } from '@testing-library/dom';
 import { readFile } from 'fs/promises';
 import { beforeAll, beforeEach, expect, test, vi } from 'vitest';
 
@@ -25,17 +19,17 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  const resetButton = getByRole(document.body, 'button', { name: 'Reset' });
+  const resetButton = screen.getByRole('button', { name: 'Reset' });
   fireEvent.click(resetButton);
 });
 
 test('renders clock buttons with initial time', () => {
-  const buttons = getAllByText(document.body, '1:00');
+  const buttons = screen.getAllByText('1:00');
   expect(buttons).toHaveLength(2);
 });
 
 test('other clock becomes active on click', async () => {
-  const buttons = getAllByRole(document.body, 'button', { pressed: true });
+  const buttons = screen.getAllByRole('button', { pressed: true });
   expect(buttons).toHaveLength(2);
 
   fireEvent.click(buttons[0]);
@@ -48,19 +42,19 @@ test('other clock becomes active on click', async () => {
 });
 
 test('pause button stops both clocks', async () => {
-  const clockButtons = getAllByRole(document.body, 'button', { pressed: true });
+  const clockButtons = screen.getAllByRole('button', { pressed: true });
   expect(clockButtons).toHaveLength(2);
 
-  expect(queryByRole(document.body, 'button', { name: 'Pause' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Pause' })).toBeNull();
 
   fireEvent.click(clockButtons[0]);
   expect(clockButtons[0].getAttribute('aria-pressed')).toBe('true');
   expect(clockButtons[1].getAttribute('aria-pressed')).toBe('false');
 
-  const pauseButton = getByRole(document.body, 'button', { name: 'Pause' });
+  const pauseButton = screen.getByRole('button', { name: 'Pause' });
   fireEvent.click(pauseButton);
   expect(clockButtons[0].getAttribute('aria-pressed')).toBe('true');
   expect(clockButtons[1].getAttribute('aria-pressed')).toBe('true');
 
-  expect(queryByRole(document.body, 'button', { name: 'Pause' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Pause' })).toBeNull();
 });

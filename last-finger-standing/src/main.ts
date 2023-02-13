@@ -52,7 +52,6 @@ class IndicatorManager {
   indicators = new Map<number, TouchIndicator>();
   pickedId: number | undefined;
   pickedIndicator: TouchIndicator | undefined;
-  private rules = new Intl.PluralRules();
 
   getOrCreateIndicator(identifier: number) {
     return this.indicators.get(identifier) ?? this.addIndicator(identifier);
@@ -62,7 +61,6 @@ class IndicatorManager {
     const indicator = new TouchIndicator(colors[randomIndex(colors.length)]);
 
     this.indicators.set(identifier, indicator);
-    this.countIndicators();
 
     arena.append(indicator.element);
     indicator.animateIn();
@@ -76,20 +74,14 @@ class IndicatorManager {
       animation.onfinish = () => indicator.element.remove();
     }
     const result = this.indicators.delete(identifier);
-    this.countIndicators();
     return result;
-  }
-
-  private countIndicators() {
-    const count = this.rules.select(this.indicators.size);
-    const fingerText = count === 'one' ? 'finger' : 'fingers';
-    status.textContent = `${this.indicators.size} ${fingerText} on the screen`;
   }
 }
 
 class TouchPicker {
-  touchList: ArrayLike<Touch> = [];
-  picked: Touch | undefined;
+  touchList: readonly Touch[] = [];
+  // This is an tuple so that it doesn't need to be initialized every frame in touchesToDisplay
+  picked: [Touch] | [] = [];
 
   private pickTimeoutId: ReturnType<typeof setTimeout> | undefined;
   private resetTimeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -99,7 +91,7 @@ class TouchPicker {
    * Update the list of fingers to display.
    */
   updateList(touchList: ArrayLike<Touch>) {
-    this.touchList = touchList;
+    this.touchList = Array.from(touchList);
     if (this.touchList.length > 0) {
       hint.classList.add('hidden');
     }
@@ -109,25 +101,24 @@ class TouchPicker {
    * Returns an interator over the touch list.
    * Alters the displayed list of fingers to highlight the picked one.
    */
-  *touchesToDisplay() {
-    if (this.picked) {
-      yield this.picked;
+  touchesToDisplay() {
+    if (this.picked.length > 0) {
+      return this.picked;
     } else {
-      for (let i = 0; i < this.touchList.length; i++) {
-        yield this.touchList[i];
-      }
+      return this.touchList;
     }
   }
 
   pick = () => {
-    this.picked = this.touchList[randomIndex(this.touchList.length)];
+    const picked = this.touchList[randomIndex(this.touchList.length)];
+    this.picked = [picked];
     navigator.vibrate(100);
-    console.log('Picked', this.picked.identifier);
-    status.textContent = `Picked ${this.picked.identifier}`;
+    console.log('Picked', picked.identifier);
+    status.textContent = `Picked finger ${picked.identifier}`;
   };
 
   reset = () => {
-    this.picked = undefined;
+    this.picked.length = 0;
     console.log('Reset');
   };
 
