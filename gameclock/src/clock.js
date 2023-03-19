@@ -1,4 +1,3 @@
-// @ts-check
 /** @typedef {ReturnType<typeof initClock>} Clock */
 
 const libModule = import('./libs.js');

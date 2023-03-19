@@ -30,7 +30,7 @@ https://games.tigeroakes.com/gameclock/
 
 ## [Quest Kit](https://github.com/NotWoods/quest-tools)
 
-<img alt="" src="https://raw.githubusercontent.com/NotWoods/quest-tools/main/static/images/quest-kit.svg?token=GHSAT0AAAAAAB6BZHDMVGYONPX7IDWWAU26Y6W3RDQ" width="64" height="64">
+<img alt="" src="https://questkit.app/images/logo.svg" width="64" height="64">
 
 The adventure's toolkit for the [Quest TTRPG](https://www.adventure.game/).
 

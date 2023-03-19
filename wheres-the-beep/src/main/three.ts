@@ -38,7 +38,7 @@ function init() {
     50,
     window.innerWidth / window.innerHeight,
     0.1,
-    7
+    7,
   );
   camera.position.set(0, 1.6, 3);
 
@@ -84,13 +84,13 @@ function init() {
   const fadeOutKF = new THREE.NumberKeyframeTrack(
     '.material.opacity',
     [0, 5],
-    [1, 0]
+    [1, 0],
   );
 
   const domeMixer = new THREE.AnimationMixer(dome.obj);
   mixers.push(domeMixer);
   const fadeOutAction = domeMixer.clipAction(
-    new THREE.AnimationClip('FadeOutDome', 5, [fadeOutKF])
+    new THREE.AnimationClip('FadeOutDome', 5, [fadeOutKF]),
   );
   fadeOutAction.clampWhenFinished = true;
   fadeOutAction.loop = THREE.LoopOnce;
@@ -129,7 +129,7 @@ function init() {
       }
 
       pointerResult.outlineMaterial.color.setHex(
-        goodGuess ? 0x6af797 : 0xf76a6f
+        goodGuess ? 0x6af797 : 0xf76a6f,
       );
     }
 
@@ -153,7 +153,7 @@ function init() {
     circle,
     new THREE.MeshLambertMaterial({
       color: 0x000000,
-    })
+    }),
   );
   floor.geometry.rotateX(-Math.PI / 2);
   floor.add(bgmPanner);

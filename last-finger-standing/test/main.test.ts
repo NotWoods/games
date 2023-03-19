@@ -2,23 +2,6 @@ import { fireEvent, screen } from '@testing-library/dom';
 import { readFile } from 'fs/promises';
 import { beforeAll, expect, test, vi } from 'vitest';
 
-window.requestAnimationFrame = (callback) => {
-  setTimeout(callback, 1000 / 60);
-  return 0;
-};
-navigator.vibrate = vi.fn(() => true);
-Element.prototype.animate = (_, options) => {
-  const animation = new EventTarget();
-  if (typeof options === 'object' && options.delay) {
-    setTimeout(
-      () => animation.dispatchEvent(new Event('finish')),
-      options.delay,
-    );
-  }
-
-  return animation as Animation;
-};
-
 beforeAll(async () => {
   const html = await readFile(new URL('../app.html', import.meta.url), 'utf8');
   const [, body] = html.match(/<body>(.*)<\/body>/ms)!;

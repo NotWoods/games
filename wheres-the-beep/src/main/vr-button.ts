@@ -9,14 +9,14 @@ declare global {
     isSessionSupported(mode: THREE.XRSessionMode): Promise<boolean>;
     requestSession(
       mode: THREE.XRSessionMode,
-      options: THREE.XRSessionInit
+      options: THREE.XRSessionInit,
     ): Promise<THREE.XRSession>;
   }
 }
 
 export class VRButton {
   static createButton(
-    renderer: THREE.WebGLRenderer
+    renderer: THREE.WebGLRenderer,
   ): HTMLButtonElement | HTMLAnchorElement {
     const button = document.createElement('button');
     button.className = 'vr-button vr-button--available vr-button--enter';

@@ -1,4 +1,3 @@
-// @ts-check
 import { trackGoal } from 'fathom-client';
 
 if (navigator.serviceWorker) {

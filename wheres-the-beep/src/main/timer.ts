@@ -26,7 +26,7 @@ export class Timer extends THREE.EventDispatcher {
       0,
       Math.PI * 2,
       false,
-      -Math.PI / 2
+      -Math.PI / 2,
     );
     this.geometry = new THREE.BufferGeometry();
 

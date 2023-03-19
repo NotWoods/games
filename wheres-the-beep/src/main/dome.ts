@@ -12,7 +12,7 @@ export class Dome {
       20,
       0,
       undefined,
-      Math.PI / 2
+      Math.PI / 2,
     );
     sphereGeometry.rotateX(Math.PI);
     this.material = new THREE.MeshBasicMaterial({

@@ -15,7 +15,7 @@ import {
  */
 export function raycastOnSphereToPoint(
   ray: Ray,
-  sphereRadius: number
+  sphereRadius: number,
 ): Vector | undefined {
   const center = ZERO;
   const len = dot(ray.direction, subtract(center, ray.origin));
@@ -23,7 +23,7 @@ export function raycastOnSphereToPoint(
   if (len < 0) return undefined;
   const dst2 = distanceSquared(
     center,
-    add(ray.origin, scale(len, ray.direction))
+    add(ray.origin, scale(len, ray.direction)),
   );
   const r2 = sphereRadius * sphereRadius;
   if (dst2 > r2) return undefined;
@@ -103,7 +103,7 @@ export function cartesianToSpherical(vector: Vector): SphericalPoint {
 
 export function sphericalToCartesian(
   point: SphericalPoint,
-  sphereRadius: number
+  sphereRadius: number,
 ): Vector {
   const x = sphereRadius * Math.sin(point.theta) * Math.cos(point.phi);
   const z = sphereRadius * Math.sin(point.theta) * Math.sin(point.phi);

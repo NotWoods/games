@@ -1,5 +1,3 @@
-// @ts-check
-
 import('./libs.js');
 
 /** @type {HTMLInputElement} */

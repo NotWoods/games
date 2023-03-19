@@ -24,7 +24,7 @@ export class Score {
 
   async load() {
     this.font = await loader.loadAsync(
-      'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json'
+      'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
     );
   }
 

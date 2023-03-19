@@ -19,7 +19,7 @@ export class Sphere {
     });
     const beepOutline = new THREE.Mesh(
       new THREE.SphereBufferGeometry(0.08, 12, 10),
-      this.outlineMaterial
+      this.outlineMaterial,
     );
     beepOutline.scale.multiplyScalar(1.1);
     beepOutline.visible = false;

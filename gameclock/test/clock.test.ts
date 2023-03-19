@@ -2,8 +2,6 @@ import { fireEvent, screen } from '@testing-library/dom';
 import { readFile } from 'fs/promises';
 import { beforeAll, beforeEach, expect, test, vi } from 'vitest';
 
-vi.spyOn(window, 'confirm').mockImplementation(() => true);
-
 beforeAll(async () => {
   const html = await readFile(
     new URL('../index.html', import.meta.url),
