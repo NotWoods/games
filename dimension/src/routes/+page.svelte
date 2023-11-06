@@ -1,6 +1,7 @@
 <script lang="ts">
   import TaskChecks from '$lib/tasks/TaskChecks.svelte';
   import { buildDeck } from '$lib/tasks/deck';
+  import { onMount } from 'svelte';
   import '../app.css';
 
   const demoTasks: import('$lib/tasks/types').Task[] = [
@@ -13,6 +14,10 @@
     { type: 'sum', colorA: 'orange', colorB: 'blue', amount: 4 },
   ];
   const { hand, deck, draw, shuffle } = buildDeck(demoTasks);
+
+  onMount(() => {
+    shuffle();
+  });
 </script>
 
 <span>{$deck.length} cards left in deck</span>
