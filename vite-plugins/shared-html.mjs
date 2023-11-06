@@ -7,7 +7,7 @@ export const sharedHtml = () =>
   insertHtml({
     head: [
       h('script', {
-        src: 'https://fortunate-twentyseven.tigeroakes.com/script.js',
+        src: 'https://cdn.usefathom.com/script.js',
         'data-site': 'FMVLGCSF',
         'data-honor-dnt': 'true',
         defer: true,
