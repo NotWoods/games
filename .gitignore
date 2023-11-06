@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.svelte-kit
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
 # Editor directories and files
 .vscode/*

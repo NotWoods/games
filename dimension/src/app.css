@@ -1,0 +1,61 @@
+body {
+  font-family: sans-serif;
+  background: #02443e radial-gradient(#36bbab, #02443e);
+  color: white;
+}
+
+.task {
+  background: #fee457 linear-gradient(to bottom, #ad9f42, #e5c641, #fad23e);
+  aspect-ratio: 2 / 3;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  container-type: size;
+  box-sizing: border-box;
+  padding: 0.15cm;
+  border: 0.2cm solid white;
+  border-radius: 0.2cm;
+  box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 0.5);
+  user-select: none;
+}
+
+.sphere {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+.sphere.orange {
+  background: #c44529;
+}
+.sphere.black {
+  background: #040200;
+}
+.sphere.blue {
+  background: #193e72;
+}
+.sphere.green {
+  background: #256d30;
+}
+.sphere.white {
+  background: #e4dbd1;
+}
+.sphere.rainbow {
+  background: linear-gradient(to right bottom, #e4dbd1, #193e72, #c44529, #256d30, #040200);
+}
+
+.task-amount, .not-x {
+  display: block;
+  text-align: center;
+  z-index: 1;
+  font-weight: bold;
+}
+.task-amount {
+  color: white;
+  text-shadow: 0 0 1px rgb(0 0 0 / 0.5);
+  font-size: 75cqmin;
+}
+.not-x {
+  color: red;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-size: 100cqmin;
+}

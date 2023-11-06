@@ -1,5 +1,6 @@
 {
   "workspaces": [
+    "dimension",
     "gameclock",
     "last-finger-standing",
     "minecraft-tools",
