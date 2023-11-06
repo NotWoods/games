@@ -14,23 +14,35 @@
     "test": "npm run test --workspaces --if-present -- run"
   },
   "devDependencies": {
-    "@types/eslint": "^8.21.2",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
-    "@typescript-eslint/parser": "^5.55.0",
-    "eslint": "^8.36.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-testing-library": "^5.10.2",
-    "prettier": "~2.8.4"
+    "@types/eslint": "^8.44.6",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-svelte": "^2.34.1",
+    "eslint-plugin-testing-library": "^6.1.0",
+    "prettier": "~3.0.3",
+    "prettier-plugin-svelte": "^3.0.3"
   },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all",
     "proseWrap": "always",
+    "plugins": [
+      "prettier-plugin-svelte"
+    ],
     "overrides": [
       {
         "files": "*.html",
         "options": {
           "printWidth": 120
+        }
+      },
+      {
+        "files": "*.svelte",
+        "options": {
+          "parser": "svelte",
+          "printWidth": 100
         }
       }
     ]

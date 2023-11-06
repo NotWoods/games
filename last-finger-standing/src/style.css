@@ -11,11 +11,6 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
-}
-
-header {
-  position: fixed;
 }
 
 .icon-button {
@@ -55,6 +50,20 @@ header {
   opacity: 0.12;
 }
 
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 'header' 'hint';
+}
+
+header {
+  grid-area: header;
+  width: 100vw;
+}
+
+.fullscreen-button {
+  margin: 8px;
+}
 .fullscreen-button::before {
   content: '';
   display: block;
@@ -70,18 +79,20 @@ header {
 }
 
 .hint {
-  position: fixed;
-  top: 3.5rem;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: min(90vw, calc(90vh - 3.5rem));
+  grid-area: hint;
+  place-self: center;
   pointer-events: none;
   font-size: 1.1rem;
 }
 .hidden {
   opacity: 0;
+}
+
+#arena {
+  grid-column-start: header-start;
+  grid-column-end: header-end;
+  grid-row-start: header-start;
+  grid-row-end: hint-end;
 }
 
 .visually-hidden {

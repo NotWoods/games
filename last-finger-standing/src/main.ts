@@ -98,7 +98,7 @@ class TouchPicker {
   }
 
   /**
-   * Returns an interator over the touch list.
+   * Returns an iterator over the touch list.
    * Alters the displayed list of fingers to highlight the picked one.
    */
   touchesToDisplay() {
