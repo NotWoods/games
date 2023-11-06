@@ -5,8 +5,8 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
   },
-	plugins: [sveltekit()],
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
-	}
+  plugins: [sveltekit()],
+  test: {
+    include: ['src/**/*.{test,spec}.{js,ts}'],
+  },
 });

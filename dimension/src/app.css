@@ -40,10 +40,18 @@ body {
   background: #e4dbd1;
 }
 .sphere.rainbow {
-  background: linear-gradient(to right bottom, #e4dbd1, #193e72, #c44529, #256d30, #040200);
+  background: linear-gradient(
+    to right bottom,
+    #e4dbd1,
+    #193e72,
+    #c44529,
+    #256d30,
+    #040200
+  );
 }
 
-.task-amount, .not-x {
+.task-amount,
+.not-x {
   display: block;
   text-align: center;
   z-index: 1;
@@ -51,11 +59,12 @@ body {
 }
 .task-amount {
   color: white;
-  text-shadow: 0 0 1px rgb(0 0 0 / 0.5);
+  text-shadow: 0 0 5px rgb(0 0 0 / 0.75);
   font-size: 75cqmin;
 }
 .not-x {
   color: red;
   font-family: 'Comic Sans MS', 'Comic Sans', cursive;
   font-size: 100cqmin;
+  text-shadow: 4px 4px 2px rgb(0 0 0 / 0.75);
 }

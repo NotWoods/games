@@ -4,16 +4,13 @@
   import { onMount } from 'svelte';
   import '../app.css';
 
-  const demoTasks: import('$lib/tasks/types').Task[] = [
-    { type: 'touch', colorA: 'orange', colorB: 'green' },
-    { type: 'not-touch', colorA: 'orange', colorB: 'green' },
-    { type: 'exact', color: 'orange', amount: 2 },
-    { type: 'not-over', color: 'orange' },
-    { type: 'not-under', color: 'orange' },
-    { type: 'more', colorA: 'orange', colorB: 'black' },
-    { type: 'sum', colorA: 'orange', colorB: 'blue', amount: 4 },
-  ];
-  const { hand, deck, draw, shuffle } = buildDeck(demoTasks);
+  let keyClear = 0;
+  const { hand, deck, draw, shuffle } = buildDeck();
+
+  $: {
+    $hand;
+    keyClear++;
+  }
 
   onMount(() => {
     shuffle();
@@ -22,5 +19,7 @@
 
 <span>{$deck.length} cards left in deck</span>
 <button on:click={shuffle}>Shuffle all cards into deck</button>
-<TaskChecks tasks={$hand} />
+{#key keyClear}
+  <TaskChecks tasks={$hand} />
+{/key}
 <button on:click={draw}>Draw</button>
