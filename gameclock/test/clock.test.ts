@@ -1,12 +1,12 @@
 import { fireEvent, screen } from '@testing-library/dom';
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { beforeAll, beforeEach, expect, test, vi } from 'vitest';
 
 beforeAll(async () => {
-  const html = await readFile(
-    new URL('../index.html', import.meta.url),
-    'utf8',
-  );
+  const filename = fileURLToPath(import.meta.url);
+  const html = await readFile(resolve(filename, '../../index.html'), 'utf8');
   const [, body] = html.match(/<body>(.*)<\/body>/ms)!;
 
   vi.useFakeTimers();

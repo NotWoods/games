@@ -19,6 +19,7 @@ const config = {
   },
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'svelte/no-inner-declarations': 'off',
     'no-inner-declarations': 'off',
   },
   overrides: [
@@ -38,6 +39,9 @@ const config = {
     {
       files: ['*.test.ts', '*.test.js'],
       extends: ['plugin:testing-library/dom'],
+      rules: {
+        'testing-library/no-node-access': 'off',
+      },
     },
   ],
 };

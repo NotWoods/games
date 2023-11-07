@@ -1,6 +1,7 @@
 // @ts-check
 import legacy from '@vitejs/plugin-legacy';
 import { defineConfig } from 'vitest/config';
+import { VitePWA } from 'vite-plugin-pwa';
 import { sharedHtml } from '../vite-plugins/shared-html.mjs';
 import { socialMetadata } from '../vite-plugins/social-metadata.mjs';
 
@@ -27,6 +28,14 @@ export default defineConfig({
     }),
     legacy({
       targets: ['defaults', 'not IE 11'],
+    }),
+    VitePWA({
+      manifest: false,
+      workbox: {
+        cacheId: 'gameclock',
+        ignoreURLParametersMatching: [/fbclid/],
+        dontCacheBustURLsMatching: new RegExp('^assets/'),
+      },
     }),
   ],
   test: {

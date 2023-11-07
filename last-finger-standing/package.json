@@ -13,10 +13,10 @@
   "devDependencies": {
     "@testing-library/dom": "^9.0.1",
     "@types/dom-screen-wake-lock": "^1.0.1",
-    "jsdom": "^21.1.1",
+    "jsdom": "^22.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.2.0",
-    "vite-plugin-pwa": "^0.14.4",
-    "vitest": "^0.29.3"
+    "vite-plugin-pwa": "^0.16.0",
+    "vitest": "^0.34.0"
   }
 }

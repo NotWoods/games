@@ -4,11 +4,6 @@
   import type { Task } from './types';
 
   export let tasks: readonly Task[];
-  let checked: boolean[] = [];
-
-  $: {
-    checked = tasks.map(() => false);
-  }
 </script>
 
 <ul style="--total-tasks: {tasks.length}">
