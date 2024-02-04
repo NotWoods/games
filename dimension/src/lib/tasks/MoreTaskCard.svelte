@@ -6,11 +6,7 @@
   $: label = `There must be more ${task.colorA} than ${task.colorB}!`;
 </script>
 
-<div
-  class="task more-task"
-  aria-label={label}
-  title={label}
->
+<div class="task more-task" aria-label={label} title={label}>
   <div class="sphere sphere-a {task.colorA}"></div>
   <div class="sphere sphere-b {task.colorB}"></div>
   <span class="task-amount">&gt;</span>

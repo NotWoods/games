@@ -6,11 +6,7 @@
   $: label = `The sum of ${task.colorA} and ${task.colorB} must be exactly ${task.amount}!`;
 </script>
 
-<div
-  class="task sum-task"
-  aria-label={label}
-  title={label}
->
+<div class="task sum-task" aria-label={label} title={label}>
   <div class="sphere sphere-a {task.colorA} sum-half"></div>
   <div class="sphere sphere-b {task.colorB} sum-half"></div>
   <span class="task-amount">{task.amount}</span>

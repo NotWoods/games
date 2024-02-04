@@ -22,7 +22,9 @@
   }
 
   .task-container {
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      opacity 0.2s ease-in-out;
   }
   input:checked + .task-container {
     opacity: 0.5;

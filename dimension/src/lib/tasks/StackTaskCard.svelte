@@ -41,7 +41,8 @@
   .sphere-b {
     grid-row: 2;
   }
-  .not-x, .task-amount {
+  .not-x,
+  .task-amount {
     z-index: 2;
     grid-row: 1 / -1;
     grid-column: 1;

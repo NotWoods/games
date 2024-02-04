@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     outDir: '../dist/wheres-the-beep',
     emptyOutDir: true,
-    chunkSizeWarningLimit: 650
+    chunkSizeWarningLimit: 650,
   },
   plugins: [
     sharedHtml(),

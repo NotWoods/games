@@ -4,7 +4,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "checkJs": true
+    "checkJs": true,
   },
-  "include": ["src/**/*.js", "workbox-config.js", "vite.config.js"]
+  "include": ["src/**/*.js", "workbox-config.js", "vite.config.js"],
 }

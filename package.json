@@ -15,15 +15,15 @@
     "test": "npm run test --workspaces --if-present -- run"
   },
   "devDependencies": {
-    "@types/eslint": "^8.44.6",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
-    "eslint": "^8.53.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-svelte": "^2.34.1",
-    "eslint-plugin-testing-library": "^6.1.0",
-    "prettier": "~3.0.3",
-    "prettier-plugin-svelte": "^3.0.3"
+    "@types/eslint": "^8.56.2",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-svelte": "^2.35.1",
+    "eslint-plugin-testing-library": "^6.2.0",
+    "prettier": "~3.2.4",
+    "prettier-plugin-svelte": "^3.1.2"
   },
   "prettier": {
     "singleQuote": true,
