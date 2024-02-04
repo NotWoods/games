@@ -7,17 +7,8 @@
 </script>
 
 <div class="task exact-task" aria-label={label} title={label}>
-  <div class="sphere {task.color}"></div>
-  <span class="task-amount">{task.amount}</span>
+  <svg viewBox="0 0 94 150">
+    <circle class="sphere {task.color}" cx="47" cy="75" r="40" />
+    <text class="task-amount" x="47" y="97">{task.amount}</text>
+  </svg>
 </div>
-
-<style>
-  .exact-task {
-    grid-template: 1fr / 1fr;
-  }
-
-  .sphere,
-  .task-amount {
-    grid-area: 1 / 1;
-  }
-</style>

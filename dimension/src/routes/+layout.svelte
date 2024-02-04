@@ -44,7 +44,7 @@
       <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#000" flood-opacity="0.75" />
     </filter>
     <filter id="symbol-cross-shadow">
-      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.75" />
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#000" flood-opacity="0.75" />
     </filter>
     <linearGradient id="rainbow-gradient" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#e4dbd1" />
@@ -54,4 +54,7 @@
       <stop offset="100%" stop-color="#040200" />
     </linearGradient>
   </defs>
+  <clipPath id="symbol-half">
+    <rect width="47" height="150" />
+  </clipPath>
 </svg>

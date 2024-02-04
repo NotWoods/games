@@ -7,19 +7,12 @@ body {
 .task {
   background: #fee457 linear-gradient(to bottom, #ad9f42, #e5c641, #fad23e);
   aspect-ratio: 2 / 3;
-  display: grid;
-  justify-content: center;
-  align-items: center;
   position: relative;
-  container-type: size;
   box-sizing: border-box;
-  padding: 0.15cm;
   border: 0.2cm solid white;
   border-radius: 0.2cm;
   box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 0.5);
   user-select: none;
-  width: 100%;
-  height: 100%;
 }
 .task > svg {
   position: absolute;
@@ -51,23 +44,14 @@ body {
   fill: #e4dbd1;
 }
 .sphere.rainbow {
-  background: linear-gradient(
-    to right bottom,
-    #e4dbd1,
-    #193e72,
-    #c44529,
-    #256d30,
-    #040200
-  );
   fill: url(#rainbow-gradient);
 }
 
 .task-amount {
-  display: block;
-  text-align: center;
-  z-index: 1;
   font-weight: bold;
   color: white;
+  fill: white;
   text-shadow: 0 0 5px rgb(0 0 0 / 0.75);
-  font-size: 75cqmin;
+  text-anchor: middle;
+  font-size: 65px;
 }

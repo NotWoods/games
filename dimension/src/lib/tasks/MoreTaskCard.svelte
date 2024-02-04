@@ -7,28 +7,9 @@
 </script>
 
 <div class="task more-task" aria-label={label} title={label}>
-  <div class="sphere sphere-a {task.colorA}"></div>
-  <div class="sphere sphere-b {task.colorB}"></div>
   <svg viewBox="0 0 94 150">
+    <circle class="sphere {task.colorA}" cx="26" cy="75" r="21" />
+    <circle class="sphere {task.colorB}" cx="68" cy="75" r="21" />
     <use href="#symbol-more-than" />
   </svg>
 </div>
-
-<style>
-  .more-task {
-    grid-template: auto / 1fr 1fr;
-  }
-  .task-amount {
-    grid-row: 1;
-    grid-column: 1 / -1;
-  }
-  .sphere {
-    grid-row: 1;
-  }
-  .sphere-a {
-    grid-column: 1;
-  }
-  .sphere-b {
-    grid-column: 2;
-  }
-</style>
