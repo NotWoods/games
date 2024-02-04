@@ -54,7 +54,7 @@ export function buildDeck(
   };
 }
 
-const ALL_CARDS: readonly Task[] = [
+export const ALL_CARDS: readonly Task[] = [
   { type: 'touch', colorA: 'white', colorB: 'white' },
   { type: 'touch', colorA: 'white', colorB: 'black' },
   { type: 'touch', colorA: 'white', colorB: 'orange' },

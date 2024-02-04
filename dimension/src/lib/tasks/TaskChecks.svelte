@@ -23,7 +23,7 @@
     list-style: none;
     grid-template-columns: repeat(var(--columns), 2fr);
     grid-template-rows: repeat(calc(var(--total-tasks) / var(--columns)), 3fr);
-    grid-gap: 16px;
+    gap: 16px;
     max-inline-size: 1200px;
     padding: 0;
     margin-inline: auto;

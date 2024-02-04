@@ -2,7 +2,6 @@
   import TaskChecks from '$lib/tasks/TaskChecks.svelte';
   import { buildDeck } from '$lib/tasks/deck';
   import { onMount } from 'svelte';
-  import '../app.css';
 
   let keyClear = 0;
   const { hand, deck, draw, shuffle } = buildDeck();
