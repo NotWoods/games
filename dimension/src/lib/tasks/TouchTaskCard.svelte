@@ -9,9 +9,11 @@
 <div class="task touch-task" aria-label={label} title={label}>
   <div class="sphere sphere-a {task.colorA}"></div>
   <div class="sphere sphere-b {task.colorB}"></div>
-  {#if task.type === 'not-touch'}
-    <div class="not-x">X</div>
-  {/if}
+  <svg viewBox="0 0 94 150">
+    {#if task.type === 'not-touch'}
+      <use href="#symbol-cross" filter="url(#symbol-cross-shadow)" />
+    {/if}
+  </svg>
 </div>
 
 <style>
@@ -19,8 +21,7 @@
     grid-template: 1fr / 1fr;
   }
 
-  .sphere,
-  .not-x {
+  .sphere {
     grid-area: 1 / 1;
   }
   .sphere-a {

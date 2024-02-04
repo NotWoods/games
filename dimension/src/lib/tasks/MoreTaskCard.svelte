@@ -9,7 +9,9 @@
 <div class="task more-task" aria-label={label} title={label}>
   <div class="sphere sphere-a {task.colorA}"></div>
   <div class="sphere sphere-b {task.colorB}"></div>
-  <span class="task-amount">&gt;</span>
+  <svg viewBox="0 0 94 150">
+    <use href="#symbol-more-than" />
+  </svg>
 </div>
 
 <style>

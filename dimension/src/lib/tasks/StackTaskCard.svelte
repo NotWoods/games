@@ -9,26 +9,18 @@
 </script>
 
 <div class="task stack-task" aria-label={label} title={label}>
-  <div class="sphere sphere-a {task.color}"></div>
-  <div class="sphere sphere-b rainbow"></div>
-  <div class="not-x">X</div>
-  <span class="task-amount">⬇</span>
+  <svg viewBox="0 0 94 150">
+    <use href="#symbol-stack" />
+    <circle class="sphere {task.color}" cx="47" cy="45" r="25" />
+    <circle class="sphere rainbow" fill="url(#rainbow-gradient)" cx="47" cy="105" r="25" />
+    <use href="#symbol-cross" />
+    <use href="#symbol-above" />
+  </svg>
 </div>
 
 <style>
   .stack-task {
     grid-template: 1fr 1fr / auto;
-  }
-  .stack-task::before {
-    content: '';
-    position: absolute;
-    display: block;
-    inset: 0;
-    width: 0;
-    height: 0;
-    margin: auto;
-    border-inline: 50cqi solid transparent;
-    border-bottom: 100cqb solid rgb(255 255 255 / 0.3);
   }
 
   .sphere {
@@ -40,11 +32,5 @@
   }
   .sphere-b {
     grid-row: 2;
-  }
-  .not-x,
-  .task-amount {
-    z-index: 2;
-    grid-row: 1 / -1;
-    grid-column: 1;
   }
 </style>

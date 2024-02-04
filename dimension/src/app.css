@@ -18,6 +18,12 @@ body {
   border-radius: 0.2cm;
   box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 0.5);
   user-select: none;
+  width: 100%;
+  height: 100%;
+}
+.task > svg {
+  position: absolute;
+  inset: 0;
 }
 
 .sphere {
@@ -26,18 +32,23 @@ body {
 }
 .sphere.orange {
   background: #c44529;
+  fill: #c44529;
 }
 .sphere.black {
   background: #040200;
+  fill: #040200;
 }
 .sphere.blue {
   background: #193e72;
+  fill: #193e72;
 }
 .sphere.green {
   background: #256d30;
+  fill: #256d30;
 }
 .sphere.white {
   background: #e4dbd1;
+  fill: #e4dbd1;
 }
 .sphere.rainbow {
   background: linear-gradient(
@@ -48,23 +59,15 @@ body {
     #256d30,
     #040200
   );
+  fill: url(#rainbow-gradient);
 }
 
-.task-amount,
-.not-x {
+.task-amount {
   display: block;
   text-align: center;
   z-index: 1;
   font-weight: bold;
-}
-.task-amount {
   color: white;
   text-shadow: 0 0 5px rgb(0 0 0 / 0.75);
   font-size: 75cqmin;
-}
-.not-x {
-  color: red;
-  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-  font-size: 100cqmin;
-  text-shadow: 4px 4px 2px rgb(0 0 0 / 0.75);
 }
