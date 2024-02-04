@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/dom';
-import { readFile } from 'fs/promises';
 import { beforeAll, beforeEach, expect, test, vi } from 'vitest';
+import { importHtml } from './import-html';
 
 function changeFullscreen(fullscreenElement: Element | null) {
   // @ts-expect-error - mocking a readonly property
@@ -16,12 +16,9 @@ document.exitFullscreen = vi.fn(async () => {
 });
 
 beforeAll(async () => {
-  const html = await readFile(new URL('../app.html', import.meta.url), 'utf8');
-  const [, body] = html.match(/<body>(.*)<\/body>/ms)!;
-
   vi.useFakeTimers();
 
-  document.body.innerHTML = body;
+  document.body.innerHTML = await importHtml();
   await import('../src/fullscreen');
 });
 
