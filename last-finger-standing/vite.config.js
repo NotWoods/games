@@ -1,10 +1,10 @@
 // @ts-check
-import { defineConfig } from 'vitest/config';
+import { defineProject } from 'vitest/config';
 import { VitePWA } from 'vite-plugin-pwa';
 import { sharedHtml } from '../vite-plugins/shared-html.mjs';
 import { socialMetadata } from '../vite-plugins/social-metadata.mjs';
 
-export default defineConfig({
+export default defineProject({
   base: '/last-finger-standing/',
   server: {
     host: '0.0.0.0',
