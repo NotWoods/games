@@ -1,6 +1,6 @@
 const { EleventyHtmlBasePlugin } = require('@11ty/eleventy');
 
-/** @param {import('../node_modules/@11ty/eleventy/src').UserConfig} eleventyConfig */
+/** @param {import('@11ty/eleventy').UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
 

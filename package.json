@@ -11,20 +11,22 @@
     "build": "npm run build --workspaces && cp _redirects dist",
     "format": "prettier --ignore-path .gitignore --write .",
     "format:check": "prettier --ignore-path .gitignore --check .",
-    "lint": "npm run lint --workspaces",
+    "lint": "eslint .",
     "test": "vitest"
   },
   "devDependencies": {
-    "@types/eslint": "^8.56.2",
-    "@typescript-eslint/eslint-plugin": "^6.20.0",
-    "@typescript-eslint/parser": "^6.20.0",
-    "eslint": "^8.56.0",
+    "@eslint/compat": "^1.1.1",
+    "@eslint/js": "^9.9.1",
+    "@types/eslint": "^8.56.12",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-svelte": "^2.35.1",
-    "eslint-plugin-testing-library": "^6.2.0",
-    "prettier": "~3.2.4",
-    "prettier-plugin-svelte": "^3.1.2",
-    "vitest": "^1.6.0"
+    "eslint-plugin-svelte": "^2.43.0",
+    "eslint-plugin-testing-library": "^6.3.0",
+    "globals": "^15.9.0",
+    "prettier": "~3.3.3",
+    "prettier-plugin-svelte": "^3.2.6",
+    "typescript-eslint": "^8.3.0",
+    "vitest": "^2.0.5"
   },
   "prettier": {
     "singleQuote": true,

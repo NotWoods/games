@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint --ext .ts src test *.js",
     "preview": "vite preview",
     "test": "vitest"
   },

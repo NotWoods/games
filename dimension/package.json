@@ -7,8 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest",
-    "lint": "eslint ."
+    "test": "vitest"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.1",
