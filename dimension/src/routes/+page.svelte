@@ -1,21 +1,21 @@
 <script lang="ts">
   import TaskChecks from '$lib/tasks/TaskChecks.svelte';
-  import { buildDeck } from '$lib/tasks/deck';
+  import { Deck } from '$lib/tasks/Deck.svelte';
   import { onMount } from 'svelte';
   import { ChangeCount } from '$lib/tasks/ChangeCount.svelte';
 
-  const { hand, deck, draw, shuffle } = buildDeck();
+  const deck = new Deck()
 
-  const keyClear = new ChangeCount(() => hand)
+  const keyClear = new ChangeCount(() => deck.hand)
 
   onMount(() => {
-    shuffle();
+    deck.shuffle();
   });
 </script>
 
-<span>{$deck.length} cards left in deck</span>
-<button onclick={shuffle}>Shuffle all cards into deck</button>
+<span>{deck.cards.length} cards left in deck</span>
+<button onclick={deck.shuffle}>Shuffle all cards into deck</button>
 {#key keyClear.key}
-  <TaskChecks tasks={$hand} />
+  <TaskChecks tasks={deck.hand} />
 {/key}
-<button onclick={draw}>Draw</button>
+<button onclick={deck.draw}>Draw</button>

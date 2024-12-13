@@ -1,57 +1,51 @@
 import arrayShuffle from 'array-shuffle';
 import type { Task } from './types';
-import { writable, type Readable } from 'svelte/store';
 
-export interface Deck {
+export class Deck {
+  #cards: readonly Task[] = $state.raw([]);
+  #hand: readonly Task[] = $state.raw([]);
+
+  constructor(
+    private readonly initialCards: readonly Task[] = ALL_CARDS,
+    private readonly handSize = 6,
+  ) {
+    this.draw = this.draw.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+
+    this.shuffle();
+  }
+
   /**
    * Current drawn cards. Will always be the first `handSize` cards of `deck`.
    */
-  hand: Readable<readonly Task[]>;
+  get hand(): readonly Task[] {
+    return this.#hand;
+  }
+
   /**
    * Remaining cards in the deck.
    */
-  deck: Readable<readonly Task[]>;
+  get cards(): readonly Task[] {
+    return this.#cards;
+  }
+
   /**
    * Draw a new hand of cards.
    */
-  draw(): void;
+  draw() {
+    if (this.#cards.length === 0) return;
+
+    this.#hand = this.#cards.slice(0, this.handSize);
+    this.#cards = this.#cards.slice(this.handSize);
+  }
+
   /**
    * Shuffle all cards back into the deck and draw a new hand of cards.
    */
-  shuffle(): void;
-}
-
-export function buildDeck(
-  initialCards: readonly Task[] = ALL_CARDS,
-  handSize = 6,
-): Deck {
-  const cards = writable<readonly Task[]>([]);
-  const hand = writable<readonly Task[]>([]);
-
-  function draw() {
-    cards.update((deck) => {
-      if (deck.length === 0) return deck;
-
-      const newHand = deck.slice(0, handSize);
-      const newDeck = deck.slice(handSize);
-      hand.set(newHand);
-      return newDeck;
-    });
+  shuffle() {
+    this.#cards = arrayShuffle(this.initialCards);
+    this.draw();
   }
-
-  function shuffle() {
-    cards.set(arrayShuffle(initialCards));
-    draw();
-  }
-
-  shuffle();
-
-  return {
-    hand,
-    deck: cards,
-    draw,
-    shuffle,
-  };
 }
 
 export const ALL_CARDS: readonly Task[] = [

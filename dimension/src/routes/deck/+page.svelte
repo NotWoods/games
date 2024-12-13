@@ -1,6 +1,6 @@
 <script lang="ts">
   import TaskCard from '$lib/tasks/TaskCard.svelte';
-  import { ALL_CARDS } from '$lib/tasks/deck';
+  import { ALL_CARDS } from '$lib/tasks/Deck.svelte';
 </script>
 
 <ul>
