@@ -1,5 +1,10 @@
 <script lang="ts">
   import '../app.css';
+  interface Props {
+    children: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 </script>
 
 <svg
@@ -29,7 +34,7 @@
   />
 </svg>
 
-<slot />
+{@render children()}
 
 <svg
   xmlns="http://www.w3.org/2000/svg"

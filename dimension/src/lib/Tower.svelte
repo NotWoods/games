@@ -1,5 +1,5 @@
 <script lang="ts">
-  let sphereCount = 11;
+  let sphereCount = $state(11);
 </script>
 
 <section class="tower">

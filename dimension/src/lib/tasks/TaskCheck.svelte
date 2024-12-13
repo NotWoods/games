@@ -1,11 +1,16 @@
 <script lang="ts">
-  export let value: string;
+  interface Props {
+    value: string;
+    children: import('svelte').Snippet;
+  }
+
+  let { value, children }: Props = $props();
 </script>
 
 <label class="check">
   <input type="checkbox" name="task" {value} checked={false} />
   <div class="task-container">
-    <slot />
+    {@render children()}
   </div>
 </label>
 

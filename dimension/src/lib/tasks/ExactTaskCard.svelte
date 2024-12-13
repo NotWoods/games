@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { ExactTask } from './types';
 
-  export let task: ExactTask;
+  interface Props {
+    task: ExactTask;
+  }
 
-  $: label = `There must be exactly ${task.amount} ${task.color}!`;
+  let { task }: Props = $props();
+
+  let label = $derived(`There must be exactly ${task.amount} ${task.color}!`);
 </script>
 
 <div class="task exact-task" aria-label={label} title={label}>

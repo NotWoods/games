@@ -6,7 +6,11 @@
   import TouchTaskCard from './TouchTaskCard.svelte';
   import type { Task } from './types';
 
-  export let task: Task;
+  interface Props {
+    task: Task;
+  }
+
+  let { task }: Props = $props();
 </script>
 
 {#if task.type === 'touch' || task.type === 'not-touch'}

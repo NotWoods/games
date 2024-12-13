@@ -3,7 +3,11 @@
   import TaskCheck from './TaskCheck.svelte';
   import type { Task } from './types';
 
-  export let tasks: readonly Task[];
+  interface Props {
+    tasks: readonly Task[];
+  }
+
+  let { tasks }: Props = $props();
 </script>
 
 <ul style="--total-tasks: {tasks.length}">

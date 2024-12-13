@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { SumTask } from './types';
 
-  export let task: SumTask;
+  interface Props {
+    task: SumTask;
+  }
 
-  $: label = `The sum of ${task.colorA} and ${task.colorB} must be exactly ${task.amount}!`;
+  let { task }: Props = $props();
+
+  let label = $derived(`The sum of ${task.colorA} and ${task.colorB} must be exactly ${task.amount}!`);
 </script>
 
 <div class="task sum-task" aria-label={label} title={label}>

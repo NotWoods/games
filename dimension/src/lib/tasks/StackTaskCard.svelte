@@ -1,14 +1,18 @@
 <script lang="ts">
   import type { StackTask } from './types';
 
-  export let task: StackTask;
+  interface Props {
+    task: StackTask;
+  }
 
-  $: label = `${task.color} must not be ${
+  let { task }: Props = $props();
+
+  let label = $derived(`${task.color} must not be ${
     task.type === 'not-over' ? 'on top of' : 'underneath'
-  } any spheres!`;
+  } any spheres!`);
 
-  $: topColor = task.type === 'not-over' ? task.color : 'rainbow';
-  $: bottomColor = task.type === 'not-over' ? 'rainbow' : task.color;
+  let topColor = $derived(task.type === 'not-over' ? task.color : 'rainbow');
+  let bottomColor = $derived(task.type === 'not-over' ? 'rainbow' : task.color);
 </script>
 
 <div class="task stack-task" aria-label={label} title={label}>

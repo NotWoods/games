@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { TouchTask } from './types';
 
-  export let task: TouchTask;
+  interface Props {
+    task: TouchTask;
+  }
 
-  $: label = `${task.colorA} and ${task.colorB} ${task.type === 'touch' ? 'must' : 'must not'} touch!`;
+  let { task }: Props = $props();
+
+  let label = $derived(`${task.colorA} and ${task.colorB} ${task.type === 'touch' ? 'must' : 'must not'} touch!`);
 </script>
 
 <div class="task touch-task" aria-label={label} title={label}>

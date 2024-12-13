@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { MoreTask } from './types';
 
-  export let task: MoreTask;
+  interface Props {
+    task: MoreTask;
+  }
 
-  $: label = `There must be more ${task.colorA} than ${task.colorB}!`;
+  let { task }: Props = $props();
+
+  let label = $derived(`There must be more ${task.colorA} than ${task.colorB}!`);
 </script>
 
 <div class="task more-task" aria-label={label} title={label}>
