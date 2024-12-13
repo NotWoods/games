@@ -1,6 +1,7 @@
 {
   "name": "game-clock",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "dev": "vite",
@@ -11,10 +12,10 @@
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
-    "@vitejs/plugin-legacy": "^5.3.0",
+    "@vitejs/plugin-legacy": "^6.0.0",
     "jsdom": "^25.0.0",
-    "vite": "^5.0.12",
-    "vite-plugin-pwa": "^0.17.5",
-    "vitest": "^2.0.5"
+    "vite": "^6.0.0",
+    "vite-plugin-pwa": "^0.21.1",
+    "vitest": "^3.0.0-beta.2"
   }
 }

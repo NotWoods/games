@@ -10,12 +10,12 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["vite/client"],
-    "noEmit": true,
+    "noEmit": true
   },
-  "include": ["src", "test"],
+  "include": ["src", "test"]
 }

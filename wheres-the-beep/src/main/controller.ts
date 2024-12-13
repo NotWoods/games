@@ -103,6 +103,5 @@ export class ControllerManager {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   render() {}
 }

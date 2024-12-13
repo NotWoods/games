@@ -2,9 +2,9 @@
   "compilerOptions": {
     "lib": ["dom"],
     "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "checkJs": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "checkJs": true
   },
-  "include": ["src/**/*.js", "workbox-config.js", "vite.config.js"],
+  "include": ["src/**/*.js", "workbox-config.js", "vite.config.js"]
 }

@@ -1,5 +1,4 @@
 // @ts-check
-import { fixupPluginRules } from '@eslint/compat';
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
@@ -52,7 +51,7 @@ export default ts.config(
   {
     files: ['**/*.test.ts', '**/*.test.js'],
     plugins: {
-      'testing-library': fixupPluginRules(testingLibrary),
+      'testing-library': testingLibrary,
     },
     rules: {
       'testing-library/no-node-access': 'off',
